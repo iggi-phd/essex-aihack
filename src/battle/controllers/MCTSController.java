@@ -14,11 +14,17 @@ public class MCTSController implements BattleController
     Action currentMacroAction = new Action(0, 0, false);
     MCTSRunnable mctsSearch = null;
     Thread t = null;
-    int counter = 0;
-    int maxCounter = 100;
 
     public MCTSController()
     {
+    }
+
+    private void StartMCTS(SimpleBattle gameState, int playerId)
+    {
+        mctsSearch = new MCTSRunnable();
+        mctsSearch.Init(gameState, playerId);
+        t = new Thread(mctsSearch);
+        t.start();
     }
 
     @Override
@@ -27,24 +33,16 @@ public class MCTSController implements BattleController
         if(mctsSearch == null)
         {
             //first run
-            mctsSearch = new MCTSRunnable();
-            mctsSearch.restart(gameStateCopy);
-            t = new Thread(mctsSearch);
-            t.start();
+            StartMCTS(gameStateCopy, playerId);
+        }
+        else if(mctsSearch.IsComplete())
+        {
+            currentMacroAction = mctsSearch.GetBestAction();
+            StartMCTS(gameStateCopy, playerId);
         }
         else
         {
-            counter++;
-
-            if(counter < maxCounter)
-            {
-                return currentMacroAction;
-            }
-            else
-            {
-                currentMacroAction = mctsSearch.GetBestAction();
-                mctsSearch.restart(gameStateCopy);
-            }
+            currentMacroAction = mctsSearch.GetBestAction();
         }
 
         return currentMacroAction;
