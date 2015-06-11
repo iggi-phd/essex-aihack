@@ -1,9 +1,6 @@
 package battle;
 
-import asteroids.Action;
-import asteroids.GameObject;
-import asteroids.Missile;
-import asteroids.Ship;
+import asteroids.*;
 import math.Vector2d;
 import utilities.JEasyFrame;
 
@@ -40,6 +37,7 @@ public class SimpleBattle {
     NeuroShip s1, s2;
     BattleController p1, p2;
     BattleView view;
+    JEasyFrame frame;
 
     public SimpleBattle() {
         this.objects = new ArrayList<>();
@@ -47,13 +45,14 @@ public class SimpleBattle {
 
         if (visible) {
             view = new BattleView(this);
-            new JEasyFrame(view, "battle");
+            frame= new JEasyFrame(view, "battle");
         }
     }
 
     public int playGame(BattleController p1, BattleController p2) {
         this.p1 = p1;
         this.p2 = p2;
+
         reset();
 
         stats.add(new PlayerStats(0, 0));
@@ -66,6 +65,9 @@ public class SimpleBattle {
         }
 
         return 0;
+    }
+    public void addKeyListener(KeyController keyController) {
+        frame.addKeyListener(keyController);
     }
 
     protected void reset() {

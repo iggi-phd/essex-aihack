@@ -1,13 +1,6 @@
 package battle;
 
-import javax.swing.*;
-
-import asteroids.Action;
-import battle.controllers.EmptyController;
-import battle.controllers.FireController;
-import battle.controllers.RotateAndShoot;
-import math.Vector2d;
-import utilities.JEasyFrame;
+import battle.controllers.*;
 
 /**
  * Created by simon lucas on 10/06/15.
@@ -19,8 +12,11 @@ public class BattleTest {
 
         SimpleBattle battle = new SimpleBattle();
 
-        BattleController fire = new RotateAndShoot();
-        battle.playGame(fire, fire);
+        BattleController fire1 = new PlayerKeyController();
+
+       battle.addKeyListener(  ((PlayerKeyController) fire1).getKeyHandler());
+        BattleController fire2 = new FireController();
+        battle.playGame(fire1, fire2);
     }
 
 }

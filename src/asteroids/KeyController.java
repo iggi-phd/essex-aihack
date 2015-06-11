@@ -24,6 +24,10 @@ public class KeyController extends KeyAdapter
         // this is defined to comply with the standard interface
         return action;
     }
+    // lets us get action without needing to pass gamestate
+    public Action getAction() {
+        return action;
+    }
 
     public void setVehicle(Ship ship) {
         //To change body of implemented methods use File | Settings | File Templates.
