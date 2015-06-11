@@ -19,11 +19,13 @@ public class DaveController implements BattleController {
     Action action;
     int t;
     int lastShot;
+    int offset;
 
     public DaveController()
     {
         t = 0;
         lastShot = 0;
+        offset = (int) Math.round(Math.random()*90);
     }
 
     @Override
@@ -49,13 +51,13 @@ public class DaveController implements BattleController {
             lastShot = t;
         }
 
-        angle *= 0.05*Math.sin(t);
+        //angle *= 0.05*Math.sin(t+offset);
         angle = Math.min(angle, 1);
         angle = Math.max(-1, angle);
 
 
         t++;
-        return new Action(1,Math.random()+angle, shoot);
+        return new Action(1,Math.random()*Math.sin(t + offset)/10+angle, shoot);
     }
 
     private NeuroShip getSelf(SimpleBattle s, int playerId)
