@@ -38,15 +38,25 @@ public class DaveController implements BattleController {
         NeuroShip self = getSelf(s, playerId);
         Vector2d selfPos = new Vector2d(self.s);
         Vector2d selfVel = new Vector2d(self.v);
+        Vector2d selfDir = new Vector2d(self.d);
 
         Vector2d ePredictedPos = enemyPos.add(enemyVel);
 
         Vector2d relativePos = ePredictedPos.subtract(selfPos);
 
-        double angle = Math.acos(relativePos.scalarProduct(self.d) / (self.d.mag() * relativePos.mag()));
+        Vector2d shootingDirection = selfDir;//.add(selfDir.mul(relativePos.mag()*missileMinVelocity*2));
+
+        double angle = Math.acos(relativePos.scalarProduct(shootingDirection) / (shootingDirection.mag() * relativePos.mag()));
+        double alignment = -Math.acos(enemyVel.scalarProduct(selfDir) / selfDir.mag() * enemyVel.mag());
+
+        if (!(angle > 0) && !(angle < 0))
+            angle = 0;
+        if (!(alignment > 0) && !(alignment < 0))
+            alignment = 0;
+
 
         if ((Math.abs(angle) < 1) && (t - lastShot > 10)) {
-            if (relativePos.mag()< missileTTL*self.v.mag())
+            if (relativePos.mag()< missileTTL*10+self.v.mag())
                 shoot = true;
             lastShot = t;
         }
@@ -55,9 +65,14 @@ public class DaveController implements BattleController {
         angle = Math.min(angle, 1);
         angle = Math.max(-1, angle);
 
+        double randomness = Math.random()*Math.sin(t + offset)/1;
+
+        double thrust = 1/alignment*enemyVel.mag()+randomness;
+        if (Math.abs(thrust)<0.2)
+            thrust = 0;
 
         t++;
-        return new Action(1,Math.random()*Math.sin(t + offset)/10+angle, shoot);
+        return new Action(thrust,angle, shoot);
     }
 
     private NeuroShip getSelf(SimpleBattle s, int playerId)

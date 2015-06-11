@@ -18,7 +18,7 @@ public class BattleTest {
         SimpleBattle battle = new SimpleBattle();
 
         BattleController player1 = new DaveController();
-        BattleController player2 = new EmptyController();
+        BattleController player2 = new MemoControllerRandom();
         battle.playGame(player1, player2);
     }
 
