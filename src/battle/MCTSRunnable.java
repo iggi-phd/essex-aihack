@@ -21,10 +21,9 @@ public class MCTSRunnable implements Runnable {
 
     public void restart(SimpleBattle state)
     {
-        //reset the tree
-        MCTSTreeNode newRoot = new MCTSTreeNode();
-
-
+        //reset the tree - need to stop the process probably
+        rootState = state.clone();
+        rootNode = null;
     }
 
     public Action GetBestAction()

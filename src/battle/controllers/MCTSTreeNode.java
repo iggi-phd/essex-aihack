@@ -93,7 +93,7 @@ public class MCTSTreeNode {
     public double rollOut(MCTSTreeNode tn)
     {
         //Max score is 10*number of missles (1000)
-        return (nodeState.getStats(0).nPoints - nodeState.getStats(1))/1000;
+        return (nodeState.get - nodeState.getStats(1).getPoints())/1000;
     }
 
     public void updateStats(double value) {
