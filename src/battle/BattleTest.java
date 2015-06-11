@@ -20,8 +20,7 @@ public class BattleTest {
 
         SimpleBattle battle = new SimpleBattle();
 
-        BattleController fire = new DaveController();
-        battle.playGame(fire, fire);
+        battle.playGame(new DaveController(), new RotateAndShoot());
     }
 
 }

@@ -23,12 +23,30 @@ public class DaveController implements BattleController {
     @Override
     public Action getAction(SimpleBattle s, int playerId)
     {
-        for (int i=0;i<s.getObjects().size();i++)
-        {
-            GameObject o = s.getObjects().get(i);
-            Vector2d predictedPosition = o.s.add(o.v);
+        GameObject enemy = getEnemy(s,playerId);
+        Vector2d ePredictedPos = enemy.s.add(enemy.v);
+        GameObject self = getSelf(s,playerId);
 
-        }
-        return new Action(0, 1, true);
+        Vector2d distance = self.s.subtract(ePredictedPos);
+        Vector2d angle = distance.subtract(self.v);
+        angle.normalise();
+
+        return new Action(0, angle.x, true);
+    }
+
+    private NeuroShip getSelf(SimpleBattle s, int playerId)
+    {
+        if (playerId==0)
+            return s.getS1();
+        else
+            return s.getS2();
+    }
+
+    private NeuroShip getEnemy(SimpleBattle s, int playerId)
+    {
+        if (playerId==1)
+            return s.getS1();
+        else
+            return s.getS2();
     }
 }
