@@ -147,7 +147,7 @@ public class SimpleBattle {
         return statsClone;
     }
 
-    public void checkCollision(GameObject actor) {
+    protected void checkCollision(GameObject actor) {
         // check with all other game objects
         // but use a hack to only consider interesting interactions
         // e.g. asteroids do not collide with themselves
@@ -188,7 +188,7 @@ public class SimpleBattle {
         }
     }
 
-    public void fireMissile(Vector2d s, Vector2d d, int playerId) {
+    protected void fireMissile(Vector2d s, Vector2d d, int playerId) {
         // need all the usual missile firing code here
         NeuroShip currentShip = playerId == 0 ? s1 : s2;
         PlayerStats stats = this.stats.get(playerId);
@@ -221,9 +221,27 @@ public class SimpleBattle {
         s2.draw(g);
     }
 
+    public NeuroShip getShip(int playerID) {
+        assert playerID < 2;
+        assert playerID >= 0;
+
+        if (playerID == 0) {
+            return s1.copy();
+        } else {
+            return s2.copy();
+        }
+    }
+
     public ArrayList<GameObject> getObjects()
     {
-        return objects;
+        return new ArrayList<>(objects);
+    }
+
+    public PlayerStats getStats(int playerID) {
+        assert playerID < 2;
+        assert playerID >= 0;
+
+        return stats.get(playerID);
     }
 
     static class PlayerStats {
