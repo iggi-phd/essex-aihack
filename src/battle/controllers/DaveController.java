@@ -23,15 +23,31 @@ public class DaveController implements BattleController {
     @Override
     public Action getAction(SimpleBattle s, int playerId)
     {
-        GameObject enemy = getEnemy(s,playerId);
-        Vector2d ePredictedPos = enemy.s.add(enemy.v);
-        GameObject self = getSelf(s,playerId);
+        NeuroShip enemy = getEnemy(s,playerId);
+        Vector2d enemyPos = new Vector2d(enemy.s);
+        Vector2d enemyVel = new Vector2d(enemy.v);
 
-        Vector2d distance = self.s.subtract(ePredictedPos);
-        Vector2d angle = distance.subtract(self.v);
-        angle.normalise();
+        NeuroShip self = getSelf(s,playerId);
+        Vector2d selfPos = new Vector2d(self.s);
+        Vector2d selfVel = new Vector2d(self.v);
+        System.out.println(selfPos.x + "," + selfPos.y);
 
-        return new Action(0, angle.x, true);
+        Vector2d ePredictedPos = enemyPos.add(enemyVel);
+
+        Vector2d relativePos = ePredictedPos.subtract(selfPos);
+
+        double angle = Math.acos(relativePos.scalarProduct(self.d)/(self.d.mag()*relativePos.mag()));
+        if (angle > 0)
+            angle = Math.min(angle,1);
+        if (angle < 0)
+            angle = Math.max(-1,angle);
+
+        boolean shoot = false;
+        System.out.println(angle);
+        if (Math.abs(angle) < 1)
+            shoot = true;
+
+        return new Action(1, angle, shoot);
     }
 
     private NeuroShip getSelf(SimpleBattle s, int playerId)
