@@ -15,7 +15,7 @@ public class BattleTest {
         BattleController fire1 = new PlayerKeyController();
 
        battle.addKeyListener(  ((PlayerKeyController) fire1).getKeyHandler());
-        BattleController fire2 = new FireController();
+        BattleController fire2 = new SimpleController();
         battle.playGame(fire1, fire2);
     }
 

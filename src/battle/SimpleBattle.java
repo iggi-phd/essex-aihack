@@ -23,7 +23,7 @@ public class SimpleBattle {
 
     // play a time limited game with a strict missile budget for
     // each player
-    static int nMissiles = 100;
+    static int nMissiles = 100000;//100;
     static int nTicks = 1000;
     static int pointsPerKill = 10;
     static int releaseVelocity = 5;
@@ -34,7 +34,7 @@ public class SimpleBattle {
     ArrayList<GameObject> objects;
     ArrayList<PlayerStats> stats;
 
-    NeuroShip s1, s2;
+    public NeuroShip s1, s2;
     BattleController p1, p2;
     BattleView view;
     JEasyFrame frame;
