@@ -1,9 +1,6 @@
 package battle;
 
-import asteroids.Action;
-import asteroids.GameObject;
-import asteroids.Missile;
-import asteroids.Ship;
+import asteroids.*;
 import math.Vector2d;
 import utilities.JEasyFrame;
 
@@ -89,9 +86,11 @@ public class SimpleBattle {
         // apply them to each player's ship, taking actions as necessary
         Action a1 = p1.getAction(this, 0);
         Action a2 = p2.getAction(this, 1);
+        update(a1, a2);
+    }
 
+    public void update(Action a1, Action a2) {
         // now apply them to the ships
-
         s1.update(a1);
         s2.update(a2);
 
@@ -119,7 +118,36 @@ public class SimpleBattle {
         }
     }
 
-    public void checkCollision(GameObject actor) {
+
+    public SimpleBattle clone() {
+        SimpleBattle state = new SimpleBattle();
+        state.objects = copyObjects();
+        state.stats = copyStats();
+
+        state.s1 = s1.copy();
+        state.s2 = s2.copy();
+        return state;
+    }
+
+    protected ArrayList<GameObject> copyObjects() {
+        ArrayList<GameObject> objectClone = new ArrayList<GameObject>();
+        for (GameObject object : objects) {
+            objectClone.add(object.copy());
+        }
+
+        return objectClone;
+    }
+
+    protected ArrayList<PlayerStats> copyStats() {
+        ArrayList<PlayerStats> statsClone = new ArrayList<PlayerStats>();
+        for (PlayerStats object : stats) {
+            statsClone.add(new PlayerStats(object.nMissiles, object.nPoints));
+        }
+
+        return statsClone;
+    }
+
+    protected void checkCollision(GameObject actor) {
         // check with all other game objects
         // but use a hack to only consider interesting interactions
         // e.g. asteroids do not collide with themselves
@@ -160,7 +188,7 @@ public class SimpleBattle {
         }
     }
 
-    public void fireMissile(Vector2d s, Vector2d d, int playerId) {
+    protected void fireMissile(Vector2d s, Vector2d d, int playerId) {
         // need all the usual missile firing code here
         NeuroShip currentShip = playerId == 0 ? s1 : s2;
         PlayerStats stats = this.stats.get(playerId);
@@ -193,9 +221,27 @@ public class SimpleBattle {
         s2.draw(g);
     }
 
+    public NeuroShip getShip(int playerID) {
+        assert playerID < 2;
+        assert playerID >= 0;
+
+        if (playerID == 0) {
+            return s1.copy();
+        } else {
+            return s2.copy();
+        }
+    }
+
     public ArrayList<GameObject> getObjects()
     {
-        return objects;
+        return new ArrayList<>(objects);
+    }
+
+    public PlayerStats getStats(int playerID) {
+        assert playerID < 2;
+        assert playerID >= 0;
+
+        return stats.get(playerID);
     }
 
     static class PlayerStats {
@@ -205,6 +251,14 @@ public class SimpleBattle {
         public PlayerStats(int nMissiles, int nPoints) {
             this.nMissiles = nMissiles;
             this.nPoints = nPoints;
+        }
+
+        public int getMissilesFired() {
+            return nMissiles;
+        }
+
+        public int getPoints() {
+            return nPoints;
         }
 
         public String toString() {
