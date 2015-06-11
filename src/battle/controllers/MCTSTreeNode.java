@@ -1,5 +1,6 @@
 package battle.controllers;
 
+import asteroids.Action;
 import battle.SimpleBattle;
 
 import java.util.LinkedList;
@@ -8,9 +9,19 @@ import java.util.Random;
 
 public class MCTSTreeNode {
     static Random r = new Random();
-    static int nActions = 5;
     static double epsilon = 1e-6;
     SimpleBattle nodeState = null;
+
+    static Action[] macroActions = new Action[]
+    {
+        new Action(0, 0, true),
+            new Action(1,1, true),
+            new Action(1,-1, true),
+            new Action(0, 0, false),
+            new Action(1,1, false),
+            new Action(1,-1, false)
+    };
+
 
     MCTSTreeNode[] children;
     double nVisits, totValue;
@@ -40,10 +51,19 @@ public class MCTSTreeNode {
         }
     }
 
-    public void expand() {
-        children = new MCTSTreeNode[nActions];
-        for (int i=0; i<nActions; i++) {
-            children[i] = new MCTSTreeNode();
+    public void expand()
+    {
+        children = new MCTSTreeNode[macroActions.length * macroActions.length];
+        SimpleBattle cloneState = null;
+
+        for (int i=0; i<macroActions.length; i++)
+        {
+            for (int j=0; j<macroActions.length; j++)
+            {
+                cloneState = nodeState.clone();
+                cloneState.update(macroActions[i], macroActions[j]);
+                children[i] = new MCTSTreeNode(cloneState);
+            }
         }
     }
 
@@ -70,11 +90,9 @@ public class MCTSTreeNode {
         return children == null;
     }
 
-    public double rollOut(MCTSTreeNode tn) {
-        // ultimately a roll out will end in some value
-        // assume for now that it ends in a win or a loss
-        // and just return this at random
-        return r.nextInt(2);
+    public double rollOut(MCTSTreeNode tn)
+    {
+        nodeState.
     }
 
     public void updateStats(double value) {
