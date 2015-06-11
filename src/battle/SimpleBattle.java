@@ -37,16 +37,13 @@ public class SimpleBattle {
     ArrayList<GameObject> objects;
     ArrayList<PlayerStats> stats;
 
-    BattleController b1, b2;
     NeuroShip s1, s2;
     BattleController p1, p2;
     BattleView view;
 
-    public SimpleBattle(NeuroShip s1, NeuroShip s2) {
+    public SimpleBattle() {
         this.objects = new ArrayList<>();
         this.stats = new ArrayList<>();
-        this.s1 = s1;
-        this.s2 = s2;
 
         if (visible) {
             view = new BattleView(this);
@@ -57,6 +54,7 @@ public class SimpleBattle {
     public int playGame(BattleController p1, BattleController p2) {
         this.p1 = p1;
         this.p2 = p2;
+        reset();
 
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
@@ -70,12 +68,25 @@ public class SimpleBattle {
         return 0;
     }
 
+    protected void reset() {
+        stats.clear();
+        objects.clear();
+        s1 = buildShip(250, 250);
+        s2 = buildShip(300, 300);
+    }
+
+    protected NeuroShip buildShip(int x, int y) {
+        Vector2d position = new Vector2d(x, y);
+        Vector2d speed = new Vector2d();
+        Vector2d direction = new Vector2d(1, 0);
+
+        return new NeuroShip(position, speed, direction );
+    }
+
     public void update() {
         // get the actions from each player
 
         // apply them to each player's ship, taking actions as necessary
-
-
         Action a1 = p1.getAction(this, 0);
         Action a2 = p2.getAction(this, 1);
 
@@ -124,7 +135,7 @@ public class SimpleBattle {
 
                     int playerID = (actor == s1 ? 1 : 0);
                     PlayerStats stats = this.stats.get(playerID);
-                    stats.nPoints += 10;
+                    stats.nPoints += pointsPerKill;
                     return;
                 }
             }
