@@ -27,7 +27,8 @@ public class SimpleBattle {
     static int nTicks = 1000;
     static int pointsPerKill = 10;
     static int releaseVelocity = 5;
-    static boolean visible = true;
+
+    boolean visible = true;
 
     ArrayList<BattleController> controllers;
 
@@ -57,7 +58,7 @@ public class SimpleBattle {
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
 
-        while (currentTick < nTicks) {
+        while (!isGameOver()) {
             update();
         }
 
@@ -101,10 +102,14 @@ public class SimpleBattle {
         if (a1.shoot) fireMissile(s1.s, s1.d, 0);
         if (a2.shoot) fireMissile(s2.s, s2.d, 1);
 
+        wrap(s1);
+        wrap(s2);
+
         // here need to add the game objects ...
         java.util.List<GameObject> killList = new ArrayList<GameObject>();
         for (GameObject object : objects) {
             object.update();
+            wrap(object);
             if (object.dead()) {
                 killList.add(object);
             }
@@ -125,6 +130,7 @@ public class SimpleBattle {
         state.objects = copyObjects();
         state.stats = copyStats();
         state.currentTick = currentTick;
+        state.visible = false; //stop MCTS people having all the games :p
 
         state.s1 = s1.copy();
         state.s2 = s2.copy();
@@ -208,6 +214,9 @@ public class SimpleBattle {
 
     public void draw(Graphics2D g) {
         // for (Object ob : objects)
+        if (s1 == null || s2 == null) {
+            return;
+        }
 
         // System.out.println("In draw(): " + n);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -253,8 +262,22 @@ public class SimpleBattle {
         return stats.get(playerID).nMissiles - nMissiles;
     }
 
+    private void wrap(GameObject ob) {
+        // only wrap objects which are wrappable
+        if (ob.wrappable()) {
+            ob.s.x = (ob.s.x + width) % width;
+            ob.s.y = (ob.s.y + height) % height;
+        }
+    }
 
     public boolean isGameOver() {
+        if (getMissilesLeft(0) >= 0 && getMissilesLeft(1) >= 0) {
+            //ensure that there are no bullets left in play
+            if (objects.isEmpty()) {
+                return true;
+            }
+        }
+
         return currentTick >= nTicks;
     }
 

@@ -4,9 +4,7 @@ import javax.swing.*;
 
 import asteroids.Action;
 import battle.controllers.EmptyController;
-import battle.controllers.FireController;
 import battle.controllers.MCTSController;
-import battle.controllers.RotateAndShoot;
 import math.Vector2d;
 import utilities.JEasyFrame;
 
@@ -20,8 +18,8 @@ public class BattleTest {
 
         SimpleBattle battle = new SimpleBattle();
 
-        BattleController player1 = new MCTSController();
-        BattleController player2 = new RotateAndShoot();
+        BattleController player1 = new EmptyController();
+        BattleController player2 = new MCTSController();
         battle.playGame(player1, player2);
     }
 
