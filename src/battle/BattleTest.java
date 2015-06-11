@@ -3,6 +3,7 @@ package battle;
 import javax.swing.*;
 
 import asteroids.Action;
+import battle.controllers.DaveController;
 import battle.controllers.EmptyController;
 import battle.controllers.FireController;
 import battle.controllers.RotateAndShoot;
@@ -22,7 +23,7 @@ public class BattleTest {
 
         SimpleBattle battle = new SimpleBattle(s1, s2);
 
-        BattleController fire = new RotateAndShoot();
+        BattleController fire = new DaveController();
         battle.playGame(fire, fire);
     }
 

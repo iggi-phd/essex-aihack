@@ -187,6 +187,16 @@ public class SimpleBattle {
         return objects;
     }
 
+    public NeuroShip getS1()
+    {
+        return s1;
+    }
+
+    public NeuroShip getS2()
+    {
+        return s2;
+    }
+
     static class PlayerStats {
         int nMissiles;
         int nPoints;
