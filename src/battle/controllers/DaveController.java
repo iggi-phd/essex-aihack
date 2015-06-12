@@ -82,6 +82,7 @@ public class DaveController implements RenderableBattleController {
     {
         if (input ==0)
             return 0.000001;
+        return input;
     }
 
     private Action chaseAndAssault(double maxShootingDistance, Vector2d relativePos, Vector2d selfDir, Vector2d selfVel, Vector2d enemyVel, Vector2d enemyDir)
