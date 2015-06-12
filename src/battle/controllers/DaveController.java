@@ -57,9 +57,11 @@ public class DaveController extends DebugController {
         //double scale = relativePos.mag()/makeNotZero(enemyVel.mag());
         //ePredictedPos = Vector2d.add(enemyPos, Vector2d.multiply(enemyVel,scale));
         //ePredictedPos = Vector2d.add(enemyPos, Vector2d.multiply(enemyVel,relativePos.mag()));
-        relativePos = Vector2d.subtract(ePredictedPos,selfPos);
+        //relativePos = Vector2d.subtract(ePredictedPos,selfPos);
 
-        lastRelativePos = relativePos;
+        lastRelativePos = new Vector2d();
+        Vector2d.clone(lastRelativePos,relativePos);
+        lastRelativePos.rotate(selfDir.theta()+Math.PI/2);
 
 
         Action action;
@@ -161,7 +163,6 @@ public class DaveController extends DebugController {
         g.setColor(Color.BLUE);
         g.drawLine(0, 0, (int)( Math.tan(lastAlignment)*lastThrust*100), (int) (-lastThrust*100));
         g.setColor(Color.RED);
-        lastRelativePos.rotate(-lastAngle);
         g.drawArc((int)lastRelativePos.x,(int)lastRelativePos.y,10,10,0,360);
     }
 }

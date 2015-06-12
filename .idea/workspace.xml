@@ -70,20 +70,29 @@
               <caret line="238" column="38" selection-start-line="238" selection-start-column="23" selection-end-line="238" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#954#955#0" expanded="true" />
-                <element signature="e#980#981#0" expanded="true" />
-                <element signature="e#1292#1293#0" expanded="true" />
-                <element signature="e#1326#1327#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DaveController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Vector2d.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/math/Vector2d.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="21.81457">
+              <caret line="423" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
+              <folding>
+                <element signature="e#5246#5247#0" expanded="true" />
+                <element signature="e#5287#5288#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DaveController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/battle/controllers/DaveController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56363636">
-              <caret line="164" column="18" selection-start-line="164" selection-start-column="18" selection-end-line="164" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="63" column="30" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -188,6 +197,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -351,8 +362,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Favorites" />
     </panes>
   </component>
@@ -687,7 +696,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44907406" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44907406" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21156661" sideWeight="0.12307692" order="0" side_tool="false" content_ui="combo" />
@@ -1026,15 +1035,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/math/Vector2d.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33112583">
-          <caret line="215" column="23" selection-start-line="215" selection-start-column="18" selection-end-line="215" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1050,7 +1050,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4909091">
           <caret line="38" column="26" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1079,20 +1078,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/SimpleBattle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="238" column="38" selection-start-line="238" selection-start-column="23" selection-end-line="238" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#954#955#0" expanded="true" />
-            <element signature="e#980#981#0" expanded="true" />
-            <element signature="e#1292#1293#0" expanded="true" />
-            <element signature="e#1326#1327#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/battle/BattleTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1111,12 +1096,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/controllers/DaveController.java">
+    <entry file="file://$PROJECT_DIR$/src/battle/SimpleBattle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56363636">
-          <caret line="164" column="18" selection-start-line="164" selection-start-column="18" selection-end-line="164" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="238" column="38" selection-start-line="238" selection-start-column="23" selection-end-line="238" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/battle/controllers/DaveController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="30" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/math/Vector2d.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="21.81457">
+          <caret line="423" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
+          <folding>
+            <element signature="e#5246#5247#0" expanded="true" />
+            <element signature="e#5287#5288#0" expanded="true" />
           </folding>
         </state>
       </provider>
