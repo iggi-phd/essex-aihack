@@ -4,10 +4,7 @@ import asteroids.Action;
 import asteroids.GameObject;
 import asteroids.GameState;
 import asteroids.Missile;
-import battle.BattleController;
-import battle.NeuroShip;
-import battle.RenderableBattleController;
-import battle.SimpleBattle;
+import battle.*;
 import math.Vector2d;
 
 import java.awt.*;
@@ -17,27 +14,29 @@ import static asteroids.Constants.*;
 /**
  * Created by davidgundry on 30/05/15.
  */
-public class DaveController implements RenderableBattleController {
+public class DaveController extends DebugController {
 
     Action action;
     int t;
     int lastShot;
     int offset;
 
-    Vector2d lastAngle;
-    Vector2d lastAlignment;
+    double lastAngle;
+    double lastAlignment;
+    double lastThrust = 0;
 
-    double minimumDistance;
+    double minimumDistance = 30;
     double minThrust = 0.2;
+    int shootingTime = 10;
+
 
     public DaveController()
     {
         t = 0;
         lastShot = -100000;
         offset = (int) Math.round(Math.random()*90);
-        minimumDistance = 30;
-        lastAngle = new Vector2d(0,0);
-        lastAlignment = new Vector2d(0,0);
+        lastAngle = 0;
+        lastAlignment = 0;
     }
 
     @Override
@@ -65,6 +64,9 @@ public class DaveController implements RenderableBattleController {
         t++;
         if (action.shoot)
             lastShot = t;
+
+        lastThrust  =action.thrust;
+
         return action;
     }
 
@@ -92,35 +94,26 @@ public class DaveController implements RenderableBattleController {
         Vector2d weightedEnemyDir = Vector2d.add(Vector2d.multiply(enemyDir, 0.7), Vector2d.multiply(enemyVel, 0.3));
 
         double angle = Math.acos(relativePos.scalarProduct(shootingDirection) / makeNotZero(shootingDirection.mag() * relativePos.mag()));
-        double alignment = 1/makeNotZero(Math.acos(weightedEnemyDir.scalarProduct(selfDir) / makeNotZero(selfDir.mag() * weightedEnemyDir.mag())));
+        double alignment = -makeNotZero(Math.acos(weightedEnemyDir.scalarProduct(selfDir) / makeNotZero(selfDir.mag() * weightedEnemyDir.mag())));
 
-        if (angle > Math.PI/2)
-            angle = -(angle-Math.PI/2);
+        if (angle > Math.PI)
+            angle = -(angle-Math.PI);
 
-        System.out.println(angle);
+        lastAngle = angle;
+        lastAlignment = alignment;
 
-        //if (!(angle > 0) && !(angle < 0))
-        //   angle = 0;
-        //if (!(alignment > 0) && !(alignment < 0))
-        //    alignment = 0;
-
-        if ((Math.abs(angle) < 1) && (t - lastShot > 10)) {
+        if ((Math.abs(angle) < Math.PI/32) && (t - lastShot > shootingTime)) {
             if (relativePos.mag() < maxShootingDistance)
                 shoot = true;
         }
 
-        //angle = Math.min(angle, 1);
-        //angle = Math.max(-1, angle);
-
-        double randomness = Math.random()*Math.sin(t + offset);
+        double randomness = Math.random()*Math.sin(t/100 + offset);
         double thrust = 0;
-        // Only take alignment with enemy into account if they're moving
-        if (enemyVel.mag()>5) {
-            thrust = alignment * enemyVel.mag() + randomness;
-            angle -= alignment / 3;
-        }
-        else
-            thrust = enemyVel.mag()+randomness;
+        // Only take alignment with enemy into account if they're moving?
+       // if (enemyVel.mag()>=3.2) {
+       //     angle = angle*randomness+alignment*(1-randomness/2);
+       // }
+        thrust = (relativePos.mag()/20)*enemyVel.mag()+randomness/2;
 
         if (Math.abs(thrust)<minThrust)
             thrust = 0;
@@ -150,8 +143,10 @@ public class DaveController implements RenderableBattleController {
     }
 
     @Override
-    public void render(Graphics2D g, NeuroShip s) {
-        g.drawLine(0,0,(int)lastAngle.x,(int)lastAngle.y);
-        g.drawLine(0,0,(int)lastAlignment.x,(int)lastAlignment.y);
+    public void render(Graphics2D g) {
+        g.setColor(Color.RED);
+        g.drawLine(0, 0, (int)( Math.tan(lastAngle)*lastThrust), (int) -lastThrust);
+        g.setColor(Color.BLUE);
+        g.drawLine(0, 0, (int)( Math.tan(lastAlignment)*lastThrust), (int) -lastThrust);
     }
 }
