@@ -24,6 +24,7 @@ public class DaveController extends DebugController {
     double lastAngle;
     double lastAlignment;
     double lastThrust = 0;
+    Vector2d lastRelativePos = new Vector2d(0,0);
 
     double minimumDistance = 40;
     double minThrust = 0.2;
@@ -53,6 +54,12 @@ public class DaveController extends DebugController {
 
         Vector2d ePredictedPos = Vector2d.add(enemyPos, enemyVel);
         Vector2d relativePos = Vector2d.subtract(ePredictedPos,selfPos);
+        double scale = relativePos.mag()/makeNotZero(enemyVel.mag());
+        ePredictedPos = Vector2d.add(enemyPos, Vector2d.multiply(enemyVel,scale));
+        //ePredictedPos = Vector2d.add(enemyPos, Vector2d.multiply(enemyVel,relativePos.mag()));
+        relativePos = Vector2d.subtract(ePredictedPos,selfPos);
+
+        lastRelativePos = relativePos;
 
 
         Action action;
@@ -106,8 +113,6 @@ public class DaveController extends DebugController {
         lastAngle = angle;
         lastAlignment = alignment;
 
-        System.out.println((alignment/Math.PI)*180);
-
         if ((Math.abs(angle) < Math.PI/16) && (t - lastShot > shootingTime)) {
             if (relativePos.mag() < maxShootingDistance)
                 shoot = true;
@@ -120,8 +125,8 @@ public class DaveController extends DebugController {
             angle = angle*randomness+alignment*(1-randomness);
         }
         thrust = (relativePos.mag()/6)  +  enemyVel.mag()*(1/makeNotZero(-alignment*2))  +  randomness*30;
-        thrust /=100;
-
+        thrust /=50;
+        thrust = 1;
         if (Math.abs(thrust)<minThrust)
             thrust = 0;
 
@@ -130,7 +135,7 @@ public class DaveController extends DebugController {
 
     private double maxShootingDistance(Vector2d selfVel, Vector2d selfDir)
     {
-        return missileTTL*(4+selfVel.mag());
+        return (missileTTL*5);
     }
 
     private NeuroShip getSelf(SimpleBattle s, int playerId)
@@ -155,5 +160,7 @@ public class DaveController extends DebugController {
         g.drawLine(0, 0, (int)( Math.tan(lastAngle)*lastThrust*100), (int) (-lastThrust*100));
         g.setColor(Color.BLUE);
         g.drawLine(0, 0, (int)( Math.tan(lastAlignment)*lastThrust*100), (int) (-lastThrust*100));
+        g.setColor(Color.RED);
+        g.drawArc((int)lastRelativePos.x,(int)lastRelativePos.y,10,10,0,360);
     }
 }

@@ -2,33 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ebda1064-4e7d-40c4-8a89-ad3f47ecbaf1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/mmmcts/tools/ElapsedCpuTimer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ga/Eval2.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/webpigeon/GameEvaluator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/mmmcts/MMMCTS.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/mmmcts/MacroAction.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ga/SimpleRandomHillClimberEngine.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/mmmcts/SingleMCTSPlayer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/mmmcts/SingleTreeNode.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/webpigeon/StaticEvolver.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/webpigeon/StupidGAWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/mmmcts/tools/Utils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/Human/WASDController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/BattleTest.java" afterPath="$PROJECT_DIR$/src/battle/BattleTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/BattleView.java" afterPath="$PROJECT_DIR$/src/battle/BattleView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/asteroids/Constants.java" afterPath="$PROJECT_DIR$/src/asteroids/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/Piers/MCTSNode.java" afterPath="$PROJECT_DIR$/src/battle/controllers/Piers/MCTSNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/MemoBattleTest.java" afterPath="$PROJECT_DIR$/src/battle/MemoBattleTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/Memo/MemoController1.java" afterPath="$PROJECT_DIR$/src/battle/controllers/Memo/MemoController1.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/Memo/MemoControllerRandom.java" afterPath="$PROJECT_DIR$/src/battle/controllers/Memo/MemoControllerRandom.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/Memo/MemoControllerUtils.java" afterPath="$PROJECT_DIR$/src/battle/controllers/Memo/MemoControllerUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/Piers/PiersBattleTest.java" afterPath="$PROJECT_DIR$/src/battle/controllers/Piers/PiersBattleTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/Piers/PiersMCTS.java" afterPath="$PROJECT_DIR$/src/battle/controllers/Piers/PiersMCTS.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/SimpleBattle.java" afterPath="$PROJECT_DIR$/src/battle/SimpleBattle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ga/SimpleRandomHillClimber.java" afterPath="$PROJECT_DIR$/src/ga/SimpleRandomHillClimber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/math/Vector2d.java" afterPath="$PROJECT_DIR$/src/math/Vector2d.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/DaveController.java" afterPath="$PROJECT_DIR$/src/battle/controllers/DaveController.java" />
     </list>
     <ignored path="SimpleAsteroids.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -93,7 +68,7 @@
         <entry file="file://$PROJECT_DIR$/src/battle/SimpleBattle.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="240" column="0" selection-start-line="240" selection-start-column="0" selection-end-line="240" selection-end-column="0" />
+              <caret line="238" column="38" selection-start-line="238" selection-start-column="23" selection-end-line="238" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#954#955#0" expanded="true" />
@@ -108,13 +83,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DaveController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DaveController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/battle/controllers/DaveController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="95" column="8" selection-start-line="95" selection-start-column="8" selection-end-line="95" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.5090909">
+              <caret line="56" column="8" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#4233#4234#0" expanded="true" />
+                <element signature="e#4270#4271#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -130,54 +107,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Missile.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/asteroids/Missile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="6" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BattleTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BattleTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/battle/BattleTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.92727274">
-              <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="19" column="62" selection-start-line="19" selection-start-column="62" selection-end-line="19" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RenderableBattleController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/battle/RenderableBattleController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BattleController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/battle/BattleController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NeuroShip.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/battle/NeuroShip.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="125" column="74" selection-start-line="125" selection-start-column="74" selection-end-line="125" selection-end-column="74" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -201,8 +138,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/battle/SimpleBattle.java" />
-        <option value="$PROJECT_DIR$/src/battle/controllers/DaveController.java" />
         <option value="$PROJECT_DIR$/src/battle/BattleTest.java" />
+        <option value="$PROJECT_DIR$/src/battle/controllers/DaveController.java" />
       </list>
     </option>
   </component>
@@ -347,6 +284,76 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SimpleAsteroids" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="essex-aihack" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Memo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SimpleAsteroids" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="essex-aihack" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Human" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SimpleAsteroids" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="essex-aihack" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="asteroids" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -738,13 +745,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/trackgen/TrackTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/asteroids/Ship.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1021,14 +1021,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/NeuroShip.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="125" column="74" selection-start-line="125" selection-start-column="74" selection-end-line="125" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/asteroids/Game.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1044,22 +1036,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/RenderableBattleController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/asteroids/Missile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="6" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/math/Vector2d.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33112583">
@@ -1068,18 +1044,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/BattleView.java">
+    <entry file="file://$PROJECT_DIR$/src/battle/controllers/FireForwardController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12727273">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/battle/controllers/Human/WASDController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4909091">
+          <caret line="38" column="26" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/battle/RenderableBattleController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38181818">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/battle/NeuroShip.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="0" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="21" />
+          <caret line="125" column="74" selection-start-line="125" selection-start-column="74" selection-end-line="125" selection-end-column="74" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/asteroids/Missile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43636364">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/battle/SimpleBattle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="240" column="0" selection-start-line="240" selection-start-column="0" selection-end-line="240" selection-end-column="0" />
+          <caret line="238" column="38" selection-start-line="238" selection-start-column="23" selection-end-line="238" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#954#955#0" expanded="true" />
@@ -1093,30 +1103,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/controllers/FireForwardController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12727273">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/controllers/DaveController.java">
+    <entry file="file://$PROJECT_DIR$/src/battle/BattleTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="95" column="8" selection-start-line="95" selection-start-column="8" selection-end-line="95" selection-end-column="8" />
+          <caret line="19" column="62" selection-start-line="19" selection-start-column="62" selection-end-line="19" selection-end-column="62" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/BattleTest.java">
+    <entry file="file://$PROJECT_DIR$/src/battle/BattleView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.92727274">
-          <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="0" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/battle/controllers/DaveController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5090909">
+          <caret line="56" column="8" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4233#4234#0" expanded="true" />
+            <element signature="e#4270#4271#0" expanded="true" />
           </folding>
         </state>
       </provider>
