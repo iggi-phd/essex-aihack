@@ -25,7 +25,7 @@ public class DaveController extends DebugController {
     double lastAlignment;
     double lastThrust = 0;
 
-    double minimumDistance = 30;
+    double minimumDistance = 40;
     double minThrust = 0.2;
     int shootingTime = 10;
 
@@ -90,19 +90,25 @@ public class DaveController extends DebugController {
     private Action chaseAndAssault(double maxShootingDistance, Vector2d relativePos, Vector2d selfDir, Vector2d selfVel, Vector2d enemyVel, Vector2d enemyDir)
     {
         boolean shoot = false;
-        Vector2d shootingDirection = Vector2d.add(Vector2d.multiply(selfDir, 0.6), Vector2d.multiply(selfVel, 0.4));
-        Vector2d weightedEnemyDir = Vector2d.add(Vector2d.multiply(enemyDir, 0.7), Vector2d.multiply(enemyVel, 0.3));
-
-        double angle = Math.acos(relativePos.scalarProduct(shootingDirection) / makeNotZero(shootingDirection.mag() * relativePos.mag()));
-        double alignment = -makeNotZero(Math.acos(weightedEnemyDir.scalarProduct(selfDir) / makeNotZero(selfDir.mag() * weightedEnemyDir.mag())));
+        Vector2d shootingDirection = selfDir;
+        //Vector2d shootingDirection = Vector2d.add(Vector2d.multiply(selfDir, 0.9), Vector2d.multiply(selfVel, 0.1));
+        Vector2d weightedEnemyDir = enemyVel;//Vector2d.add(Vector2d.multiply(enemyDir, 0.3), Vector2d.multiply(enemyVel, 0.7));
+        
+        double angle = relativePos.theta()-shootingDirection.theta();
+        double alignment = weightedEnemyDir.theta()-selfDir.theta();
 
         if (angle > Math.PI)
             angle = -(angle-Math.PI);
 
+        if (alignment > Math.PI)
+            alignment = -(alignment-Math.PI);
+
         lastAngle = angle;
         lastAlignment = alignment;
 
-        if ((Math.abs(angle) < Math.PI/32) && (t - lastShot > shootingTime)) {
+        System.out.println((alignment/Math.PI)*180);
+
+        if ((Math.abs(angle) < Math.PI/16) && (t - lastShot > shootingTime)) {
             if (relativePos.mag() < maxShootingDistance)
                 shoot = true;
         }
@@ -110,10 +116,11 @@ public class DaveController extends DebugController {
         double randomness = Math.random()*Math.sin(t/100 + offset);
         double thrust = 0;
         // Only take alignment with enemy into account if they're moving?
-       // if (enemyVel.mag()>=3.2) {
-       //     angle = angle*randomness+alignment*(1-randomness/2);
-       // }
-        thrust = (relativePos.mag()/20)*enemyVel.mag()+randomness/2;
+        if ((enemyVel.mag()>=0.2) && (relativePos.mag() < 100) && (relativePos.mag() > 40)) {
+            angle = angle*randomness+alignment*(1-randomness);
+        }
+        thrust = (relativePos.mag()/6)  +  enemyVel.mag()*(1/makeNotZero(-alignment*2))  +  randomness*30;
+        thrust /=100;
 
         if (Math.abs(thrust)<minThrust)
             thrust = 0;
@@ -123,7 +130,7 @@ public class DaveController extends DebugController {
 
     private double maxShootingDistance(Vector2d selfVel, Vector2d selfDir)
     {
-        return missileTTL*2*Math.max(selfVel.mag(), 1);
+        return missileTTL*(4+selfVel.mag());
     }
 
     private NeuroShip getSelf(SimpleBattle s, int playerId)
@@ -145,8 +152,8 @@ public class DaveController extends DebugController {
     @Override
     public void render(Graphics2D g) {
         g.setColor(Color.RED);
-        g.drawLine(0, 0, (int)( Math.tan(lastAngle)*lastThrust), (int) -lastThrust);
+        g.drawLine(0, 0, (int)( Math.tan(lastAngle)*lastThrust*100), (int) (-lastThrust*100));
         g.setColor(Color.BLUE);
-        g.drawLine(0, 0, (int)( Math.tan(lastAlignment)*lastThrust), (int) -lastThrust);
+        g.drawLine(0, 0, (int)( Math.tan(lastAlignment)*lastThrust*100), (int) (-lastThrust*100));
     }
 }
