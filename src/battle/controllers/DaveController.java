@@ -6,20 +6,26 @@ import asteroids.GameState;
 import asteroids.Missile;
 import battle.BattleController;
 import battle.NeuroShip;
+import battle.RenderableBattleController;
 import battle.SimpleBattle;
 import math.Vector2d;
+
+import java.awt.*;
 
 import static asteroids.Constants.*;
 
 /**
  * Created by davidgundry on 30/05/15.
  */
-public class DaveController implements BattleController {
+public class DaveController implements RenderableBattleController {
 
     Action action;
     int t;
     int lastShot;
     int offset;
+
+    Vector2d lastAngle;
+    Vector2d lastAlignment;
 
     double minimumDistance;
     double minThrust = 0.2;
@@ -30,6 +36,8 @@ public class DaveController implements BattleController {
         lastShot = -100000;
         offset = (int) Math.round(Math.random()*90);
         minimumDistance = 30;
+        lastAngle = new Vector2d(0,0);
+        lastAlignment = new Vector2d(0,0);
     }
 
     @Override
@@ -44,8 +52,8 @@ public class DaveController implements BattleController {
         Vector2d selfVel = new Vector2d(self.v);
         Vector2d selfDir = new Vector2d(self.d);
 
-        Vector2d ePredictedPos = enemyPos.add(enemyVel);
-        Vector2d relativePos = ePredictedPos.subtract(selfPos);
+        Vector2d ePredictedPos = Vector2d.add(enemyPos, enemyVel);
+        Vector2d relativePos = Vector2d.subtract(ePredictedPos,selfPos);
 
 
         Action action;
@@ -70,24 +78,20 @@ public class DaveController implements BattleController {
         return new Action(thrust,angle,shoot);
     }
 
+    private double makeNotZero(double input)
+    {
+        if (input ==0)
+            return 0.000001;
+    }
+
     private Action chaseAndAssault(double maxShootingDistance, Vector2d relativePos, Vector2d selfDir, Vector2d selfVel, Vector2d enemyVel, Vector2d enemyDir)
     {
         boolean shoot = false;
-        Vector2d shootingDirection = selfDir.mul(0.6).add(selfVel.mul(0.4));//.add(selfDir.mul(relativePos.mag()*missileMinVelocity*2));
-        Vector2d weightedEnemyDir = enemyDir.mul(0.7).add(enemyVel.mul(0.3));
+        Vector2d shootingDirection = Vector2d.add(Vector2d.multiply(selfDir, 0.6), Vector2d.multiply(selfVel, 0.4));
+        Vector2d weightedEnemyDir = Vector2d.add(Vector2d.multiply(enemyDir, 0.7), Vector2d.multiply(enemyVel, 0.3));
 
-        double den = shootingDirection.mag() * relativePos.mag();
-        if (den==0)
-            den=0.0001;
-        double angle = Math.acos(relativePos.scalarProduct(shootingDirection) / den);
-
-        den = selfDir.mag() * weightedEnemyDir.mag();
-        if (den==0)
-            den=0.0001;
-        double alignment = Math.acos(weightedEnemyDir.scalarProduct(selfDir) / den);
-        if (alignment == 0)
-            alignment = 0.0001;
-        alignment = 1/alignment;
+        double angle = Math.acos(relativePos.scalarProduct(shootingDirection) / makeNotZero(shootingDirection.mag() * relativePos.mag()));
+        double alignment = 1/makeNotZero(Math.acos(weightedEnemyDir.scalarProduct(selfDir) / makeNotZero(selfDir.mag() * weightedEnemyDir.mag())));
 
         if (angle > Math.PI/2)
             angle = -(angle-Math.PI/2);
@@ -142,5 +146,11 @@ public class DaveController implements BattleController {
             return s.getS1();
         else
             return s.getS2();
+    }
+
+    @Override
+    public void render(Graphics2D g, NeuroShip s) {
+        g.drawLine(0,0,(int)lastAngle.x,(int)lastAngle.y);
+        g.drawLine(0,0,(int)lastAlignment.x,(int)lastAlignment.y);
     }
 }
