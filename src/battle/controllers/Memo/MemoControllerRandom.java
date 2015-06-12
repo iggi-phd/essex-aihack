@@ -1,14 +1,9 @@
 package battle.controllers.Memo;
 
 import asteroids.Action;
-import asteroids.Controller;
-import asteroids.GameState;
-import asteroids.Ship;
 import battle.BattleController;
 import battle.NeuroShip;
-import battle.SimpleBattle;
-import math.Vector2d;
-import battle.controllers.Memo.MemoControllerUtils;
+import battle.JoeCSimpleController;
 
 /**
  * Created by Memo Akten on 11/06/15.
@@ -68,7 +63,7 @@ public class MemoControllerRandom implements BattleController {
     }
 
     @Override
-    public Action getAction(SimpleBattle gs, int playerId) {
+    public Action getAction(JoeCSimpleController gs, int playerId) {
         NeuroShip thisShip = gs.getShip(playerId);
         NeuroShip otherShip = gs.getShip(1 - playerId);
 

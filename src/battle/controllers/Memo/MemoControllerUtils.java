@@ -2,12 +2,6 @@ package battle.controllers.Memo;
 
 import math.Vector2d;
 import asteroids.Action;
-import battle.BattleMissile;
-import battle.NeuroShip;
-import battle.SimpleBattle;
-import asteroids.Missile;
-import java.util.ArrayList;
-import asteroids.GameObject;
 
 /**
  * Created by Memo Akten on 11/06/2015.

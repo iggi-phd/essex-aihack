@@ -2,7 +2,7 @@ package battle.controllers.Piers;
 
 import asteroids.Action;
 import battle.BattleController;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -42,7 +42,7 @@ public class PiersController implements BattleController {
 
         // Learn the controllers
 
-        SimpleBattle battle = new SimpleBattle();
+        JoeCSimpleController battle = new JoeCSimpleController();
 
         ArrayList<PiersController> candidates = new ArrayList<>(POPULATION_COUNT);
         for (int i = 0; i < POPULATION_COUNT; i++) candidates.add(new PiersController());
@@ -56,7 +56,7 @@ public class PiersController implements BattleController {
     }
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
 
         double[] avoidanceTable = new double[5];
         double[] shootingTable = new double[3];

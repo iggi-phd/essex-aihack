@@ -1,9 +1,7 @@
 package battle;
 
-import battle.controllers.Memo.MemoControllerRandom;
 import battle.controllers.Memo.MemoController1;
 import battle.controllers.mmmcts.MMMCTS;
-import battle.controllers.Human.WASDController;
 
 /**
  * Created by simon lucas on 10/06/15.
@@ -13,7 +11,7 @@ public class MemoBattleTest {
 
     public static void main(String[] args) {
 
-        SimpleBattle battle = new SimpleBattle();
+        JoeCSimpleController battle = new JoeCSimpleController();
 
         BattleController player1 = new MemoController1();
         BattleController player2 = new MMMCTS();

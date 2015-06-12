@@ -1,7 +1,7 @@
 package battle.controllers.Piers;
 
 import asteroids.Action;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 
 import java.util.Random;
 
@@ -73,7 +73,7 @@ public class MCTSNode {
         }
     }
 
-    public MCTSNode select(SimpleBattle state, int maxDepth) {
+    public MCTSNode select(JoeCSimpleController state, int maxDepth) {
         MCTSNode current = this;
         while (current.currentDepth <= maxDepth) {
             if (current.fullyExpanded()) {
@@ -148,7 +148,7 @@ public class MCTSNode {
         current.numberOfVisits++;
     }
 
-    public double[] rollout(SimpleBattle state, int maxDepth) {
+    public double[] rollout(JoeCSimpleController state, int maxDepth) {
         int currentRolloutDepth = this.currentDepth;
         while (maxDepth > currentRolloutDepth && !state.isGameOver()) {
             Action first = allActions[random.nextInt(allActions.length)];

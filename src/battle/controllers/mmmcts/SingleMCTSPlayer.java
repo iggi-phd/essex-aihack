@@ -1,6 +1,6 @@
 package battle.controllers.mmmcts;
 
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 import battle.controllers.mmmcts.tools.ElapsedCpuTimer;
 
 import java.util.Random;
@@ -39,7 +39,7 @@ public class SingleMCTSPlayer
      * Inits the tree with the new observation state in the root.
      * @param a_gameState current state of the game.
      */
-    public void init(SimpleBattle a_gameState, int playerId)
+    public void init(JoeCSimpleController a_gameState, int playerId)
     {
         //Set the game observation to a newly root node.
         m_root = new SingleTreeNode(m_rnd);

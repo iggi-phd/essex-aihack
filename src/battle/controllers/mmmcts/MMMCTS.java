@@ -2,7 +2,7 @@ package battle.controllers.mmmcts;
 
 import asteroids.Action;
 import battle.BattleController;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 import battle.controllers.mmmcts.tools.ElapsedCpuTimer;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class MMMCTS implements BattleController {
         mctsPlayer = new SingleMCTSPlayer(new Random());
     }
 
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
         //ArrayList<Observation> obs[] = stateObs.getFromAvatarSpritesPositions();
         //ArrayList<Observation> grid[][] = stateObs.getObservationGrid();
 

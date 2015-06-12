@@ -4,7 +4,7 @@ import asteroids.Action;
 import asteroids.GameState;
 import battle.BattleController;
 import battle.NeuroShip;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 
 /**
  * Created by simonlucas on 30/05/15.
@@ -33,7 +33,7 @@ public class TestBehaviour implements BattleController {
     }
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
 
         return new Action(1, 0, true);
     }

@@ -1,12 +1,10 @@
 package battle.controllers;
 
 import asteroids.Action;
-import asteroids.Controller;
 import asteroids.GameState;
-import asteroids.Ship;
 import battle.BattleController;
 import battle.NeuroShip;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 
 /**
  * Created by simonlucas on 30/05/15.
@@ -35,7 +33,7 @@ public class RotateAndShoot implements BattleController {
     }
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
         return new Action(0, 1, true);
     }
 }

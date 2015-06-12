@@ -2,9 +2,7 @@ package battle.controllers.Piers;
 
 import asteroids.Action;
 import battle.BattleController;
-import battle.SimpleBattle;
-
-import java.util.Arrays;
+import battle.JoeCSimpleController;
 
 /**
  * Created by pwillic on 11/06/2015.
@@ -16,14 +14,14 @@ public class PiersMCTS implements BattleController {
     }
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
         MCTSNode root = new MCTSNode(2.0, playerId);
         GameTimer timer = new GameTimer();
         timer.setTimeBudgetMilliseconds(40);
         int i = 0;
         while (timer.remainingTimePercent() > 10) {
 //            System.out.println("Running");
-            SimpleBattle copy = gameStateCopy.clone();
+            JoeCSimpleController copy = gameStateCopy.clone();
             MCTSNode travel = root.select(copy, 3);
             double[] results = travel.rollout(copy, 100);
 //            System.out.println(Arrays.toString(results));

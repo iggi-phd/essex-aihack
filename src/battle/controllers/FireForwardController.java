@@ -4,14 +4,13 @@ import asteroids.Action;
 import battle.*;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 /**
  * Created by davidgundry on 11/06/15.
  */
 public class FireForwardController extends DebugController {
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
         return new Action(1,0,true);
     }
 

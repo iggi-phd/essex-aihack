@@ -20,7 +20,7 @@ import static asteroids.Constants.*;
  * Might start off with just two ships, each with their own types of missile.
  */
 
-public class SimpleBattle {
+public class JoeCSimpleController {
 
     // play a time limited game with a strict missile budget for
     // each player
@@ -42,11 +42,11 @@ public class SimpleBattle {
     JEasyFrame frame;
     int currentTick;
 
-    public SimpleBattle() {
+    public JoeCSimpleController() {
         this(true);
     }
 
-    public SimpleBattle(boolean visible) {
+    public JoeCSimpleController(boolean visible) {
         this.objects = new ArrayList<>();
         this.stats = new ArrayList<>();
         this.visible = visible;
@@ -162,8 +162,8 @@ public class SimpleBattle {
     }
 
 
-    public SimpleBattle clone() {
-        SimpleBattle state = new SimpleBattle(false);
+    public JoeCSimpleController clone() {
+        JoeCSimpleController state = new JoeCSimpleController(false);
         state.objects = copyObjects();
         state.stats = copyStats();
         state.currentTick = currentTick;

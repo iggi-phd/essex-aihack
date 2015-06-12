@@ -2,7 +2,7 @@ package battle.controllers.webpigeon;
 
 import asteroids.Action;
 import battle.BattleController;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 
 /**
  * Created by jwalto on 12/06/2015.
@@ -20,7 +20,7 @@ public class StupidGAWrapper implements BattleController {
     }
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
         return getMove();
     }
 }

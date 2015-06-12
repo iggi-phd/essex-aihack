@@ -1,16 +1,16 @@
 package battle.controllers.webpigeon;
 
 import asteroids.Action;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 import ga.Eval2;
 
 /**
  * Created by jwalto on 12/06/2015.
  */
 public class GameEvaluator implements Eval2 {
-    private SimpleBattle battle;
+    private JoeCSimpleController battle;
 
-    public GameEvaluator(SimpleBattle battle, boolean reset) {
+    public GameEvaluator(JoeCSimpleController battle, boolean reset) {
         this.battle = battle.clone();
 
         if (reset) {
@@ -20,7 +20,7 @@ public class GameEvaluator implements Eval2 {
 
     @Override
     public double pointsDiff(double[] a, double[] b) {
-        SimpleBattle currBattle = battle.clone();
+        JoeCSimpleController currBattle = battle.clone();
         currBattle.reset();
 
         StupidGAWrapper controller1 = new StupidGAWrapper(a);

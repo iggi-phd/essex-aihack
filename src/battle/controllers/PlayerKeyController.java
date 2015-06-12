@@ -1,11 +1,10 @@
 package battle.controllers;
 
 import asteroids.Action;
-import asteroids.GameState;
 import asteroids.KeyController;
 import battle.BattleController;
 import battle.NeuroShip;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 
 /**
  * Created by simonlucas on 30/05/15.
@@ -39,7 +38,7 @@ public class PlayerKeyController implements BattleController {
     }*/
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
         return keyHandler.getAction();
         //return new Action(1, 0, true);
     }

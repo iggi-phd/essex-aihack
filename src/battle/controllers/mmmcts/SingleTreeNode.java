@@ -2,7 +2,7 @@ package battle.controllers.mmmcts;
 
 import asteroids.Action;
 import battle.NeuroShip;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 import battle.controllers.mmmcts.tools.ElapsedCpuTimer;
 import battle.controllers.mmmcts.tools.Utils;
 
@@ -15,7 +15,7 @@ public class SingleTreeNode
     private static final double HUGE_POSITIVE =  10000000.0;
     public static double epsilon = 1e-6;
     public static double egreedyEpsilon = 0.05;
-    public SimpleBattle state;
+    public JoeCSimpleController state;
     public SingleTreeNode parent;
     public SingleTreeNode[] children;
     //public int playerId;
@@ -28,9 +28,9 @@ public class SingleTreeNode
         this(null, null, rnd);
     }
 
-    public static SimpleBattle OGState;
+    public static JoeCSimpleController OGState;
 
-    public SingleTreeNode(SimpleBattle state, SingleTreeNode parent, Random rnd) {
+    public SingleTreeNode(JoeCSimpleController state, SingleTreeNode parent, Random rnd) {
         this.state = state;
 
         OGState = state;
@@ -105,7 +105,7 @@ public class SingleTreeNode
             }
         }
 
-        SimpleBattle nextState = state.clone();
+        JoeCSimpleController nextState = state.clone();
         if(playerId == 0) {
             nextState.update(MMMCTS.actions.get(bestAction).buildAction(), DEFAULTACTION);
         } else {
@@ -190,7 +190,7 @@ public class SingleTreeNode
 
     public double rollOut(int playerId)
     {
-        SimpleBattle rollerState = state.clone();
+        JoeCSimpleController rollerState = state.clone();
         int thisDepth = this.m_depth;
 
         while (!finishRollout(rollerState,thisDepth)) {
@@ -215,7 +215,7 @@ public class SingleTreeNode
         return delta;
     }
 
-    public double value(SimpleBattle a_gameState, int playerId) {
+    public double value(JoeCSimpleController a_gameState, int playerId) {
 
         //double score = OGState.getPoints(playerId);
         double score = 5000;
@@ -258,7 +258,7 @@ public class SingleTreeNode
         return score;
     }
 
-    public boolean finishRollout(SimpleBattle rollerState, int depth)
+    public boolean finishRollout(JoeCSimpleController rollerState, int depth)
     {
         if(depth >= MMMCTS.ROLLOUT_DEPTH)      //rollout end condition.
             return true;

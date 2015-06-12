@@ -2,7 +2,7 @@ package battle.controllers.Human;
 
 import asteroids.Action;
 import battle.BattleController;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,7 +20,7 @@ public class WASDController implements BattleController, KeyListener {
     Action currentAction = NOOP;
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
         if (currentAction == null) {
             return NOOP;
         }

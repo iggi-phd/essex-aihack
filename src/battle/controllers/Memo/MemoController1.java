@@ -1,16 +1,12 @@
 package battle.controllers.Memo;
 
 import asteroids.*;
-import battle.BattleController;
 import battle.NeuroShip;
 import battle.RenderableBattleController;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 import math.Vector2d;
-import battle.controllers.Memo.MemoControllerUtils;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 
 /**
  * Created by Memo Akten on 11/06/15.
@@ -56,7 +52,7 @@ public class MemoController1 implements RenderableBattleController {
     }
 
     @Override
-    public Action getAction(SimpleBattle gs, int playerId) {
+    public Action getAction(JoeCSimpleController gs, int playerId) {
         if(TICK_STEP < 1) TICK_STEP = 1;
         if(TICK_STEP > 1) {
             if(gs.getTicks() % TICK_STEP != 0) return action;

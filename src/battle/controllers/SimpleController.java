@@ -3,14 +3,14 @@ package battle.controllers;
 import asteroids.Action;
 import battle.BattleController;
 import battle.NeuroShip;
-import battle.SimpleBattle;
+import battle.JoeCSimpleController;
 
 import math.Vector2d;
 
 import static asteroids.Constants.t;
 
 /**
- * Created by davidgundry on 11/06/15.
+ * Created by Joe Cutting on 12/06/15.
  */
 public class SimpleController implements BattleController {
 
@@ -18,7 +18,7 @@ public class SimpleController implements BattleController {
     static double steerStep = 10 * Math.PI / 180;
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(JoeCSimpleController gameStateCopy, int playerId) {
         NeuroShip me;
         NeuroShip other;
         double turnDirection=0;
@@ -45,7 +45,9 @@ public class SimpleController implements BattleController {
             double minDiff = 1000;
             for (turn = -1.0; turn < 2.0; turn++) {
                 for (thrust = 0; thrust < 2; thrust++) {
-                    difference = getAimDifference(getNextPos(me.s, me.d, turn, thrust), getNextRotate(me.d, turn).mul(-1), other.s);
+                    Vector2d nextRotate = getNextRotate(me.d, turn);
+                    nextRotate.multiply(-1);
+                    difference = getAimDifference(getNextPos(me.s, me.d, turn, thrust), nextRotate, other.s);
                     if (difference < minDiff) {
                         minDiff = difference;
                         turnDirection = turn;
@@ -78,19 +80,19 @@ public class SimpleController implements BattleController {
 
     }
     double getAimDifference(Vector2d firerPos,Vector2d firerDir,Vector2d targetPos) {
-        Vector2d dV = targetPos.copy();
+        Vector2d dV = new Vector2d(targetPos,true);
         dV.subtract(firerPos);
         return Math.atan2(firerDir.x * dV.y - firerDir.y * dV.x, firerDir.x * dV.x + firerDir.y * dV.y);
     }
     Vector2d getNextPos(Vector2d pos,Vector2d dir, double steer,double thrust) {
-        Vector2d d = dir.copy();
+        Vector2d d = new Vector2d(dir, true);
         d.rotate(steer * steerStep);
-        Vector2d p = pos.copy();
+        Vector2d p = new Vector2d(pos,true);
         p.add(d, thrust * t * 0.3 / 2);
         return p;
     }
     Vector2d getNextRotate(Vector2d dir,double steer) {
-        Vector2d d = dir.copy();
+        Vector2d d = new Vector2d(dir, true);
         d.rotate(steer * steerStep);
         return d;
     }

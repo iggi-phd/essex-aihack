@@ -1,14 +1,11 @@
 package battle;
 
 import asteroids.GameObject;
-import asteroids.GameState;
 import asteroids.Ship;
-import math.Vector2d;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 
 import static asteroids.Constants.*;
 import static java.awt.Color.black;
@@ -19,7 +16,7 @@ public class BattleView extends JComponent {
     int scale;
     // static int carSize = 5;
     static Color bg = black;
-    SimpleBattle game;
+    JoeCSimpleController game;
     // Font font;
 
     Ship ship;
@@ -27,7 +24,7 @@ public class BattleView extends JComponent {
     static double viewScale = 1.0;
 
 
-    public BattleView(SimpleBattle game) {
+    public BattleView(JoeCSimpleController game) {
         this.game = game;
         scale = size.width - 2 * offset;
 
@@ -69,8 +66,8 @@ public class BattleView extends JComponent {
         // FontMetrics fm = font.
 
         //String str = game.stats.get(0) + " " + game.stats.get(1) + " " + game.currentTick;
-        SimpleBattle.PlayerStats p1Stats = game.stats.get(0);
-        SimpleBattle.PlayerStats p2Stats = game.stats.get(1);
+        JoeCSimpleController.PlayerStats p1Stats = game.stats.get(0);
+        JoeCSimpleController.PlayerStats p2Stats = game.stats.get(1);
         String strScores    = "Score:    " + p1Stats.getPoints() + " | " + p2Stats.getPoints();
         String strMissiles  = "Missiles: " + p1Stats.getMissilesFired() + " | " + p2Stats.getMissilesFired();
         String strTicks     = "Ticks:    " + game.currentTick;
