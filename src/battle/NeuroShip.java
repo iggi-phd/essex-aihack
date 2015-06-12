@@ -25,9 +25,10 @@ public class NeuroShip extends GameObject {
 
     // define how quickly the ship will rotate
     static double steerStep = 10 * Math.PI / 180;
+    static double maxSpeed = 3;
 
     // this is the friction that makes the ship slow down over time
-    static double loss = 0.995;
+    static double loss = 0.99;
 
     double releaseVelocity = 0;
     double minVelocity = 2;
@@ -40,14 +41,18 @@ public class NeuroShip extends GameObject {
     // position and velocity
     public Vector2d d;
 
+    // played id (used for drawing)
+    int playerID;
 
-    public NeuroShip(Vector2d s, Vector2d v, Vector2d d) {
-        super(new Vector2d(s), new Vector2d(v));
-        this.d = new Vector2d(d);
+
+    public NeuroShip(Vector2d s, Vector2d v, Vector2d d, int playerID) {
+        super(new Vector2d(s, true), new Vector2d(v, true));
+        this.d = new Vector2d(d, true);
+        this.playerID = playerID;
     }
 
     public NeuroShip copy() {
-        NeuroShip ship = new NeuroShip(s, v, d);
+        NeuroShip ship = new NeuroShip(s, v, d, playerID);
         ship.releaseVelocity = releaseVelocity;
         return ship;
     }
@@ -104,7 +109,12 @@ public class NeuroShip extends GameObject {
         v.add(d, thrustSpeed * t * 0.3 / 2);
         v.y += gravity;
         // v.x = 0.5;
-        v.mul(loss);
+        v.multiply(loss);
+
+        // This is fairly basic, but it'll do for now...
+        v.x = clamp(v.x, -maxSpeed, maxSpeed);
+        v.y = clamp(v.y, -maxSpeed, maxSpeed);
+
         s.add(v);
 
         return this;
@@ -114,7 +124,7 @@ public class NeuroShip extends GameObject {
         // System.out.println("Trying a missile launch");
         if (releaseVelocity > maxRelease) {
             releaseVelocity = Math.max(releaseVelocity, missileMinVelocity * 2);
-            Missile m = new Missile(s, new Vector2d(0, 0));
+            Missile m = new Missile(s, new Vector2d(0, 0, true));
             releaseVelocity = Math.min(releaseVelocity, maxRelease);
             m.v.add(d, releaseVelocity);
             // make it clear the ship
@@ -137,6 +147,7 @@ public class NeuroShip extends GameObject {
     }
 
     public void draw(Graphics2D g) {
+        color = playerID == 0 ? Color.green : Color.blue;
         AffineTransform at = g.getTransform();
         g.translate(s.x, s.y);
         double rot = Math.atan2(d.y, d.x) + Math.PI / 2;

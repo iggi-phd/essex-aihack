@@ -42,7 +42,6 @@ public class BattleView extends JComponent {
         AffineTransform at = g.getTransform();
         g.translate((1 - viewScale) * width / 2, (1-viewScale)*height / 2);
 
-
         // this was an experiment to turn it into a side-scroller
         // but it produces a weird moving screen effect
         // needs more logic in the drawing process
@@ -69,8 +68,15 @@ public class BattleView extends JComponent {
         //         + " : " + game.list.isSafe(game.ship) + " : " + game.nLives;
         // FontMetrics fm = font.
 
-        String str = game.stats.get(0) + " " + game.stats.get(1) + " " + game.currentTick;
-        g.drawString(str, 10, 20);
+        //String str = game.stats.get(0) + " " + game.stats.get(1) + " " + game.currentTick;
+        SimpleBattle.PlayerStats p1Stats = game.stats.get(0);
+        SimpleBattle.PlayerStats p2Stats = game.stats.get(1);
+        String strScores    = "Score:    " + p1Stats.getPoints() + " | " + p2Stats.getPoints();
+        String strMissiles  = "Missiles: " + p1Stats.getMissilesFired() + " | " + p2Stats.getMissilesFired();
+        String strTicks     = "Ticks:    " + game.currentTick;
+        g.drawString(strScores, 10, 20);
+        g.drawString(strMissiles, 10, 50);
+        g.drawString(strTicks, 10, 80);
     }
 
 
