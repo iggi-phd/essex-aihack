@@ -2,10 +2,7 @@ package battle;
 
 import battle.controllers.*;
 import battle.controllers.FireForwardController;
-import battle.controllers.Human.WASDController;
-import battle.controllers.Memo.MemoController1;
-import battle.controllers.Piers.PiersMCTS;
-import battle.controllers.webpigeon.StupidGAWrapper;
+
 /**
  * Created by simon lucas on 10/06/15.
  */

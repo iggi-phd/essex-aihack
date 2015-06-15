@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ebda1064-4e7d-40c4-8a89-ad3f47ecbaf1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/DaveController.java" afterPath="$PROJECT_DIR$/src/battle/controllers/DaveController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/DaniBattleTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/Dani/DaniClimber.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/Dani/DaniController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/Dani/DaniControllerEvo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/battle/controllers/Naz/Naz_AI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/BattleTest.java" afterPath="$PROJECT_DIR$/src/battle/BattleTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/Piers/MCTSNode.java" afterPath="$PROJECT_DIR$/src/battle/controllers/Piers/MCTSNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/Memo/MemoController1.java" afterPath="$PROJECT_DIR$/src/battle/controllers/Memo/MemoController1.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/Piers/PiersMCTS.java" afterPath="$PROJECT_DIR$/src/battle/controllers/Piers/PiersMCTS.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ga/SimpleRandomHillClimber.java" afterPath="$PROJECT_DIR$/src/ga/SimpleRandomHillClimber.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/battle/controllers/mmmcts/SingleTreeNode.java" afterPath="$PROJECT_DIR$/src/battle/controllers/mmmcts/SingleTreeNode.java" />
     </list>
     <ignored path="SimpleAsteroids.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/src/battle/SimpleBattle.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="238" column="38" selection-start-line="238" selection-start-column="23" selection-end-line="238" selection-end-column="38" />
+              <caret line="249" column="36" selection-start-line="238" selection-start-column="23" selection-end-line="238" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -75,27 +85,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Vector2d.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Vector2d.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/math/Vector2d.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="21.81457">
-              <caret line="423" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
-              <folding>
-                <element signature="e#5246#5247#0" expanded="true" />
-                <element signature="e#5287#5288#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DaveController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/battle/controllers/DaveController.java">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="63" column="30" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="30" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <caret line="423" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -110,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BattleTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BattleTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/battle/BattleTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="62" selection-start-line="19" selection-start-column="62" selection-end-line="19" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.3768116">
+              <caret line="13" column="49" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -141,8 +136,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/battle/SimpleBattle.java" />
-        <option value="$PROJECT_DIR$/src/battle/BattleTest.java" />
         <option value="$PROJECT_DIR$/src/battle/controllers/DaveController.java" />
+        <option value="$PROJECT_DIR$/src/battle/BattleTest.java" />
       </list>
     </option>
   </component>
@@ -197,8 +192,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -361,7 +354,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="Favorites" />
     </panes>
   </component>
@@ -690,13 +685,11 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18981482" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44907406" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21156661" sideWeight="0.12307692" order="0" side_tool="false" content_ui="combo" />
@@ -704,7 +697,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39814815" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -713,8 +705,11 @@
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39814815" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18981482" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44907406" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7418655" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -998,7 +993,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2361516">
           <caret line="13" column="27" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1042,7 +1036,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12727273">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1072,19 +1065,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.43636364">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/BattleTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="62" selection-start-line="19" selection-start-column="62" selection-end-line="19" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1099,17 +1079,7 @@
     <entry file="file://$PROJECT_DIR$/src/battle/SimpleBattle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="238" column="38" selection-start-line="238" selection-start-column="23" selection-end-line="238" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/battle/controllers/DaveController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="30" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="30" />
+          <caret line="249" column="36" selection-start-line="238" selection-start-column="23" selection-end-line="238" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1118,11 +1088,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/math/Vector2d.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="21.81457">
+        <state vertical-scroll-proportion="0.0">
           <caret line="423" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/battle/BattleTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3768116">
+          <caret line="13" column="49" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
           <folding>
-            <element signature="e#5246#5247#0" expanded="true" />
-            <element signature="e#5287#5288#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
