@@ -121,7 +121,7 @@ public class SimpleRandomHillClimber {
         // returns whether or not I won
         int playWith(double[] v) {
             System.out.print("Playing with: " + Arrays.toString(v));
-            SimpleBattle battle = new SimpleBattle();
+            SimpleBattle battle = new SimpleBattle(true, 500);
             BattleController player1 = new MemoController1();
             MemoController1.setFeatures(v);
 

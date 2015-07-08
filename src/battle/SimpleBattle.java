@@ -24,14 +24,10 @@ public class SimpleBattle {
 
     // play a time limited game with a strict missile budget for
     // each player
-    static int nMissiles = 100;
-    static int nTicks = 1000;
-    static int pointsPerKill = 10;
-    static int releaseVelocity = 5;
 
+    int nTicks = 500;
     boolean visible = true;
 
-    ArrayList<BattleController> controllers;
 
     ArrayList<GameObject> objects;
     ArrayList<PlayerStats> stats;
@@ -41,14 +37,26 @@ public class SimpleBattle {
     BattleView view;
     int currentTick;
 
+    double score1, score2;
+    double scoreRecord[];
+
     public SimpleBattle() {
         this(true);
+        scoreRecord = new double[nTicks+1];
+    }
+
+    public SimpleBattle(boolean visible, int nTicks) {
+        this(visible);
+        this.nTicks = nTicks;
+        scoreRecord = new double[nTicks+1];
     }
 
     public SimpleBattle(boolean visible) {
         this.objects = new ArrayList<>();
         this.stats = new ArrayList<>();
         this.visible = visible;
+        this.score1 = 0.0;
+        this.score2 = 0.0;
 
         if (visible) {
             view = new BattleView(this);
@@ -60,7 +68,7 @@ public class SimpleBattle {
         return currentTick;
     }
 
-    public int playGame(BattleController p1, BattleController p2) {
+    public double[] playGame(BattleController p1, BattleController p2) {
         this.p1 = p1;
         this.p2 = p2;
         reset();
@@ -91,24 +99,25 @@ public class SimpleBattle {
             view.removeKeyListener((KeyListener)p2);
         }
 
-        return 0;
+
+        return scoreRecord;
     }
 
     public void reset() {
         stats.clear();
         objects.clear();
-        s1 = buildShip(100, 250, 0);
-        s2 = buildShip(500, 250, 1);
+        s1 = buildShip(200, 250, 1, 0, 0);
+        s2 = buildShip(300, 250, -1, 0, 1);
         this.currentTick = 0;
 
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
     }
 
-    protected NeuroShip buildShip(int x, int y, int playerID) {
+    protected NeuroShip buildShip(int x, int y, int dx, int dy, int playerID) {
         Vector2d position = new Vector2d(x, y, true);
         Vector2d speed = new Vector2d(true);
-        Vector2d direction = new Vector2d(1, 0, true);
+        Vector2d direction = new Vector2d(dx, dy, true);
 
         return new NeuroShip(position, speed, direction, playerID );
     }
@@ -131,8 +140,8 @@ public class SimpleBattle {
         checkCollision(s2);
 
         // and fire any missiles as necessary
-        if (a1.shoot) fireMissile(s1.s, s1.d, 0);
-        if (a2.shoot) fireMissile(s2.s, s2.d, 1);
+        //if (a1.shoot) fireMissile(s1.s, s1.d, 0);
+        //if (a2.shoot) fireMissile(s2.s, s2.d, 1);
 
         wrap(s1);
         wrap(s2);
@@ -149,11 +158,50 @@ public class SimpleBattle {
 
         objects.removeAll(killList);
         currentTick++;
+        updateScores();
 
         if (visible) {
             view.repaint();
             sleep();
         }
+
+        if(scoreRecord != null)
+            scoreRecord[currentTick] = score(0);
+        //System.out.println(currentTick + " " + score(0));
+        //int a = 0;
+    }
+
+    public void updateScores()
+    {
+        score1 = calcScore(0);
+        score2 = calcScore(1);
+    }
+
+
+    private double calcScore(int playerId)
+    {
+        NeuroShip ss1 = s1;
+        NeuroShip ss2 = s2;
+
+        if(playerId == 1)
+        {
+            ss1 = s2;
+            ss2 = s1;
+        }
+
+        double dot = ss1.dotTo(ss2);
+        double dist = ss1.distTo(ss2);
+        double distPoints = 1.0/(1.0+dist/100.0);
+        //if(playerId == 0)
+        //    System.out.println("d: " + dist + "; dp: " + distPoints + "; dot: " + dot + "; TOTAL: " + (dot*distPoints));
+        return dot*distPoints;
+    }
+
+    public double score(int playerId)
+    {
+        if(playerId == 0)
+            return score1 - score2;
+        return score2 - score1;
     }
 
 
@@ -203,7 +251,7 @@ public class SimpleBattle {
 
                     int playerID = (actor == s1 ? 1 : 0);
                     PlayerStats stats = this.stats.get(playerID);
-                    stats.nPoints += pointsPerKill;
+                    //stats.nPoints += pointsPerKill;
 
                     ob.hit();
                     return;
@@ -230,7 +278,7 @@ public class SimpleBattle {
         }
     }
 
-    protected void fireMissile(Vector2d s, Vector2d d, int playerId) {
+    /*protected void fireMissile(Vector2d s, Vector2d d, int playerId) {
         // need all the usual missile firing code here
         NeuroShip currentShip = playerId == 0 ? s1 : s2;
         PlayerStats stats = this.stats.get(playerId);
@@ -244,7 +292,7 @@ public class SimpleBattle {
             // sounds.fire();
             stats.nMissiles++;
         }
-    }
+    }*/
 
     public void draw(Graphics2D g) {
         // for (Object ob : objects)
@@ -299,10 +347,11 @@ public class SimpleBattle {
     }
 
     public int getMissilesLeft(int playerID) {
-        assert playerID < 2;
+        return 0;
+        /*assert playerID < 2;
         assert playerID >= 0;
 
-        return stats.get(playerID).nMissiles - nMissiles;
+        return stats.get(playerID).nMissiles - nMissiles;*/
     }
 
     private void wrap(GameObject ob) {
@@ -314,12 +363,12 @@ public class SimpleBattle {
     }
 
     public boolean isGameOver() {
-        if (getMissilesLeft(0) >= 0 && getMissilesLeft(1) >= 0) {
+        /*if (getMissilesLeft(0) >= 0 && getMissilesLeft(1) >= 0) {
             //ensure that there are no bullets left in play
             if (objects.isEmpty()) {
                 return true;
             }
-        }
+        }*/
 
         return currentTick >= nTicks;
     }
