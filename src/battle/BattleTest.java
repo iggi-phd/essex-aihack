@@ -1,5 +1,6 @@
 package battle;
 
+import battle.controllers.Human.ArrowsController;
 import battle.controllers.Human.WASDController;
 import battle.controllers.diego.BattleEvoController;
 import battle.controllers.diego.search.CoevSearch;
@@ -97,15 +98,16 @@ public class BattleTest {
 //                new RandomPairing(rnd2, 3),
 //                rnd2));
 
-        return new BattleEvoController(new GASearch(
-                new UniformCrossover(rnd2),
-                new PMutation(rnd2, 0.1),
-                new TournamentSelection(rnd2, 3),
-                rnd2));
+//        return new BattleEvoController(new GASearch(
+//                new UniformCrossover(rnd2),
+//                new PMutation(rnd2, 0.1),
+//                new TournamentSelection(rnd2, 3),
+//                rnd2));
 
         //return new RandomController(rnd2);
 
 //        return new NullController();
+         return new ArrowsController();
 
 //        return new WASDController();
     }

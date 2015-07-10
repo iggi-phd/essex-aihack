@@ -10,7 +10,7 @@ import java.awt.event.KeyListener;
 /**
  * Created by jwalto on 12/06/2015.
  */
-public class WASDController implements BattleController, KeyListener {
+public class ArrowsController implements BattleController, KeyListener {
 
     public static Action[] ActionMap = new Action[]{
             new Action(0.0,0.0,false),
@@ -34,7 +34,7 @@ public class WASDController implements BattleController, KeyListener {
     private int m_turn;
 
 
-    public WASDController()
+    public ArrowsController()
     {
         m_turn = 0;
         m_thrust = false;
@@ -76,15 +76,15 @@ public class WASDController implements BattleController, KeyListener {
     public void keyPressed(KeyEvent e) {
 
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
+            case KeyEvent.VK_UP:
                 m_thrust = true;
                 break;
 
-            case KeyEvent.VK_A:
+            case KeyEvent.VK_LEFT:
                 m_turn = -1;
                 break;
 
-            case KeyEvent.VK_D:
+            case KeyEvent.VK_RIGHT:
                 m_turn = 1;
                 break;
 
@@ -98,13 +98,13 @@ public class WASDController implements BattleController, KeyListener {
     public void keyReleased(KeyEvent e)
     {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_W) {
+        if (key == KeyEvent.VK_UP) {
             m_thrust = false;
         }
-        if (key == KeyEvent.VK_A) {
+        if (key == KeyEvent.VK_LEFT) {
             m_turn = 0;
         }
-        if (key == KeyEvent.VK_D) {
+        if (key == KeyEvent.VK_RIGHT) {
             m_turn = 0;
         }
 
