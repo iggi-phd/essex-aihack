@@ -55,10 +55,10 @@ public class BattleEvoController implements battle.BattleController {
     @Override
     public Action getAction(SimpleBattle game, int playerId)
     {
-        //if(playerId == 1)
-        //    return ActionMap.ActionMap[0];
-
         m_search.playerID = playerId;
+        if(Search.MACRO_ACTION_LENGTH == 1)
+            return getSingleAction(game, playerId);
+
         int cycle = game.getTicks();
         int nextMacroAction;
 
@@ -125,10 +125,21 @@ public class BattleEvoController implements battle.BattleController {
             for(int i = first; i < Search.MACRO_ACTION_LENGTH; ++i)
             {
                 //make the moves to advance the game state.
-                game.update(ActionMap.ActionMap[m_lastMacroAction], ActionMap.ActionMap[0]);
+                if(m_search.playerID == 0)
+                    game.update(ActionMap.ActionMap[m_lastMacroAction], ActionMap.ActionMap[0]);
+                else
+                    game.update(ActionMap.ActionMap[0], ActionMap.ActionMap[m_lastMacroAction]);
             }
         }
     }
+
+    public Action getSingleAction(SimpleBattle game, int playerId)
+    {
+        m_search.init(game, playerId);
+        int suggestedAction = m_search.run(game);
+        return ActionMap.ActionMap[suggestedAction];
+    }
+
 
     /**
      * We are boring and we don't paint anything here.

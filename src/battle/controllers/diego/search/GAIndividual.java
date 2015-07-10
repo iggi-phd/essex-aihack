@@ -56,7 +56,10 @@ public class GAIndividual
             int otherAction = opponent.m_genome[i];
             for(int j =0; !end && j < Search.MACRO_ACTION_LENGTH; ++j)
             {
-                thisGameCopy.update(ActionMap.ActionMap[thisAction], ActionMap.ActionMap[otherAction]);
+                if(playerID == 0)
+                    thisGameCopy.update(ActionMap.ActionMap[thisAction], ActionMap.ActionMap[otherAction]);
+                else
+                    thisGameCopy.update(ActionMap.ActionMap[otherAction], ActionMap.ActionMap[thisAction]);
                 end = thisGameCopy.isGameOver();
             }
         }

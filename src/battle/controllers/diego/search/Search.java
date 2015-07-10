@@ -12,11 +12,11 @@ public abstract class Search {
     /**
      * Number of macro-actions that form the random path.
      */
-    public static int NUM_ACTIONS_INDIVIDUAL = 10; //8
+    public static int NUM_ACTIONS_INDIVIDUAL = 5; //8
     /**
      * Number of single actions that form a macro action.
      */
-    public static int MACRO_ACTION_LENGTH = 2; //15
+    public static int MACRO_ACTION_LENGTH = 1; //15
 
     /**
      * ID of ths player.

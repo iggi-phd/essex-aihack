@@ -3,6 +3,7 @@ package battle;
 import asteroids.*;
 import math.Vector2d;
 import utilities.JEasyFrame;
+import utilities.StatSummary;
 
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -38,6 +39,8 @@ public class SimpleBattle {
     int currentTick;
 
     double score1, score2;
+    StatSummary ss1 = new StatSummary();
+    StatSummary ss2 = new StatSummary();
     double scoreRecord[];
 
     public SimpleBattle() {
@@ -108,6 +111,7 @@ public class SimpleBattle {
         objects.clear();
         s1 = buildShip(200, 250, 1, 0, 0);
         s2 = buildShip(300, 250, -1, 0, 1);
+        //s2 = buildShip(25, 250, 1, 0, 1);
         this.currentTick = 0;
 
         stats.add(new PlayerStats(0, 0));
@@ -129,6 +133,8 @@ public class SimpleBattle {
         Action a1 = p1.getAction(this.clone(), 0);
         Action a2 = p2.getAction(this.clone(), 1);
         update(a1, a2);
+        ss1.add(score(0));
+        ss2.add(score(1));
     }
 
     public void update(Action a1, Action a2) {

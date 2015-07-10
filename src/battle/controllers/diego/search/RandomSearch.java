@@ -97,8 +97,10 @@ public class RandomSearch extends Search {
             //Rollout macro-action in the game
             for(int j =0; j < Search.MACRO_ACTION_LENGTH; ++j)
             {
-                m_futureGameState.update(ActionMap.ActionMap[m_currentRandomPath[i]],
-                                         ActionMap.ActionMap[0]);
+                if(playerID == 0)
+                    m_futureGameState.update(ActionMap.ActionMap[m_currentRandomPath[i]], ActionMap.ActionMap[0]);
+                else
+                    m_futureGameState.update(ActionMap.ActionMap[0], ActionMap.ActionMap[m_currentRandomPath[i]]);
             }
         }
         //printGenome(m_currentRandomPath);
