@@ -24,9 +24,9 @@ public class DaniBattleTest {
         SimpleBattle battle = new SimpleBattle();
 
         BattleController fire1 = new DaniController();
-        //BattleController fire2 = new MemoControllerRandom();
+        //BattleEvoController fire2 = new MemoControllerRandom();
         BattleController fire2 = new MMMCTS();
-        //BattleController fire2 = new MemoController1();
+        //BattleEvoController fire2 = new MemoController1();
 
         battle.playGame(fire1, fire2);
     }

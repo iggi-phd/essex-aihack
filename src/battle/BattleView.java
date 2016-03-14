@@ -4,6 +4,7 @@ import asteroids.GameObject;
 import asteroids.GameState;
 import asteroids.Ship;
 import math.Vector2d;
+import utilities.StatSummary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,13 +72,23 @@ public class BattleView extends JComponent {
         //String str = game.stats.get(0) + " " + game.stats.get(1) + " " + game.currentTick;
         SimpleBattle.PlayerStats p1Stats = game.stats.get(0);
         SimpleBattle.PlayerStats p2Stats = game.stats.get(1);
-        String strScores    = "Score:    " + p1Stats.getPoints() + " | " + p2Stats.getPoints();
-        String strMissiles  = "Missiles: " + p1Stats.getMissilesFired() + " | " + p2Stats.getMissilesFired();
+        //String strScores    = "Score:    " + p1Stats.getPoints() + " | " + p2Stats.getPoints();
+
+        double sc0 = ((int)(game.score(0) * 1000) * 0.001);
+        double sc1 = ((int)(game.score(1) * 1000) * 0.001);
+        String strScores    = "Score:    " + sc0 + " | " + sc1;
+
+        double scA0 = ((int)(game.ss1.sum() * 1000) * 0.001);
+        double scA1 = ((int)(game.ss2.sum() * 1000) * 0.001);
+        String strAcumScores = "Acc. Score:    " + scA0 + " | " + scA1;
+
+
+        //String strMissiles  = "Missiles: " + p1Stats.getMissilesFired() + " | " + p2Stats.getMissilesFired();
         String strTicks     = "Ticks:    " + game.currentTick;
         String p1 = "P1 Green " + game.p1.getClass().getSimpleName();
         String p2 = "P2 Blue " + game.p2.getClass().getSimpleName();
         g.drawString(strScores, 10, 20);
-        g.drawString(strMissiles, 10, 50);
+        g.drawString(strAcumScores, 10, 50);
         g.drawString(strTicks, 10, 80);
         g.drawString(p1, 10, 110);
         g.drawString(p2, 10, 140);

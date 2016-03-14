@@ -1,0 +1,21 @@
+GA vs. Null - GA_1xXX_vs_Null_100x100pdf / GA_1xXX_vs_Null_100x100pdf
+CoEv vs. Null - CoEv_1xXX_vs_Null_100x100pdf / CoEv_1xXX_vs_Null_100x100pdf
+
+They are similar. Acum slightly better for GA.
+
+-----
+
+RND vs. RND - ?
+GA vs. RND - GA_1xXX_vs_RND_100x100pdf / GA_1xXX_vs_RND_100x100pdf
+CoEv vs. RND - CoEv_1xXX_vs_RND_100x100pdf / CoEv_1xXX_vs_RND_100x100pdf
+
+GA vs. RND is CLEARLY better.
+
+GA assumes that the opponent does NOTHING.
+CoEv fights again 3 opponents picked randomly (fitness: mean).
+
+
+
+---
+
+If GA assumes the opponent is RND, against RND, results are better (than assuming the opponent is NULL) for some MA values.

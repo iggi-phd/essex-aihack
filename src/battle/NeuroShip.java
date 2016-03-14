@@ -120,6 +120,22 @@ public class NeuroShip extends GameObject {
         return this;
     }
 
+    public double dotTo(NeuroShip other)
+    {
+        Vector2d diff = Vector2d.subtract(other.s,this.s);
+        Vector2d front = new Vector2d(this.d, true);
+        front.normalise();
+        diff.normalise();
+
+        return diff.dot(front);
+    }
+
+    public double distTo(NeuroShip other)
+    {
+        Vector2d diff = Vector2d.subtract(other.s,this.s);
+        return diff.mag();
+    }
+
     private void tryMissileLaunch() {
         // System.out.println("Trying a missile launch");
         if (releaseVelocity > maxRelease) {

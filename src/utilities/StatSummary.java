@@ -75,6 +75,8 @@ public class StatSummary {
         return min;
     }
 
+    public double sum() {return sum;}
+
     public double mean() {
         if (!valid)
             computeStats();
