@@ -5,6 +5,7 @@ import battle.controllers.diego.ActionMap;
 import battle.controllers.diego.strategy.ICrossover;
 import battle.controllers.diego.strategy.IMutation;
 import battle.controllers.diego.strategy.ISelection;
+import battle.controllers.diego.strategy.OpponentGenerator;
 
 import java.util.Random;
 
@@ -39,17 +40,18 @@ public class GASearch extends Search {
     ISelection sel;
     public int m_numGenerations;
 
-    GAIndividual nullOpponent = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, -1);
+    OpponentGenerator opponentGen;
 
     /**
      * Constructor of the random search engine.
      */
-    public GASearch(ICrossover ic, IMutation im, ISelection is, Random rnd)
+    public GASearch(ICrossover ic, IMutation im, ISelection is, OpponentGenerator opponentGen, Random rnd)
     {
         super(rnd);
         cross = ic;
         mut = im;
         sel = is;
+        this.opponentGen = opponentGen;
     }
 
     /**
@@ -60,12 +62,13 @@ public class GASearch extends Search {
     {
         m_individuals = new GAIndividual[NUM_INDIVIDUALS];
         this.playerID = playerId;
+        GAIndividual opponent = opponentGen.getOpponent(Search.NUM_ACTIONS_INDIVIDUAL);
 
         for(int i = 0; i < NUM_INDIVIDUALS; ++i)
         {
             m_individuals[i] = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, playerID);
             m_individuals[i].randomize(m_rnd, ActionMap.ActionMap.length );
-            m_individuals[i].evaluate(gameState, nullOpponent);
+            m_individuals[i].evaluate(gameState, opponent);
         }
 
         sortPopulationByFitness(m_individuals);
@@ -101,6 +104,8 @@ public class GASearch extends Search {
                 nextPop[i] = m_individuals[i];
             }
 
+            GAIndividual opponent = opponentGen.getOpponent(Search.NUM_ACTIONS_INDIVIDUAL);
+
             for(;i<m_individuals.length;++i)
             {
                 //System.out.println("######### " + numIters + ":" + i + " #############");
@@ -110,7 +115,7 @@ public class GASearch extends Search {
                 mut.mutate(nextPop[i]);
 
                 //System.out.print("c-m: " + nextPop[i].toString());
-                nextPop[i].evaluate(a_gameState, nullOpponent);
+                nextPop[i].evaluate(a_gameState, opponent);
                 //System.out.println(", " + nextPop[i].m_fitness);
             }
 

@@ -106,7 +106,7 @@ public class CoevSearch extends Search {
         int numIters = 0;
 
         //check that we don't overspend
-        while(numIters < 100)
+        while(numIters < 500)
         {
             //OPPONENT POPULATION: prepare the next generation (no evaluation nor sorting yet!).
             GAIndividual[] nextOppPop = new GAIndividual[m_individualsOpp.length];
@@ -120,7 +120,6 @@ public class CoevSearch extends Search {
                 mut.mutate(nextOppPop[i]);
             }
             m_individualsOpp = nextOppPop;
-
 
             //SOURCE POPULATION: create the next generation and evaluate against new individuals from
             // the opponent population. This also evaluates those.
@@ -148,6 +147,9 @@ public class CoevSearch extends Search {
     }
 
 
+
+
+
     private GAIndividual breed(GAIndividual[] pop)
     {
         GAIndividual gai1 = sel.getParent(pop, null);        //First parent.
@@ -164,6 +166,18 @@ public class CoevSearch extends Search {
     {
         return game.score(playerID); //game.getPoints(playerID);
     }
+
+    /**
+     * Prints a population, including fitness.
+     */
+    private void printPopulation(GAIndividual[] pop)
+    {
+        for(int i=0;i<m_individuals.length;++i)
+        {
+            pop[i].print();
+        }
+    }
+
 
 
 

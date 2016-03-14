@@ -106,5 +106,11 @@ public class GAIndividual
         return accumFit.mean();
     }
 
+    public void print()
+    {
+        String genome = this.toString();
+        genome += "; n: " + accumFit.n() + ", fitness: " + ((accumFit.n() == 0) ? m_fitness : accumFit.mean());
+        System.out.println(genome);
+    }
 
 }
