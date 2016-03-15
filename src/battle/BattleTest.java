@@ -25,26 +25,27 @@ public class BattleTest {
     static final int NULL = 3;
     static final int WASD = 4;
     static final int ARROWS = 5;
+    static final int MAXTICKSGAME = 10;
+    static final int NUMGAMESTOPLAY = 100;
 
     public static void main(String[] args) {
         //playOne(BattleTest.WASD, BattleTest.ARROWS);
 
         //playOne(BattleTest.GA, BattleTest.RND);
         Search.NUM_ACTIONS_INDIVIDUAL = 10; Search.MACRO_ACTION_LENGTH = 1;
-        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_10x1_vs_RND_100x100.txt");
+        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUMGAMESTOPLAY+"x"+MAXTICKSGAME+".txt");
         Search.NUM_ACTIONS_INDIVIDUAL = 5; Search.MACRO_ACTION_LENGTH = 2;
-        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_5x2_vs_RND_100x100.txt");
+        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUMGAMESTOPLAY+"x"+MAXTICKSGAME+".txt");
         Search.NUM_ACTIONS_INDIVIDUAL = 2; Search.MACRO_ACTION_LENGTH = 5;
-        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_2x5_vs_RND_100x100.txt");
+        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUMGAMESTOPLAY+"x"+MAXTICKSGAME+".txt");
         Search.NUM_ACTIONS_INDIVIDUAL = 1; Search.MACRO_ACTION_LENGTH = 10;
-        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_1x10_vs_RND_100x100.txt");
+        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUMGAMESTOPLAY+"x"+MAXTICKSGAME+".txt");
     }
 
     public static void playOne(int ply1, int ply2)
     {
-        int maxTicksGame = 100;
         boolean visuals = true;
-        SimpleBattle battle = new SimpleBattle(visuals, maxTicksGame);
+        SimpleBattle battle = new SimpleBattle(visuals, MAXTICKSGAME);
         BattleController p1 = createPlayer(ply1);
         BattleController p2 = createPlayer(ply2);
 
@@ -53,19 +54,17 @@ public class BattleTest {
 
     public static void playN(int ply1, int ply2, String filename)
     {
-        int maxTicksGame = 100;
-        int numGamesToPlay = 100;
         boolean visuals = false;
-        double[][] results = new double[numGamesToPlay][maxTicksGame];
+        double[][] results = new double[NUMGAMESTOPLAY][MAXTICKSGAME];
 
-        for(int i = 0; i < numGamesToPlay; ++i) {
+        for(int i = 0; i < NUMGAMESTOPLAY; ++i) {
 
-            SimpleBattle battle = new SimpleBattle(visuals, maxTicksGame);
+            SimpleBattle battle = new SimpleBattle(visuals, MAXTICKSGAME);
             BattleController p1 = createPlayer(ply1);
             BattleController p2 = createPlayer(ply2);
 
             double []res = battle.playGame(p1, p2);
-            System.arraycopy(res, 0, results[i], 0, maxTicksGame);
+            System.arraycopy(res, 0, results[i], 0, MAXTICKSGAME);
         }
 
         System.out.println("Done.");
