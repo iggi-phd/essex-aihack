@@ -25,7 +25,7 @@ public class BattleTest {
     static final int NULL = 3;
     static final int WASD = 4;
     static final int ARROWS = 5;
-    static final int MAX_TICKS_GAME = 10;
+    static final int MAX_TICKS_GAME = 100;
     static final int NUM_GAMES_TO_PLAY = 100;
 
     public static void main(String[] args) {
