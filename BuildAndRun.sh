@@ -2,8 +2,10 @@
 ###############################################################################
 ### Created by Jialin Liu on 17/03/2016                                     ###
 ### This script is used to build a list of java source and run the program  ###
-### Example:                                                                ### 
-### ./BuildAndRun.sh (source_list_filename) (build_folder) (main_filename)  ###
+### Options:                                                                ### 
+### -s source_list_filename                                                 ###
+### -b build_folder                                                         ###
+### -m main_filename                                                        ###
 ###############################################################################
 
 source_list_filename=sourceList.txt                                        
