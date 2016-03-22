@@ -2,11 +2,14 @@ package battle;
 
 import asteroids.*;
 import math.Vector2d;
+import math.Util;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
 
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Random; 
+import java.util.Vector;
 import java.awt.*;
 
 
@@ -74,7 +77,7 @@ public class SimpleBattle {
     public double[] playGame(BattleController p1, BattleController p2) {
         this.p1 = p1;
         this.p2 = p2;
-        reset();
+        reset(true);
 
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
@@ -105,11 +108,11 @@ public class SimpleBattle {
 
         return scoreRecord;
     }
-
+    
     public void reset() {
         stats.clear();
         objects.clear();
-        s1 = buildShip(200, 250, 1, 0, 0);
+        s1 = buildShip(200, 250, 1, 0, 0);                                  
         s2 = buildShip(300, 250, -1, 0, 1);
         //s2 = buildShip(25, 250, 1, 0, 1);
         this.currentTick = 0;
@@ -117,6 +120,37 @@ public class SimpleBattle {
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
     }
+
+    public void reset(boolean randomInit) {
+        if(randomInit) {
+            stats.clear();
+            objects.clear();
+            Vector<Integer> pos = randomPositionBy4Area();
+            s1 = buildShip(pos.get(0), pos.get(1), 1, 0, 0);
+            s2 = buildShip(pos.get(2), pos.get(3), -1, 0, 1);
+            this.currentTick = 0;
+
+            stats.add(new PlayerStats(0, 0));
+            stats.add(new PlayerStats(0, 0));
+        } else {
+            reset();
+        }
+    }
+
+    public Vector<Integer> randomPositionBy4Area() {
+        Vector<Integer> pos = new Vector<Integer>();
+        Random randomGenerator = new Random();
+        int area1 = randomGenerator.nextInt(4)+1;
+        int area2 = randomGenerator.nextInt(4)+1;
+        while(area2==area1)
+            area2 = randomGenerator.nextInt(4)+1;
+        pos.add(Util.randomIntInRange(25+(area1%2)*250, 225+(area1%2)*250));
+        pos.add(Util.randomIntInRange(25+((int)(area1/2))*250, 225+((int)(area1/2))*250));
+        pos.add(Util.randomIntInRange(25+(area2%2)*250, 225+(area2%2)*250));
+        pos.add(Util.randomIntInRange(25+((int)(area2/2))*250, 225+((int)(area2/2))*250));
+        return pos;
+    }
+    
 
     protected NeuroShip buildShip(int x, int y, int dx, int dy, int playerID) {
         Vector2d position = new Vector2d(x, y, true);
