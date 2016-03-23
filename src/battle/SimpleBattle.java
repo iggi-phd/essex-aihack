@@ -114,6 +114,8 @@ public class SimpleBattle {
         objects.clear();
         s1 = buildShip(200, 250, 1, 0, 0);                                  
         s2 = buildShip(300, 250, -1, 0, 1);
+        //s1 = buildShip(251, 252, 0, 1, 0);
+        //s2 = buildShip(254, 254, -1, -1, 1);
         //s2 = buildShip(25, 250, 1, 0, 1);
         this.currentTick = 0;
 

@@ -25,20 +25,15 @@ public class BattleTest {
     static final int NULL = 3;
     static final int WASD = 4;
     static final int ARROWS = 5;
-    static final int MAX_TICKS_GAME = 100;
-    static final int NUM_GAMES_TO_PLAY = 100;
+    static final int MAX_TICKS_GAME = 10;
+    static final int NUM_GAMES_TO_PLAY = 10;
 
     public static void main(String[] args) {
         //playOne(BattleTest.WASD, BattleTest.ARROWS);
 
         //playOne(BattleTest.GA, BattleTest.RND);
-        Search.NUM_ACTIONS_INDIVIDUAL = 10; Search.MACRO_ACTION_LENGTH = 1;
-        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
-        Search.NUM_ACTIONS_INDIVIDUAL = 5; Search.MACRO_ACTION_LENGTH = 2;
-        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
-        Search.NUM_ACTIONS_INDIVIDUAL = 2; Search.MACRO_ACTION_LENGTH = 5;
-        playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
-        Search.NUM_ACTIONS_INDIVIDUAL = 1; Search.MACRO_ACTION_LENGTH = 10;
+        Search.NUM_ACTIONS_INDIVIDUAL = 10;
+        Search.MACRO_ACTION_LENGTH = 1;
         playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
     }
 
@@ -113,8 +108,8 @@ public class BattleTest {
                         new UniformCrossover(rnd1),
                         new PMutation(rnd1, 0.1),
                         new TournamentSelection(rnd1, 3),
-                        new NullOpponentGenerator(Search.NUM_ACTIONS_INDIVIDUAL),
-                        //new RndOpponentGenerator(rnd1),
+                        //new NullOpponentGenerator(Search.NUM_ACTIONS_INDIVIDUAL),
+                        new RndOpponentGenerator(rnd1),
                         rnd1));
 
             case BattleTest.NULL:
