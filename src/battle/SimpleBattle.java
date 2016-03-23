@@ -235,7 +235,9 @@ public class SimpleBattle {
         double dist = ss1.distTo(ss2);
         double distPoints = 1.0/(1.0+dist/100.0);
         //if(playerId == 0)
-        //    System.out.println("d: " + dist + "; dp: " + distPoints + "; dot: " + dot + "; TOTAL: " + (dot*distPoints));
+        //    System.out.println("player 1 currentTick: " +currentTick+"; d: " + dist + "; dp: " + distPoints + "; dot: " + dot + "; TOTAL: " + (dot*distPoints));
+        //if(playerId == 1)
+        //    System.out.println("player 2 currentTick: " +currentTick+"; d: " + dist + "; dp: " + distPoints + "; dot: " + dot + "; TOTAL: " + (dot*distPoints));
         return dot*distPoints;
     }
 
