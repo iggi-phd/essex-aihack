@@ -31,8 +31,9 @@ sed -i 's/Search.MACRO_ACTION_LENGTH = 1;/Search.MACRO_ACTION_LENGTH = '${action
 sed -i 's/NUM_GAMES_TO_PLAY = 10;/NUM_GAMES_TO_PLAY = '${num_games}';/g' ./src/battle/BattleTest.java
 sed -i 's/playN(BattleTest.GA, .*/playN(BattleTest.'${me}', BattleTest.'${opp}', "..\/data\/'${MUTATION_PATH}'.txt");/' ./src/battle/BattleTest.java
 
-#if [ ]; then 
-#new NullOpponentGenerator(Search.NUM_ACTIONS_INDIVIDUAL),
 ## Build and Run the program
 ./BuildAndRun.sh
+echo "Match ${me} trained by ${learnt_opp} against ${opp} using \
+    num_actions=${num_actions}  action_length=${action_length} \
+    max_ticks=${max_ticks} finished ${num_games} games."
 cd ..
