@@ -76,20 +76,26 @@ public class CoevSearch extends Search {
             m_individualsOpp[i].randomize(m_rnd, ActionMap.ActionMap.length);
         }
 
-        //We need to evaluate once the opp population is complete.
-        for(int i = 0; i < NUM_INDIVIDUALS; ++i)
-        {
-            pair.evaluate(gameState, m_individuals[i], m_individualsOpp);
+        // check that we have at least enough time for initialisation           
+        // indeed we need more than this                                        
+        if(true){//NUM_EVAL>=NUM_INDIVIDUALS) { 
+            //We need to evaluate once the opp population is complete.
+            for(int i = 0; i < NUM_INDIVIDUALS; ++i)
+            {
+                pair.evaluate(gameState, m_individuals[i], m_individualsOpp);
+            }
+
+            sortPopulationByFitness(m_individuals);
+            sortPopulationByFitness(m_individualsOpp);
+
+            //Resetting the random paths found and best fitness.
+            m_bestRandomPath = new int[NUM_ACTIONS_INDIVIDUAL];
+            m_currentRandomPath = new int[NUM_ACTIONS_INDIVIDUAL];
+            m_bestFitnessFound = -1;
+            m_numGenerations = 0;
+        } else {
+            throw new RuntimeException("The total evaluation number " + NUM_EVAL + " is less than the population size.");
         }
-
-        sortPopulationByFitness(m_individuals);
-        sortPopulationByFitness(m_individualsOpp);
-
-        //Resetting the random paths found and best fitness.
-        m_bestRandomPath = new int[NUM_ACTIONS_INDIVIDUAL];
-        m_currentRandomPath = new int[NUM_ACTIONS_INDIVIDUAL];
-        m_bestFitnessFound = -1;
-        m_numGenerations = 0;
     }
 
 

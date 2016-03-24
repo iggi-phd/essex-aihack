@@ -64,11 +64,18 @@ public class GASearch extends Search {
         this.playerID = playerId;
         GAIndividual opponent = opponentGen.getOpponent(Search.NUM_ACTIONS_INDIVIDUAL);
 
-        for(int i = 0; i < NUM_INDIVIDUALS; ++i)
-        {
-            m_individuals[i] = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, playerID);
-            m_individuals[i].randomize(m_rnd, ActionMap.ActionMap.length );
-            m_individuals[i].evaluate(gameState, opponent);
+        // check that we have at least enough time for initialisation
+        // indeed we need more than this
+        if(true){ //(NUM_EVAL>=NUM_INDIVIDUALS) {
+            for(int i = 0; i < NUM_INDIVIDUALS; ++i)
+            {
+                m_individuals[i] = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, playerID);
+                m_individuals[i].randomize(m_rnd, ActionMap.ActionMap.length );
+                m_individuals[i].evaluate(gameState, opponent);
+                NUM_EVAL--;
+            }
+        } else {
+            throw new RuntimeException("The total evaluation number " + NUM_EVAL + " is less than the population size.");
         }
 
         sortPopulationByFitness(m_individuals);
@@ -94,7 +101,8 @@ public class GASearch extends Search {
         int numIters = 0;
 
         //check that we don't overspend
-        while(numIters < 100)
+       // while(numIters < 100) //TODO changed to 500 for testing
+        while(numIters < 500)    
         {
             GAIndividual[] nextPop = new GAIndividual[m_individuals.length];
 

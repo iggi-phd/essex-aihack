@@ -34,6 +34,7 @@ public class BattleTest {
         //playOne(BattleTest.GA, BattleTest.RND);
         Search.NUM_ACTIONS_INDIVIDUAL = 10;
         Search.MACRO_ACTION_LENGTH = 1;
+        Search.NUM_EVAL = 500;
         playN(BattleTest.GA, BattleTest.RND, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
     }
 

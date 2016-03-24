@@ -17,6 +17,10 @@ public abstract class Search {
      * Number of single actions that form a macro action.
      */
     public static int MACRO_ACTION_LENGTH = 1; //15
+    /**
+     * Total number of evaluaitons can be used
+     */
+    public static int NUM_EVAL = 500;
 
     /**
      * ID of ths player.
