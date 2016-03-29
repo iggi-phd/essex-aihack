@@ -33,12 +33,12 @@ public class GASearch extends Search {
     public final int ELITISM = 2;
     public final int NUM_INDIVIDUALS = 10;
 
-
     public GAIndividual[] m_individuals;
     ICrossover cross;
     IMutation mut;
     ISelection sel;
     public int m_numGenerations;
+    public int numEvals;
 
     OpponentGenerator opponentGen;
 
@@ -60,22 +60,23 @@ public class GASearch extends Search {
     @Override
     public void init(SimpleBattle gameState, int playerId)
     {
+        this.numEvals = 0;
         m_individuals = new GAIndividual[NUM_INDIVIDUALS];
         this.playerID = playerId;
         GAIndividual opponent = opponentGen.getOpponent(Search.NUM_ACTIONS_INDIVIDUAL);
 
         // check that we have at least enough time for initialisation
         // indeed we need more than this
-        if(true){ //(NUM_EVAL>=NUM_INDIVIDUALS) {
+        if(NUM_EVALS>=NUM_INDIVIDUALS) {
             for(int i = 0; i < NUM_INDIVIDUALS; ++i)
             {
                 m_individuals[i] = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, playerID);
                 m_individuals[i].randomize(m_rnd, ActionMap.ActionMap.length );
                 m_individuals[i].evaluate(gameState, opponent);
-                NUM_EVAL--;
+                this.numEvals++;
             }
         } else {
-            throw new RuntimeException("The total evaluation number " + NUM_EVAL + " is less than the population size.");
+            throw new RuntimeException("The total evaluation number " + NUM_EVALS + " is less than the population size.");
         }
 
         sortPopulationByFitness(m_individuals);
@@ -98,12 +99,14 @@ public class GASearch extends Search {
     public int run(SimpleBattle a_gameState)
     {
         m_currentGameState = a_gameState;
-        int numIters = 0;
+        int numIters = 0; 
+
+        long start_time = System.nanoTime();
 
         //check that we don't overspend
        // while(numIters < 100) //TODO changed to 500 for testing
-        while(numIters < 500)    
-        {
+        boolean stop = false;
+        while(!stop) {
             GAIndividual[] nextPop = new GAIndividual[m_individuals.length];
 
             int i;
@@ -124,6 +127,7 @@ public class GASearch extends Search {
 
                 //System.out.print("c-m: " + nextPop[i].toString());
                 nextPop[i].evaluate(a_gameState, opponent);
+                this.numEvals++;
                 //System.out.println(", " + nextPop[i].m_fitness);
             }
 
@@ -136,8 +140,23 @@ public class GASearch extends Search {
 
             m_numGenerations++;
             numIters++;
+            //System.out.println("Iteration number " + numIters + ", evaluation number " + this.numEvals);
+            switch(CONTROL_TYPE) {                                              
+                case 0:                                                         
+                    long current_time = System.nanoTime();                      
+                    stop = ((current_time - start_time)/1e6 >= DURATION_PER_TICK);
+                    break;                                                      
+                case 1:                                                         
+                    stop = (this.numEvals >= NUM_EVALS); 
+                    break;                                                      
+                case 2:                                                         
+                    stop = (numIters >= NUM_ITERS);                             
+                    break;                                                      
+                default:                                                        
+                    throw new RuntimeException("Control parameter is not right.");
+            } 
         }
-
+        //System.out.println("GA: numIters " + numIters + ", numEvals " + this.numEvals);
         return m_individuals[0].m_genome[0];
     }
 

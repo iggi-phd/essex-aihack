@@ -38,6 +38,7 @@ public class CoevSearch extends Search {
 
     public GAIndividual[] m_individualsOpp;
 
+    public int numEvals;
 
     ICrossover cross;
     IMutation mut;
@@ -64,6 +65,7 @@ public class CoevSearch extends Search {
     @Override
     public void init(SimpleBattle gameState, int playerId)
     {
+        this.numEvals = 0;
         m_individuals = new GAIndividual[NUM_INDIVIDUALS];
         m_individualsOpp = new GAIndividual[NUM_INDIVIDUALS];
         this.playerID = playerId;
@@ -78,11 +80,12 @@ public class CoevSearch extends Search {
 
         // check that we have at least enough time for initialisation           
         // indeed we need more than this                                        
-        if(true){//NUM_EVAL>=NUM_INDIVIDUALS) { 
+        if(NUM_EVALS >= NUM_INDIVIDUALS*pair.getGroupSize()) { 
             //We need to evaluate once the opp population is complete.
             for(int i = 0; i < NUM_INDIVIDUALS; ++i)
             {
                 pair.evaluate(gameState, m_individuals[i], m_individualsOpp);
+                this.numEvals += pair.getGroupSize();
             }
 
             sortPopulationByFitness(m_individuals);
@@ -94,7 +97,7 @@ public class CoevSearch extends Search {
             m_bestFitnessFound = -1;
             m_numGenerations = 0;
         } else {
-            throw new RuntimeException("The total evaluation number " + NUM_EVAL + " is less than the population size.");
+            throw new RuntimeException("The total evaluation number " + NUM_EVALS + " is less than the population size.");
         }
     }
 
@@ -112,7 +115,10 @@ public class CoevSearch extends Search {
         int numIters = 0;
 
         //check that we don't overspend
-        while(numIters < 500)
+        //while(numIters < 500)
+        boolean stop = false;
+        long start_time = System.nanoTime();
+        while(!stop)
         {
             //OPPONENT POPULATION: prepare the next generation (no evaluation nor sorting yet!).
             GAIndividual[] nextOppPop = new GAIndividual[m_individualsOpp.length];
@@ -138,6 +144,7 @@ public class CoevSearch extends Search {
                 nextPop[i] = breed(m_individuals);
                 mut.mutate(nextPop[i]);
                 pair.evaluate(a_gameState, nextPop[i], m_individualsOpp);
+                this.numEvals += pair.getGroupSize();
             }
             m_individuals = nextPop;
 
@@ -146,9 +153,23 @@ public class CoevSearch extends Search {
             sortPopulationByFitness(m_individualsOpp);
 
             m_numGenerations++;
-            numIters++;
+            numIters++; 
+            switch(CONTROL_TYPE) {                                              
+                case 0:                                                         
+                    long current_time = System.nanoTime();                      
+                    stop = ((current_time - start_time)/1e6 >= DURATION_PER_TICK);
+                    break;                                                      
+                case 1:                                                         
+                    stop = (this.numEvals >= NUM_EVALS);                        
+                    break;                                                      
+                case 2:                                                         
+                    stop = (numIters >= NUM_ITERS);                             
+                    break;                                                      
+                default:                                                        
+                   throw new RuntimeException("Control parameter is not right.");
+            }
         }
-
+        //System.out.println("COEV: numIters " + numIters + ", numEvals " + numEvals);
         return m_individuals[0].m_genome[0];
     }
 

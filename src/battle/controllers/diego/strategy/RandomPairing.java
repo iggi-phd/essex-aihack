@@ -9,10 +9,9 @@ import java.util.Random;
 /**
  * Created by dperez on 08/07/15.
  */
-public class RandomPairing implements ICoevPairing
+public class RandomPairing extends ICoevPairing
 {
 
-    int groupSize;
     Random rnd;
     TournamentSelection ts;
 
