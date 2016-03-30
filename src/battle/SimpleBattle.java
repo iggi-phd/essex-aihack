@@ -237,8 +237,8 @@ public class SimpleBattle {
          * Check if the two ships are too closed to each other
          * If yes, neither of them can shoot, score=0
          */
-        if(distPoints<0.05)
-            return 0;
+        //if(distPoints<0.05)
+        //    return 0;
         double dot = ss1.dotTo(ss2);
         //if(playerId == 0)
         //    System.out.println("player 1 currentTick: " +currentTick+"; d: " + dist + "; dp: " + distPoints + "; dot: " + dot + "; TOTAL: " + (dot*distPoints));

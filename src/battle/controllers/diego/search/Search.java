@@ -20,11 +20,11 @@ public abstract class Search {
     /**
      * Total number of evaluaitons can be used
      */
-    public static int NUM_EVALS = 15000;
+    public static int NUM_EVALS = 1500;
 
     public static int NUM_ITERS = 500;
     
-    public static long DURATION_PER_TICK = 40;
+    public static long DURATION_PER_TICK = 10;
     
     /**
      * Control type: 
@@ -32,7 +32,7 @@ public abstract class Search {
      * 1, using total evaluation number
      * 2, using iteration number (not recommended)
      */
-    public static int CONTROL_TYPE = 1;
+    public static int CONTROL_TYPE = 0;
 
     /**
      * ID of ths player.
