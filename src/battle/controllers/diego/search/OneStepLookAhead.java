@@ -67,6 +67,7 @@ public class OneStepLookAhead implements BattleController {
                 break;
             case 11:
                 best_action = opponent_fitness.MinMax();
+                break;
             default:
                 throw new RuntimeException("Recommendation policy not defined.");
        }
