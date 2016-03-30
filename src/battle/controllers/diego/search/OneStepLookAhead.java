@@ -37,11 +37,12 @@ public class OneStepLookAhead implements BattleController {
     public Action getAction(SimpleBattle gameState, int playerId)
     {
         int best_action = -1;
-        SimpleBattle thisGameCopy = gameState.clone();
+        //SimpleBattle thisGameCopy = gameState.clone();
         for(int i=0; i<ActionMap.ActionMap.length; ++i)
         {
             for(int j=0; j<ActionMap.ActionMap.length; ++j)
             {
+                SimpleBattle thisGameCopy = gameState.clone();
                 thisGameCopy.update(ActionMap.ActionMap[i], ActionMap.ActionMap[j]);
                 my_fitness.fill(i,j,thisGameCopy.score(playerID));
                 opponent_fitness.fill(i,j,thisGameCopy.score(1-playerID));
