@@ -233,17 +233,26 @@ public class SimpleBattle {
 
         double dist = ss1.distTo(ss2);
         double distPoints = 1.0/(1.0+dist/100.0);
-        /**
-         * Check if the two ships are too closed to each other
-         * If yes, neither of them can shoot, score=0
-         */
-        //if(distPoints<0.05)
-        //    return 0;
         double dot = ss1.dotTo(ss2);
         //if(playerId == 0)
         //    System.out.println("player 1 currentTick: " +currentTick+"; d: " + dist + "; dp: " + distPoints + "; dot: " + dot + "; TOTAL: " + (dot*distPoints));
         //if(playerId == 1)
         //    System.out.println("player 2 currentTick: " +currentTick+"; d: " + dist + "; dp: " + distPoints + "; dot: " + dot + "; TOTAL: " + (dot*distPoints));
+
+        /**                                                                     
+        * Check if the two ships are too closed to each other (less than 5) 
+        * If yes, neither of them can shoot, score=0                           
+        */ 
+        double minShootRange = 5;
+        double maxShootRange = 25;
+        if(distPoints>1.0/(1.0+minShootRange/100.0))
+            return (dot*distPoints-0.5);
+            //return -dot*distPoints;
+        /**
+         * Check the win
+         */
+        if(distPoints>=1.0/(1.0+maxShootRange/100.0) && dot>=Math.sqrt(0.5))
+            return 1;
         return dot*distPoints;
     }
 
@@ -413,6 +422,8 @@ public class SimpleBattle {
     }
 
     public boolean isGameOver() {
+        //if(score1==1 || score2==1)
+        //    return true;
         /*if (getMissilesLeft(0) >= 0 && getMissilesLeft(1) >= 0) {
             //ensure that there are no bullets left in play
             if (objects.isEmpty()) {
@@ -421,6 +432,13 @@ public class SimpleBattle {
         }*/
 
         return currentTick >= nTicks;
+    }
+
+    public double getScore(int playerId)
+    {
+        if(playerId == 0)
+            return score1;
+        return score2;
     }
 
     static class PlayerStats {
@@ -444,5 +462,4 @@ public class SimpleBattle {
             return nMissiles + " : " + nPoints;
         }
     }
-
 }
