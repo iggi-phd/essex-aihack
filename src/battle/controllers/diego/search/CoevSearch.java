@@ -94,14 +94,16 @@ public class CoevSearch extends Search {
             //Resetting the random paths found and best fitness.
             m_bestRandomPath = new int[NUM_ACTIONS_INDIVIDUAL];
             m_currentRandomPath = new int[NUM_ACTIONS_INDIVIDUAL];
-            m_bestFitnessFound = -1;
+            for(int i=0; i<Search.NUM_ACTIONS_INDIVIDUAL;i++)
+                m_currentRandomPath[i] = m_individuals[0].m_genome[i];
+            m_bestRandomPath = m_currentRandomPath;
+            m_bestFitnessFound = m_individuals[0].getFitness();
+            //m_bestFitnessFound = -1;
             m_numGenerations = 0;
         } else {
             throw new RuntimeException("The total evaluation number " + NUM_EVALS + " is less than the population size.");
         }
     }
-
-
 
     /**
      * Runs the Random Search engine for one cycle.
@@ -112,7 +114,6 @@ public class CoevSearch extends Search {
     public int run(SimpleBattle a_gameState)
     {
         m_currentGameState = a_gameState;
-        int numIters = 0;
 
         //check that we don't overspend
         //while(numIters < 500)
@@ -153,7 +154,6 @@ public class CoevSearch extends Search {
             sortPopulationByFitness(m_individualsOpp);
 
             m_numGenerations++;
-            numIters++; 
             switch(CONTROL_TYPE) {                                              
                 case 0:                                                         
                     long current_time = System.nanoTime();                      
@@ -163,19 +163,15 @@ public class CoevSearch extends Search {
                     stop = (this.numEvals >= NUM_EVALS);                        
                     break;                                                      
                 case 2:                                                         
-                    stop = (numIters >= NUM_ITERS);                             
+                    stop = (m_numGenerations >= NUM_ITERS);                             
                     break;                                                      
                 default:                                                        
                    throw new RuntimeException("Control parameter is not right.");
             }
         }
-        //System.out.println("COEV: numIters " + numIters + ", numEvals " + numEvals);
+        //System.out.println("COEV: numIters " + m_numGenerations + ", numEvals " + numEvals);
         return m_individuals[0].m_genome[0];
     }
-
-
-
-
 
     private GAIndividual breed(GAIndividual[] pop)
     {

@@ -13,10 +13,13 @@ import java.util.Random;
  */
 public class GAIndividual
 {
+    // each genome is a legal solution/action
     public int[] m_genome;
+    // the fitness value
     private double m_fitness;
+    // the probability to make a mutation
     public final double MUTATION_PROB = 0.2; //0.834=5/6   //0.2;
-
+    // id of the player (0 or 1)
     public int playerID;
 
     private StatSummary accumFit;
@@ -29,7 +32,6 @@ public class GAIndividual
         this.playerID = playerID;
     }
 
-
     public GAIndividual(int genome[], int playerID)
     {
         m_genome = genome;
@@ -38,6 +40,9 @@ public class GAIndividual
         this.playerID = playerID;
     }
 
+    /**
+     * Randomly generate/reset chromosomes
+     */
     public void randomize(Random a_rnd, int a_numActions)
     {
         for(int i = 0; i < m_genome.length; ++i)
@@ -46,10 +51,14 @@ public class GAIndividual
         }
     }
 
+    /**
+     * Evaluate the game, given game state and the opponent
+     */
     public double evaluate(SimpleBattle gameState, GAIndividual opponent)
     {
         SimpleBattle thisGameCopy = gameState.clone();
         boolean end = false;
+        // Make m_genome.length moves*Search.MACRO_ACTION_LENGTH, update the score
         for(int i = 0; i < m_genome.length; ++i)
         {
             int thisAction = m_genome[i];
@@ -98,6 +107,9 @@ public class GAIndividual
         return st;
     }
 
+    /**
+     * Return the mean fitness value
+     */
     public double getFitness()
     {
         if(accumFit.n() == 0)

@@ -27,4 +27,13 @@ public class Util {
         int x = randomIntInRange(xmin, xmax);
         int y = randomIntInRange(ymin, ymax);
     }
+    
+    public static double[] combineArray(double[] arr1, double[] arr2) {
+        double[] res = new double[arr1.length+arr2.length];
+        for(int i=0; i<arr1.length; ++i)
+            res[i] = arr1[i];
+        for(int i=0; i<arr2.length; ++i)
+            res[i+arr1.length] = arr2[i];
+        return res;
+    }
 }

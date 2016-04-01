@@ -12,7 +12,6 @@ import java.util.Random;
 import java.util.Vector;
 import java.awt.*;
 
-
 import static asteroids.Constants.*;
 
 /**
@@ -45,16 +44,22 @@ public class SimpleBattle {
     StatSummary ss1 = new StatSummary();
     StatSummary ss2 = new StatSummary();
     double scoreRecord[];
+    double score1Record[];
+    double score2Record[];
 
     public SimpleBattle() {
         this(true);
         scoreRecord = new double[nTicks+1];
+        score1Record = new double[nTicks+1];
+        score2Record = new double[nTicks+1];
     }
 
     public SimpleBattle(boolean visible, int nTicks) {
         this(visible);
         this.nTicks = nTicks;
         scoreRecord = new double[nTicks+1];
+        score1Record = new double[nTicks+1];
+        score2Record = new double[nTicks+1];
     }
 
     public SimpleBattle(boolean visible) {
@@ -105,8 +110,9 @@ public class SimpleBattle {
             view.removeKeyListener((KeyListener)p2);
         }
 
-
-        return scoreRecord;
+        double[] tmp = Util.combineArray(scoreRecord,score1Record);
+        double[] allRecord = Util.combineArray(tmp,score2Record);
+        return allRecord;
     }
     
     public void reset() {
@@ -209,6 +215,10 @@ public class SimpleBattle {
 
         if(scoreRecord != null)
             scoreRecord[currentTick] = score(0);
+        if(score1Record != null)
+            score1Record[currentTick] = score1;
+        if(score2Record != null)
+            score2Record[currentTick] = score2;
         //System.out.println(currentTick + " " + score(0));
         //int a = 0;
     }
