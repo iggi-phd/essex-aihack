@@ -16,7 +16,7 @@ public class OneStepLookAhead implements BattleController {
 
     public int playerID;
 
-    public static final int RECOMMEND_POLICY = 10;
+    public static final int RECOMMEND_POLICY = 0;
     /**
      * Constructor of the engine.
      */

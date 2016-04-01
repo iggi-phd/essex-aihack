@@ -12,7 +12,6 @@ import java.util.Random;
 import java.util.Vector;
 import java.awt.*;
 
-
 import static asteroids.Constants.*;
 
 /**
@@ -45,16 +44,24 @@ public class SimpleBattle {
     StatSummary ss1 = new StatSummary();
     StatSummary ss2 = new StatSummary();
     double scoreRecord[];
+    double score1Record[];
+    double score2Record[];
+
+    int winner = -1;
 
     public SimpleBattle() {
         this(true);
         scoreRecord = new double[nTicks+1];
+        score1Record = new double[nTicks+1];
+        score2Record = new double[nTicks+1];
     }
 
     public SimpleBattle(boolean visible, int nTicks) {
         this(visible);
         this.nTicks = nTicks;
         scoreRecord = new double[nTicks+1];
+        score1Record = new double[nTicks+1];
+        score2Record = new double[nTicks+1];
     }
 
     public SimpleBattle(boolean visible) {
@@ -105,8 +112,9 @@ public class SimpleBattle {
             view.removeKeyListener((KeyListener)p2);
         }
 
-
-        return scoreRecord;
+        double[] tmp = Util.combineArray(scoreRecord,score1Record);
+        double[] allRecord = Util.combineArray(tmp,score2Record);
+        return allRecord;
     }
     
     public void reset() {
@@ -118,6 +126,7 @@ public class SimpleBattle {
         //s2 = buildShip(254, 254, -1, -1, 1);
         //s2 = buildShip(25, 250, 1, 0, 1);
         this.currentTick = 0;
+        this.winner = -1;
 
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
@@ -209,6 +218,10 @@ public class SimpleBattle {
 
         if(scoreRecord != null)
             scoreRecord[currentTick] = score(0);
+        if(score1Record != null)
+            score1Record[currentTick] = score1;
+        if(score2Record != null)
+            score2Record[currentTick] = score2;
         //System.out.println(currentTick + " " + score(0));
         //int a = 0;
     }
@@ -422,16 +435,29 @@ public class SimpleBattle {
     }
 
     public boolean isGameOver() {
-        //if(score1==1 || score2==1)
-        //    return true;
+        if(score1==1)
+        {
+            this.winner = 0;
+            return true;
+        }
+        if(score2==1)
+        {
+            this.winner = 1;
+            return true;
+        }
         /*if (getMissilesLeft(0) >= 0 && getMissilesLeft(1) >= 0) {
             //ensure that there are no bullets left in play
             if (objects.isEmpty()) {
                 return true;
             }
         }*/
-
         return currentTick >= nTicks;
+    }
+
+    public int getGameWinner() {
+        boolean end = isGameOver();
+        assert((!end) && (this.winner !=-1));
+        return this.winner;
     }
 
     public double getScore(int playerId)
