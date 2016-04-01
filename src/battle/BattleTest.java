@@ -5,6 +5,8 @@ import battle.controllers.Human.WASDController;
 import battle.controllers.diego.BattleEvoController;
 import battle.controllers.diego.search.*;
 import battle.controllers.diego.strategy.*;
+import battle.controllers.olmcts.*;
+import battle.controllers.onesteplookahead.*;
 import battle.controllers.nullController.NullController;
 import battle.controllers.random.RandomController;
 
@@ -26,6 +28,7 @@ public class BattleTest {
     static final int WASD = 4;
     static final int ARROWS = 5;
     static final int ONESTEP = 6;
+    static final int OLMCTS = 7;
     static final int MAX_TICKS_GAME = 1000;
     static final int NUM_GAMES_TO_PLAY = 1;
 
@@ -35,10 +38,10 @@ public class BattleTest {
         //playOne(BattleTest.GA, BattleTest.WASD);
         //playOne(BattleTest.GA, BattleTest.COEV); 
         //playOne(BattleTest.ONESTEP, BattleTest.COEV);
-        //playOne(BattleTest.GA, BattleTest.ONESTEP);  
-        Search.NUM_ACTIONS_INDIVIDUAL = 10;
-        Search.MACRO_ACTION_LENGTH = 1;
-        playN(BattleTest.GA, BattleTest.COEV, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
+        playOne(BattleTest.GA, BattleTest.OLMCTS);  
+        //Search.NUM_ACTIONS_INDIVIDUAL = 10;
+        //Search.MACRO_ACTION_LENGTH = 1;
+        //playN(BattleTest.GA, BattleTest.COEV, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
     }
 
     public static void playOne(int ply1, int ply2)
@@ -54,7 +57,7 @@ public class BattleTest {
     public static void playN(int ply1, int ply2, String filename)
     {
         boolean visuals = false;
-        double[][] results = new double[NUM_GAMES_TO_PLAY][MAX_TICKS_GAME];
+        double[][] results = new double[NUM_GAMES_TO_PLAY][MAX_TICKS_GAME*3];
 
         for(int i = 0; i < NUM_GAMES_TO_PLAY; ++i) {
 
@@ -63,7 +66,7 @@ public class BattleTest {
             BattleController p2 = createPlayer(ply2);
 
             double []res = battle.playGame(p1, p2);
-            System.arraycopy(res, 0, results[i], 0, MAX_TICKS_GAME);
+            System.arraycopy(res, 0, results[i], 0, MAX_TICKS_GAME*3);
         }
 
         System.out.println("Done.");
@@ -117,6 +120,8 @@ public class BattleTest {
                         rnd1));
             case BattleTest.ONESTEP:
                 return new OneStepLookAhead();
+            case BattleTest.OLMCTS:
+                return new SingleMCTSPlayer(rnd1);
             case BattleTest.NULL:
                 return new NullController();
             case BattleTest.RND:

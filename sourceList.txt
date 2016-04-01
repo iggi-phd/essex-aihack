@@ -28,7 +28,6 @@
 ./src/battle/controllers/diego/search/GAIndividual.java
 ./src/battle/controllers/diego/search/GASearch.java
 ./src/battle/controllers/diego/search/RandomSearch.java
-./src/battle/controllers/diego/search/OneStepLookAhead.java
 ./src/battle/controllers/diego/search/Search.java
 ./src/battle/controllers/diego/strategy/ICoevPairing.java
 ./src/battle/controllers/diego/strategy/ICrossover.java
@@ -41,6 +40,10 @@
 ./src/battle/controllers/diego/strategy/RndOpponentGenerator.java
 ./src/battle/controllers/diego/strategy/TournamentSelection.java
 ./src/battle/controllers/diego/strategy/UniformCrossover.java
+./src/battle/controllers/onesteplookahead/OneStepLookAhead.java
+./src/battle/controllers/olmcts/AbstractPlayer.java
+./src/battle/controllers/olmcts/SingleTreeNode.java
+./src/battle/controllers/olmcts/SingleMCTSPlayer.java
 ./src/battle/controllers/EmptyController.java
 ./src/battle/controllers/FireController.java
 ./src/battle/controllers/FireForwardController.java
@@ -74,5 +77,6 @@
 ./src/utilities/Range.java
 ./src/utilities/RangeMapper.java
 ./src/utilities/StatSummary.java
+./src/utilities/ElapsedCpuTimer.java
 ./src/view/colors/ColorTable.java
 ./src/view/colors/IntRamp.java

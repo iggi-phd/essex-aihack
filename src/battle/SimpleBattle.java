@@ -47,6 +47,8 @@ public class SimpleBattle {
     double score1Record[];
     double score2Record[];
 
+    int winner = -1;
+
     public SimpleBattle() {
         this(true);
         scoreRecord = new double[nTicks+1];
@@ -124,6 +126,7 @@ public class SimpleBattle {
         //s2 = buildShip(254, 254, -1, -1, 1);
         //s2 = buildShip(25, 250, 1, 0, 1);
         this.currentTick = 0;
+        this.winner = -1;
 
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
@@ -432,16 +435,29 @@ public class SimpleBattle {
     }
 
     public boolean isGameOver() {
-        //if(score1==1 || score2==1)
-        //    return true;
+        if(score1==1)
+        {
+            this.winner = 0;
+            return true;
+        }
+        if(score2==1)
+        {
+            this.winner = 1;
+            return true;
+        }
         /*if (getMissilesLeft(0) >= 0 && getMissilesLeft(1) >= 0) {
             //ensure that there are no bullets left in play
             if (objects.isEmpty()) {
                 return true;
             }
         }*/
-
         return currentTick >= nTicks;
+    }
+
+    public int getGameWinner() {
+        boolean end = isGameOver();
+        assert((!end) && (this.winner !=-1));
+        return this.winner;
     }
 
     public double getScore(int playerId)

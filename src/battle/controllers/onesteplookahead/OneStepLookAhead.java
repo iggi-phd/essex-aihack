@@ -1,5 +1,5 @@
 
-package battle.controllers.diego.search;
+package battle.controllers.onesteplookahead;
 
 import battle.SimpleBattle;
 import battle.controllers.diego.ActionMap;
@@ -7,6 +7,10 @@ import math.Matrix;
 import battle.BattleController;
 import asteroids.Action;
 
+/**
+ * Author: Jialin Liu, University of Essex                                    
+ * Date: 01/04/2016 
+ */
 public class OneStepLookAhead implements BattleController {
     public Matrix my_fitness;
     
