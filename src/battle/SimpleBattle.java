@@ -178,6 +178,13 @@ public class SimpleBattle {
         Action a1 = p1.getAction(this.clone(), 0);
         Action a2 = p2.getAction(this.clone(), 1);
         update(a1, a2);
+
+        if(a1.shoot)
+            s1.addRandomForce();
+
+        if(a2.shoot)
+            s2.addRandomForce();
+
         ss1.add(score(0));
         ss2.add(score(1));
     }
