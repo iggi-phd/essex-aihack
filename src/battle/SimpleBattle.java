@@ -267,7 +267,6 @@ public class SimpleBattle {
         double maxShootRange = 25;
         if(distPoints>1.0/(1.0+minShootRange/100.0))
             return (dot*distPoints-0.5);
-            //return -dot*distPoints;
         /**
          * Check the win
          */
@@ -442,6 +441,12 @@ public class SimpleBattle {
     }
 
     public boolean isGameOver() {
+        if(score1==1 && score2==1)
+        {
+           s1.addRandomForce();
+           s2.addRandomForce();
+           return currentTick >= nTicks;
+        }
         if(score1==1)
         {
             this.winner = 0;
