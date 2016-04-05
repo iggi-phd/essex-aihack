@@ -86,7 +86,7 @@ public class NeuroShip extends GameObject {
         //Random rotation:
         int rotation = (int) (Math.random()*3);
         double turnAngle = rotation == 0? -1 : rotation == 1 ? 1 : 0;
-        d.rotate(turnAngle);
+        d.rotate(turnAngle * steerStep);
 
         //System.out.format("%.3f %.3f %d\n", rad, strength, rotation);
     }
@@ -152,6 +152,17 @@ public class NeuroShip extends GameObject {
         diff.normalise();
 
         return diff.dot(front);
+    }
+
+
+    public double dotDirections(NeuroShip other)
+    {
+        Vector2d thisFront = new Vector2d(this.d, true);
+        Vector2d otherFront = new Vector2d(other.d, true);
+        thisFront.normalise();
+        otherFront.normalise();
+
+        return thisFront.dot(otherFront);
     }
 
     public double distTo(NeuroShip other)

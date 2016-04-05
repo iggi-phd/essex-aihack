@@ -240,10 +240,10 @@ public class SimpleBattle {
     {
         score1 = calcScore(0);
         score2 = calcScore(1);
-        while(score1==1 && score2==1)
+        while(score1==0 && score2==0)
         {
-            s1.addRandomForce();
-            s2.addRandomForce();
+            //s1.addRandomForce();
+            //s2.addRandomForce();
             score1 = calcScore(0);
             score2 = calcScore(1);
         }
@@ -264,6 +264,8 @@ public class SimpleBattle {
         double dist = ss1.distTo(ss2);
         double distPoints = 1.0/(1.0+dist/100.0);
         double dot = ss1.dotTo(ss2);
+        double dotDirs = ss1.dotDirections(ss2);
+
         //if(playerId == 0)
         //    System.out.println("player 1 currentTick: " +currentTick+"; d: " + dist + "; dp: " + distPoints + "; dot: " + dot + "; TOTAL: " + (dot*distPoints));
         //if(playerId == 1)
@@ -273,17 +275,21 @@ public class SimpleBattle {
         * Check if the two ships are too closed to each other (less than 5) 
         * If yes, neither of them can shoot, score=0                           
         */ 
-        double minShootRange = 25;
-        double maxShootRange = 50;
-        if(distPoints>1.0/(1.0+minShootRange/100.0))
-        {
-            //System.out.println("distPoints=" + distPoints + ", dot*distPoints=" + dot*distPoints);
-            return (dot*distPoints-0.5);
-        }
+//        double minShootRange = 40;
+         double maxShootRange = 50;
+//        if(distPoints>1.0/(1.0+minShootRange/100.0))
+//        {
+//            //s1.addRandomForce();
+//            //s2.addRandomForce();
+//
+//            //System.out.println("distPoints=" + distPoints + ", dot*distPoints=" + dot*distPoints);
+//            return (dot*distPoints-0.5);
+//        }
         /**
          * Check if the opponent in the shooting range
          */
-        if(distPoints>=1.0/(1.0+maxShootRange/100.0) && dot>=Math.sqrt(0.5))
+        double dotAngle= Math.sqrt(3.0)/2.0;
+        if(distPoints>=1.0/(1.0+maxShootRange/100.0) && dot>=dotAngle && dotDirs>=dotAngle)
             return 1;
         return dot*distPoints;
     }
