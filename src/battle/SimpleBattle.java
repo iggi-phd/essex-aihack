@@ -31,6 +31,7 @@ public class SimpleBattle {
     int nTicks = 500;
     boolean visible = true;
 
+    int nMissiles = 10;
 
     ArrayList<GameObject> objects;
     ArrayList<PlayerStats> stats;
@@ -104,6 +105,8 @@ public class SimpleBattle {
         while (!isGameOver()) {
             update();
         }
+
+        System.out.println("Player " + (this.winner+1) + " wins at " + currentTick);
 
         if (p1 instanceof KeyListener) {
             view.removeKeyListener((KeyListener)p1);
@@ -198,8 +201,8 @@ public class SimpleBattle {
         checkCollision(s2);
 
         // and fire any missiles as necessary
-        //if (a1.shoot) fireMissile(s1.s, s1.d, 0);
-        //if (a2.shoot) fireMissile(s2.s, s2.d, 1);
+        if (a1.shoot) fireMissile(s1.s, s1.d, 0);
+        if (a2.shoot) fireMissile(s2.s, s2.d, 1);
 
         wrap(s1);
         wrap(s2);
@@ -237,6 +240,13 @@ public class SimpleBattle {
     {
         score1 = calcScore(0);
         score2 = calcScore(1);
+        while(score1==1 && score2==1)
+        {
+            s1.addRandomForce();
+            s2.addRandomForce();
+            score1 = calcScore(0);
+            score2 = calcScore(1);
+        }
     }
 
 
@@ -263,12 +273,15 @@ public class SimpleBattle {
         * Check if the two ships are too closed to each other (less than 5) 
         * If yes, neither of them can shoot, score=0                           
         */ 
-        double minShootRange = 5;
-        double maxShootRange = 25;
+        double minShootRange = 25;
+        double maxShootRange = 50;
         if(distPoints>1.0/(1.0+minShootRange/100.0))
+        {
+            //System.out.println("distPoints=" + distPoints + ", dot*distPoints=" + dot*distPoints);
             return (dot*distPoints-0.5);
+        }
         /**
-         * Check the win
+         * Check if the opponent in the shooting range
          */
         if(distPoints>=1.0/(1.0+maxShootRange/100.0) && dot>=Math.sqrt(0.5))
             return 1;
@@ -356,12 +369,15 @@ public class SimpleBattle {
         }
     }
 
-    /*protected void fireMissile(Vector2d s, Vector2d d, int playerId) {
+    protected void fireMissile(Vector2d s, Vector2d d, int playerId) {
         // need all the usual missile firing code here
         NeuroShip currentShip = playerId == 0 ? s1 : s2;
         PlayerStats stats = this.stats.get(playerId);
         if (stats.nMissiles < nMissiles) {
             Missile m = new Missile(s, new Vector2d(0, 0, true));
+            // the velocity is noisy
+            double noiseStrength = 0.1;
+            Vector2d releaseVelocity = new Vector2d(1+Math.random()*noiseStrength,1+Math.random()*noiseStrength);
             m.v.add(d, releaseVelocity);
             // make it clear the ship
             m.s.add(m.v, (currentShip.r() + missileRadius) * 1.5 / m.v.mag());
@@ -370,7 +386,7 @@ public class SimpleBattle {
             // sounds.fire();
             stats.nMissiles++;
         }
-    }*/
+    }
 
     public void draw(Graphics2D g) {
         // for (Object ob : objects)
@@ -442,18 +458,16 @@ public class SimpleBattle {
 
     public boolean isGameOver() {
         if(score1==1 && score2==1)
-        {
-           s1.addRandomForce();
-           s2.addRandomForce();
-           return currentTick >= nTicks;
-        }
+            return currentTick >= nTicks;
         if(score1==1)
         {
             this.winner = 0;
+            //System.out.println("green win at " + currentTick+" " +score1 + " " +score2);
             return true;
         }
         if(score2==1)
         {
+            //System.out.println("blue win at " + currentTick+" " +score1 + " " +score2);
             this.winner = 1;
             return true;
         }

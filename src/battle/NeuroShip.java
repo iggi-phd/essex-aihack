@@ -67,8 +67,8 @@ public class NeuroShip extends GameObject {
 //    }
 //
 
-    public static double MIN_FORCE = 1.0;
-    public static double MAX_FORCE = 10.0;
+    public static double MIN_FORCE = 10.0;
+    public static double MAX_FORCE = 25.0;
     public void addRandomForce()
     {
         //Random direction:
