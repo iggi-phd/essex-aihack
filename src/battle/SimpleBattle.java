@@ -32,6 +32,7 @@ public class SimpleBattle {
     boolean visible = true;
 
     int nMissiles = 10;
+    int life = 1;
 
     ArrayList<GameObject> objects;
     ArrayList<PlayerStats> stats;
@@ -87,8 +88,8 @@ public class SimpleBattle {
         this.p2 = p2;
         reset(true);
 
-        stats.add(new PlayerStats(0, 0));
-        stats.add(new PlayerStats(0, 0));
+        stats.add(new PlayerStats(nMissiles, life));
+        stats.add(new PlayerStats(nMissiles, life));
 
         if (p1 instanceof KeyListener) {
             view.addKeyListener((KeyListener)p1);
@@ -120,35 +121,33 @@ public class SimpleBattle {
         return allRecord;
     }
     
-    public void reset() {
+    /**
+     * Randomly reset the game if randomInit==true
+     */
+    public void reset(boolean randomInit) {
         stats.clear();
         objects.clear();
-        s1 = buildShip(200, 250, 1, 0, 0);                                  
-        s2 = buildShip(300, 250, -1, 0, 1);
-        //s1 = buildShip(251, 252, 0, 1, 0);
-        //s2 = buildShip(254, 254, -1, -1, 1);
-        //s2 = buildShip(25, 250, 1, 0, 1);
-        this.currentTick = 0;
-        this.winner = -1;
-
-        stats.add(new PlayerStats(0, 0));
-        stats.add(new PlayerStats(0, 0));
-    }
-
-    public void reset(boolean randomInit) {
         if(randomInit) {
-            stats.clear();
-            objects.clear();
             Vector<Integer> pos = randomPositionBy4Area();
             s1 = buildShip(pos.get(0), pos.get(1), 1, 0, 0);
             s2 = buildShip(pos.get(2), pos.get(3), -1, 0, 1);
-            this.currentTick = 0;
-
-            stats.add(new PlayerStats(0, 0));
-            stats.add(new PlayerStats(0, 0));
+            objects.add(new Wall(100,100,50,20));
         } else {
-            reset();
+            s1 = buildShip(200, 250, 1, 0, 0);
+            s2 = buildShip(300, 250, -1, 0, 1);
         }
+
+        this.currentTick = 0;
+        this.winner = -1;
+
+        stats.add(new PlayerStats(nMissiles, life));
+        stats.add(new PlayerStats(nMissiles, life));
+        objects.add(s1);
+        objects.add(s2);
+    }
+    
+    public void addObstacle(boolean randomInit) {
+        objects.add(new Wall(100,100,50,20));
     }
 
     public Vector<Integer> randomPositionBy4Area() {
@@ -164,7 +163,6 @@ public class SimpleBattle {
         pos.add(Util.randomIntInRange(25+((int)(area2/2))*250, 225+((int)(area2/2))*250));
         return pos;
     }
-    
 
     protected NeuroShip buildShip(int x, int y, int dx, int dy, int playerID) {
         Vector2d position = new Vector2d(x, y, true);
@@ -346,9 +344,10 @@ public class SimpleBattle {
                 if (overlap(actor, ob)) {
                     // the object is hit, and the actor is also
 
-                    int playerID = (actor == s1 ? 1 : 0);
+                    int playerID = (actor == s1 ? 0 : 1);
                     PlayerStats stats = this.stats.get(playerID);
                     //stats.nPoints += pointsPerKill;
+                    stats.nPoints++;
 
                     ob.hit();
                     return;
@@ -447,11 +446,11 @@ public class SimpleBattle {
     }
 
     public int getMissilesLeft(int playerID) {
-        return 0;
-        /*assert playerID < 2;
+        //return 0;
+        assert playerID < 2;
         assert playerID >= 0;
 
-        return stats.get(playerID).nMissiles - nMissiles;*/
+        return stats.get(playerID).nMissiles - nMissiles;
     }
 
     private void wrap(GameObject ob) {
@@ -506,6 +505,11 @@ public class SimpleBattle {
         public PlayerStats(int nMissiles, int nPoints) {
             this.nMissiles = nMissiles;
             this.nPoints = nPoints;
+        }
+
+        public PlayerStats() {
+            this.nMissiles = 10;
+            this.nPoints = 1;
         }
 
         public int getMissilesFired() {

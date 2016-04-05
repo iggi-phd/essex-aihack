@@ -16,6 +16,7 @@
 ./src/asteroids/PolyContains.java
 ./src/asteroids/RotateAndShoot.java
 ./src/asteroids/Ship.java
+./src/asteroids/Wall.java 
 ./src/asteroids/State.java
 ./src/asteroids/View.java
 ./src/battle/BattleController.java

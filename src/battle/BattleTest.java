@@ -31,17 +31,17 @@ public class BattleTest {
     static final int ONESTEP = 6;
     static final int OLMCTS = 7;
     static final int MAX_TICKS_GAME = 1000;
-    static final int NUM_GAMES_TO_PLAY = 100;
+    static final int NUM_GAMES_TO_PLAY = 1;
 
     public static void main(String[] args) {
         //playOne(BattleTest.WASD, BattleTest.ARROWS);
 
-        //playOne(BattleTest.GA, BattleTest.WASD);
-        playOne(BattleTest.GA, BattleTest.COEV);
+        playOne(BattleTest.GA, BattleTest.WASD);
+        //playOne(BattleTest.GA, BattleTest.COEV);
         //playOne(BattleTest.ONESTEP, BattleTest.COEV);
         //playOne(BattleTest.GA, BattleTest.OLMCTS);
-        Search.NUM_ACTIONS_INDIVIDUAL = 10;
-        Search.MACRO_ACTION_LENGTH = 1;
+        //Search.NUM_ACTIONS_INDIVIDUAL = 10;
+        //Search.MACRO_ACTION_LENGTH = 1;
 //        playN(BattleTest.GA, BattleTest.COEV, "plots/data/GA-RND_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_COEV_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
     }
 
