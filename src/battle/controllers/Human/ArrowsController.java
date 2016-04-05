@@ -18,7 +18,8 @@ public class ArrowsController implements BattleController, KeyListener {
             new Action(0.0,1.0,false),
             new Action(1.0,0.0,false),
             new Action(1.0,-1.0,false),
-            new Action(1.0,1.0,false)
+            new Action(1.0,1.0,false),
+            new Action(0.0,0.0,true)
     };
 
     Action curAction = ActionMap[0];
@@ -33,11 +34,16 @@ public class ArrowsController implements BattleController, KeyListener {
      */
     private int m_turn;
 
+    /**
+     * USE action
+     */
+    private boolean m_use;
 
     public ArrowsController()
     {
         m_turn = 0;
         m_thrust = false;
+        m_use = false;
     }
 
     @Override
@@ -53,6 +59,9 @@ public class ArrowsController implements BattleController, KeyListener {
 
     private Action getCurrentAction()
     {
+        if(m_use)
+            return ActionMap[6];
+
         //Thrust actions.
         if(m_thrust)
         {
@@ -88,9 +97,9 @@ public class ArrowsController implements BattleController, KeyListener {
                 m_turn = 1;
                 break;
 
-//            case KeyEvent.VK_SPACE:
-//                currentAction = FIRE;
-//                break;
+            case KeyEvent.VK_SPACE:
+                m_use = true;
+                break;
         }
     }
 
@@ -106,6 +115,9 @@ public class ArrowsController implements BattleController, KeyListener {
         }
         if (key == KeyEvent.VK_RIGHT) {
             m_turn = 0;
+        }
+        if (key == KeyEvent.VK_SPACE) {
+            m_use = false;
         }
 
     }

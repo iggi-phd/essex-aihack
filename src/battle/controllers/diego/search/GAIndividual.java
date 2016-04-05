@@ -70,6 +70,8 @@ public class GAIndividual
                 else
                     thisGameCopy.update(ActionMap.ActionMap[otherAction], ActionMap.ActionMap[thisAction]);
                 end = thisGameCopy.isGameOver();
+                //if(end)
+                //    System.out.println("The previous result is a guess !");
             }
         }
         m_fitness = thisGameCopy.score(playerID);

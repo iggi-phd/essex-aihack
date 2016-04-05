@@ -8,6 +8,7 @@ import battle.controllers.diego.strategy.*;
 import battle.controllers.olmcts.*;
 import battle.controllers.onesteplookahead.*;
 import battle.controllers.nullController.NullController;
+import battle.controllers.onesteplookahead.OneStepLookAhead;
 import battle.controllers.random.RandomController;
 
 import java.io.BufferedWriter;
@@ -30,7 +31,7 @@ public class BattleTest {
     static final int ONESTEP = 6;
     static final int OLMCTS = 7;
     static final int MAX_TICKS_GAME = 1000;
-    static final int NUM_GAMES_TO_PLAY = 1;
+    static final int NUM_GAMES_TO_PLAY = 100;
 
     public static void main(String[] args) {
         //playOne(BattleTest.WASD, BattleTest.ARROWS);
@@ -38,10 +39,10 @@ public class BattleTest {
         //playOne(BattleTest.GA, BattleTest.WASD);
         //playOne(BattleTest.GA, BattleTest.COEV); 
         //playOne(BattleTest.ONESTEP, BattleTest.COEV);
-        playOne(BattleTest.GA, BattleTest.OLMCTS);  
-        //Search.NUM_ACTIONS_INDIVIDUAL = 10;
-        //Search.MACRO_ACTION_LENGTH = 1;
-        //playN(BattleTest.GA, BattleTest.COEV, "plots/data/GA-nullOpp_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_RND_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
+        //playOne(BattleTest.GA, BattleTest.OLMCTS);
+        Search.NUM_ACTIONS_INDIVIDUAL = 10;
+        Search.MACRO_ACTION_LENGTH = 1;
+        playN(BattleTest.GA, BattleTest.COEV, "plots/data/GA-RND_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_COEV_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
     }
 
     public static void playOne(int ply1, int ply2)
