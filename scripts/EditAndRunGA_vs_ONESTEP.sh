@@ -16,9 +16,9 @@ learnt_opp=RND
 
 SOURCE_PATH=~/aihack
 #MUTATION_PATH=${me}-${learnt_opp}_${num_actions}x${action_length}_vs_${opp}_${num_games}x${max_ticks}
-#MUTATION_PATH=${me}-${learnt_opp}_${num_actions}x${action_length}_vs_${opp}_policy${p}_${num_games}x${max_ticks}
+MUTATION_PATH=${me}-${learnt_opp}_${num_actions}x${action_length}_vs_${opp}_policy${p}_${num_games}x${max_ticks}
 #MUTATION_PATH=${me}_vs_${opp}_policy${p}_${num_games}x${max_ticks}
-MUTATION_PATH=${me}_vs_${opp}_${num_games}x${max_ticks} 
+#MUTATION_PATH=${me}_vs_${opp}_${num_games}x${max_ticks} 
 echo ${MUTATION_PATH}
 
 ## copy/paste
@@ -38,6 +38,6 @@ sed -i 's/playN(BattleTest.GA, .*/playN(BattleTest.'${me}', BattleTest.'${opp}',
 sed -i 's/RECOMMEND_POLICY = 0;/RECOMMEND_POLICY = '${p}';/g' ./src/battle/controllers/diego/search/OneStepLookAhead.java
 
 ## Build and Run the program
-./BuildAndRun.sh > ../wins/${MUTATION_PATH}.wins
+./BuildAndRun.sh  > ../wins/${MUTATION_PATH}.wins
 cd ..
 
