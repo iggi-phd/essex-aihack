@@ -19,7 +19,6 @@ public class PMutation implements IMutation
         m_rnd = rnd;
     }
 
-
     @Override
     public void mutate(GAIndividual individual) {
 
@@ -28,7 +27,7 @@ public class PMutation implements IMutation
             {
                 if(m_rnd.nextDouble() < 0.5)  //mutate thrust
                     individual.m_genome[i] = ActionMap.mutateThrust(individual.m_genome[i]);
-                else  //mutate steering
+                else //mutate steering
                     individual.m_genome[i] = ActionMap.mutateSteer(individual.m_genome[i], m_rnd.nextDouble()>0.5);
             }
 

@@ -30,14 +30,15 @@ public class BattleTest {
     static final int ARROWS = 5;
     static final int ONESTEP = 6;
     static final int OLMCTS = 7;
-    static final int MAX_TICKS_GAME = 1000;
+    static final int MAX_TICKS_GAME = 200;
     static final int NUM_GAMES_TO_PLAY = 1;
 
     public static void main(String[] args) {
         //playOne(BattleTest.WASD, BattleTest.ARROWS);
 
-        playOne(BattleTest.GA, BattleTest.WASD);
-        //playOne(BattleTest.GA, BattleTest.COEV);
+        //playOne(BattleTest.GA, BattleTest.WASD);
+        playOne(BattleTest.GA, BattleTest.COEV);
+        //
         //playOne(BattleTest.ONESTEP, BattleTest.COEV);
         //playOne(BattleTest.GA, BattleTest.OLMCTS);
         //Search.NUM_ACTIONS_INDIVIDUAL = 10;

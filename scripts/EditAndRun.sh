@@ -11,7 +11,7 @@ num_actions=${3}
 action_length=${4}
 num_games=${5}
 max_ticks=${6}
-learnt_opp=${7-RND}
+learnt_opp=RND
 
 SOURCE_PATH=~/aihack
 MUTATION_PATH=${me}-${learnt_opp}_${num_actions}x${action_length}_vs_${opp}_${num_games}x${max_ticks}
@@ -22,18 +22,18 @@ mkdir -p ${MUTATION_PATH}
 cd ${MUTATION_PATH}
 cp -r ${SOURCE_PATH}/src ./
 cp ${SOURCE_PATH}/sourceList.txt .
-cp ${SOURCE_PATH}/BuildAndRun.sh .
+cp ${SOURCE_PATH}/scripts/BuildAndRun.sh .
 
 ## Modify the parameters
-sed -i 's/Search.NUM_ACTIONS_INDIVIDUAL = 10;/Search.NUM_ACTIONS_INDIVIDUAL = '${num_actions}';/g' ./src/battle/BattleTest.java 
-sed -i 's/MAX_TICKS_GAME = 10;/MAX_TICKS_GAME = '${max_ticks}';/g' ./src/battle/BattleTest.java 
-sed -i 's/Search.MACRO_ACTION_LENGTH = 1;/Search.MACRO_ACTION_LENGTH = '${action_length}';/g' ./src/battle/BattleTest.java
-sed -i 's/NUM_GAMES_TO_PLAY = 10;/NUM_GAMES_TO_PLAY = '${num_games}';/g' ./src/battle/BattleTest.java
+sed -i 's/Search.NUM_ACTIONS_INDIVIDUAL = .*/Search.NUM_ACTIONS_INDIVIDUAL = '${num_actions}';/' ./src/battle/BattleTest.java 
+sed -i 's/MAX_TICKS_GAME = .*/MAX_TICKS_GAME = '${max_ticks}';/' ./src/battle/BattleTest.java 
+sed -i 's/Search.MACRO_ACTION_LENGTH = .*/Search.MACRO_ACTION_LENGTH = '${action_length}';/' ./src/battle/BattleTest.java
+sed -i 's/NUM_GAMES_TO_PLAY = .*/NUM_GAMES_TO_PLAY = '${num_games}';/' ./src/battle/BattleTest.java
 sed -i 's/playN(BattleTest.GA, .*/playN(BattleTest.'${me}', BattleTest.'${opp}', "..\/data\/'${MUTATION_PATH}'.txt");/' ./src/battle/BattleTest.java
+
+sed -i 's/RECOMMEND_POLICY = 1;/RECOMMEND_POLICY = 10;/g' ./src/battle/controllers/diego/search/OneStepLookAhead.java
 
 ## Build and Run the program
 ./BuildAndRun.sh
-echo "Match ${me} trained by ${learnt_opp} against ${opp} using \
-    num_actions=${num_actions}  action_length=${action_length} \
-    max_ticks=${max_ticks} finished ${num_games} games."
 cd ..
+
