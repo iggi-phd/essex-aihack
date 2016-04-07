@@ -35,6 +35,8 @@ public class SimpleBattle {
     int nbObstacles = 5;
     int nMissiles = 2000;
     int missileSpeed = 10;
+    int life = 3;
+    private static final double MAX_SCORE = 1000000;
 
     ArrayList<GameObject> objects;
     ArrayList<PlayerStats> stats;
@@ -92,8 +94,8 @@ public class SimpleBattle {
         this.p2 = p2;
         reset(true);
 
-        stats.add(new PlayerStats(nMissiles, 0));
-        stats.add(new PlayerStats(nMissiles, 0));
+        stats.add(new PlayerStats(nMissiles, 0, life));
+        stats.add(new PlayerStats(nMissiles, 0, life));
 
         if (p1 instanceof KeyListener) {
             view.addKeyListener((KeyListener)p1);
@@ -109,11 +111,17 @@ public class SimpleBattle {
 
         while (!isGameOver()) {
             update();
+            //System.out.println("player 1: " + this.stats.get(0).life);
+            //System.out.println("player 2: " + this.stats.get(1).life); 
         }
 
-        System.out.println("Player " + (this.winner+1) + " wins at " + currentTick + " with points " + stats.get(this.winner).nPoints);
-        System.out.println("Player " + (2-this.winner) + " loss at " + currentTick + " with points " + stats.get(2-this.winner).nPoints);
-
+        if(this.winner!=-1) {
+            System.out.println("Player " + (this.winner+1) + " wins at " + currentTick + " with life " + stats.get(this.winner).life);
+            System.out.println("Player " + (2-this.winner) + " loss at " + currentTick + " with life " + stats.get(1-this.winner).life);
+        } else {
+            System.out.println("Player 1 draws at " + currentTick + " with life " + stats.get(0).life);
+            System.out.println("Player 2 draws at " + currentTick + " with life " + stats.get(1).life);
+        }
         if (p1 instanceof KeyListener) {
             view.removeKeyListener((KeyListener)p1);
         }
@@ -152,8 +160,8 @@ public class SimpleBattle {
         this.currentTick = 0;
         this.winner = -1;
 
-        stats.add(new PlayerStats(nMissiles, 0));
-        stats.add(new PlayerStats(nMissiles, 0));
+        stats.add(new PlayerStats(nMissiles, 0, life));
+        stats.add(new PlayerStats(nMissiles, 0, life));
         objects.add(s1);
         objects.add(s2);
     }
@@ -167,12 +175,13 @@ public class SimpleBattle {
         Random randomGenerator = new Random();
         int area1 = randomGenerator.nextInt(4)+1;
         int area2 = randomGenerator.nextInt(4)+1;
-        while(area2==area1)
+        while(area2==area1) {
             area2 = randomGenerator.nextInt(4)+1;
-        pos.add(Util.randomIntInRange(25+(area1%2)*250, 225+(area1%2)*250));
-        pos.add(Util.randomIntInRange(25+((int)(area1/2))*250, 225+((int)(area1/2))*250));
-        pos.add(Util.randomIntInRange(25+(area2%2)*250, 225+(area2%2)*250));
-        pos.add(Util.randomIntInRange(25+((int)(area2/2))*250, 225+((int)(area2/2))*250));
+        }
+        pos.add(Util.randomIntInRange(0,100)+((int)(area1%2)*250)+100);
+        pos.add(Util.randomIntInRange(0,100)+((int)(area1/2)*250)+100);
+        pos.add(Util.randomIntInRange(0,100)+((int)(area2%2)*250)+100);
+        pos.add(Util.randomIntInRange(0,100)+((int)(area2/2)*250)+100);
         return pos;
     }
 
@@ -292,15 +301,13 @@ public class SimpleBattle {
         * Check if the two ships are too closed to each other (less than 5) 
         * If yes, neither of them can shoot, score=0                           
         */
-        double minShootRange = 20;
+        double minShootRange = 10;
         double maxShootRange = 100;
-        if(distPoints>1.0/(1.0+minShootRange/100.0))
+        if(dist<=minShootRange)
         {
             s1.addRandomForce();
             s2.addRandomForce();
-
-            //System.out.println("distPoints=" + distPoints + ", dot*distPoints=" + dot*distPoints);
-            return (dot*distPoints-0.5);
+            //return 0;
         }
         /**
          * Check if the opponent in the shooting range
@@ -310,10 +317,10 @@ public class SimpleBattle {
         if(distPoints>=1.0/(1.0+maxShootRange/100.0) && dot>=dotAngle && dotDirs>=dotAngle)
         //if(dot>=dotAngle && dotDirs>=dotAngle)
         {
-            return Double.POSITIVE_INFINITY;
+            return MAX_SCORE;
         }
         
-        return (stats.get(playerId).nPoints*10 + dot*distPoints);
+        return (stats.get(playerId).life + dot*distPoints);
         //return dot*distPoints;//*dotDirs;
     }
 
@@ -348,7 +355,7 @@ public class SimpleBattle {
     protected ArrayList<PlayerStats> copyStats() {
         ArrayList<PlayerStats> statsClone = new ArrayList<PlayerStats>();
         for (PlayerStats object : stats) {
-            statsClone.add(new PlayerStats(object.nMissiles, object.nPoints));
+            statsClone.add(new PlayerStats(object.nMissiles, object.nPoints, object.life));
         }
 
         return statsClone;
@@ -377,16 +384,21 @@ public class SimpleBattle {
                 }
             }
             **/
+            // the ob is a ship
             for (GameObject ob : objects) {
                 if (overlap(actor, ob)) {
                     // the object is hit, and the actor is also
 
                     int playerID = (actor == s1 ? 0 : 1);
-                    PlayerStats stats = this.stats.get(playerID);
-                    //stats.nPoints += pointsPerKill;
-                    stats.nPoints++;
-                    //ob.hit();
-                    objects.remove(ob);
+                    if(ob instanceof NeuroShip) {
+                        this.stats.get(playerID).life=0;
+                        this.stats.get(1-playerID).life=0;
+                        //System.out.println(this.stats.get(1-playerID).life);
+                    } else {
+                        ob.hit();
+                        objects.remove(ob);
+                        this.stats.get(playerID).life--;
+                    }
                     return;
                 }
             }
@@ -521,15 +533,17 @@ public class SimpleBattle {
     }
 
     public boolean isGameOver() {
-        if(score1==Double.POSITIVE_INFINITY && score2==Double.POSITIVE_INFINITY)
-            return currentTick >= nTicks;
-        if(score1==Double.POSITIVE_INFINITY || score2==-Double.POSITIVE_INFINITY)
+        if(stats.get(1).life==0 && stats.get(0).life==0)
+        {
+            return true;
+        }
+        if(score1==MAX_SCORE || score2==-MAX_SCORE || stats.get(1).life==0)
         {
             this.winner = 0;
             //System.out.println("green win at " + currentTick+" " +score1 + " " +score2);
             return true;
         }
-        if(score2==Double.POSITIVE_INFINITY || score1==-Double.POSITIVE_INFINITY)
+        if(score2==MAX_SCORE || score1==-MAX_SCORE || stats.get(0).life==0)
         {
             //System.out.println("blue win at " + currentTick+" " +score1 + " " +score2);
             this.winner = 1;
@@ -556,10 +570,6 @@ public class SimpleBattle {
             return true;                                                        
         } 
         **/
-        if(stats.get(0).nPoints > stats.get(1).nPoints)
-            this.winner = 0;
-        else if(stats.get(0).nPoints < stats.get(1).nPoints)
-            this.winner = 1;
         return currentTick >= nTicks;
     }
 
@@ -579,15 +589,18 @@ public class SimpleBattle {
     static class PlayerStats {
         int nMissiles;
         int nPoints;
+        int life;
 
-        public PlayerStats(int nMissiles, int nPoints) {
-            this.nMissiles = nMissiles;
-            this.nPoints = nPoints;
+        public PlayerStats(int _nMissiles, int _nPoints, int _life) {
+            this.nMissiles = _nMissiles;
+            this.nPoints = _nPoints;
+            this.life = _life;
         }
 
         public PlayerStats() {
             this.nMissiles = 10;
-            this.nPoints = 1;
+            this.nPoints = 0;
+            this.life = 3;
         }
 
         public int getMissilesFired() {
