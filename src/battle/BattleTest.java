@@ -36,14 +36,14 @@ public class BattleTest {
     public static void main(String[] args) {
         //playOne(BattleTest.WASD, BattleTest.ARROWS);
 
-       //playOne(BattleTest.GA, BattleTest.WASD);
+        playOne(BattleTest.GA, BattleTest.WASD);
         //playOne(BattleTest.GA, BattleTest.COEV);
         //
         //playOne(BattleTest.ONESTEP, BattleTest.COEV);
         //playOne(BattleTest.GA, BattleTest.OLMCTS);
         Search.NUM_ACTIONS_INDIVIDUAL = 10;
         Search.MACRO_ACTION_LENGTH = 1;
-        playN(BattleTest.GA, BattleTest.COEV, "plots/data/GA-RND_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_COEV_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
+        //playN(BattleTest.GA, BattleTest.COEV, "plots/data/GA-RND_"+Search.NUM_ACTIONS_INDIVIDUAL+"x"+Search.MACRO_ACTION_LENGTH+"_vs_COEV_"+NUM_GAMES_TO_PLAY+"x"+MAX_TICKS_GAME+".txt");
     }
 
     public static void playOne(int ply1, int ply2)

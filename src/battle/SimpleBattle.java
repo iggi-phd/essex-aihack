@@ -35,7 +35,7 @@ public class SimpleBattle {
     int nbObstacles = 5;
     int nMissiles = 2000;
     int missileSpeed = 10;
-    int life = 3;
+    int life = 10;
     private static final double MAX_SCORE = 1000000;
 
     ArrayList<GameObject> objects;
@@ -461,6 +461,7 @@ public class SimpleBattle {
             //System.out.println("Fired: " + m);
             //sounds.fire();
             this.stats.get(playerId).nMissiles--;
+            //currentShip.addRandomForce(1,3);
         }
     }
 
