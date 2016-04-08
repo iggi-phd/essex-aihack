@@ -398,6 +398,7 @@ public class SimpleBattle {
                         ob.hit();
                         objects.remove(ob);
                         this.stats.get(playerID).life--;
+						actor.addRandomForce();
                     }
                     return;
                 }
