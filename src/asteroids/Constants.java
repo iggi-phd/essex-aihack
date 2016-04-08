@@ -18,7 +18,7 @@ public interface Constants {
     Color bg = Color.black;
     Font font = new Font("Courier", Font.PLAIN, 20);
 
-    Color[] pColors = {Color.blue, Color.red};
+    Color[] pColors = {Color.green, Color.blue};
 
     int delay = 20;
     double ac = 0.01;

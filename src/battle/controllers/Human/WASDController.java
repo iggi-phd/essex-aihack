@@ -18,7 +18,9 @@ public class WASDController implements BattleController, KeyListener {
             new Action(0.0,1.0,false),
             new Action(1.0,0.0,false),
             new Action(1.0,-1.0,false),
-            new Action(1.0,1.0,false)
+            new Action(1.0,1.0,false),
+            new Action(0.0,0.0,true)
+
     };
 
     Action curAction = ActionMap[0];
@@ -32,12 +34,14 @@ public class WASDController implements BattleController, KeyListener {
      * Indicates if the turn must be applied.
      */
     private int m_turn;
+    private boolean shoot;
 
 
     public WASDController()
     {
         m_turn = 0;
         m_thrust = false;
+        shoot = false;
     }
 
     @Override
@@ -64,6 +68,8 @@ public class WASDController implements BattleController, KeyListener {
         //No thrust actions.
         if(m_turn == -1) return ActionMap[1];
         if(m_turn == 1) return ActionMap[2];
+
+        if(shoot) return ActionMap[6]; 
         return ActionMap[0];
     }
 
@@ -88,9 +94,9 @@ public class WASDController implements BattleController, KeyListener {
                 m_turn = 1;
                 break;
 
-//            case KeyEvent.VK_SPACE:
-//                currentAction = FIRE;
-//                break;
+            case KeyEvent.VK_SPACE:
+                shoot = true;
+                break;
         }
     }
 
@@ -107,6 +113,8 @@ public class WASDController implements BattleController, KeyListener {
         if (key == KeyEvent.VK_D) {
             m_turn = 0;
         }
-
+        if(key == KeyEvent.VK_SPACE){
+            shoot = false;
+        }
     }
 }

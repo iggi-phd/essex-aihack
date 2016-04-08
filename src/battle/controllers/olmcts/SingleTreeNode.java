@@ -143,13 +143,16 @@ public class SingleTreeNode
             uctValue = Util.noise(uctValue, this.epsilon, this.m_rnd.nextDouble());     //break ties randomly
 
             // small sampleRandom numbers: break ties in unexpanded nodes
-            if (uctValue > bestValue) {
+            if (uctValue >= bestValue) {
                 selected = child;
                 bestValue = uctValue;
             }
         }
         if (selected == null)
         {
+            //int selectedInd = Util.randomIntInRange(0, this.children.length-1);
+            //selected = this.children[selectedInd];
+            //System.out.println("Randomly chosen " + selectedInd);
             throw new RuntimeException("Warning! returning null: " + bestValue + " : " + this.children.length + " " +
             + bounds[0] + " " + bounds[1]);
         }
@@ -176,7 +179,10 @@ public class SingleTreeNode
         double delta = value(state);
 
         if(delta < bounds[0])
+        {
             bounds[0] = delta;
+            //System.out.println("delta is " +delta);
+        }
         if(delta > bounds[1])
             bounds[1] = delta;
 

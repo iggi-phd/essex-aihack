@@ -8,7 +8,7 @@ import math.Vector2d;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-
+import java.awt.geom.Rectangle2D;
 import static asteroids.Constants.*;
 
 public class NeuroShip extends GameObject {
@@ -61,15 +61,9 @@ public class NeuroShip extends GameObject {
         return scale * 2.4;
     }
 
-//    public Ship() {
-//        super(new Vector2d(), new Vector2d());
-//        d = new Vector2d(0, -1);
-//    }
-//
-
-    public static double MIN_FORCE = 10.0;
-    public static double MAX_FORCE = 25.0;
-    public void addRandomForce()
+    public static double MIN_FORCE = 5.0;
+    public static double MAX_FORCE = 50.0;
+    public void addRandomForce(double min_force, double max_force)
     {
         //Random direction:
         double rad = Math.toRadians(Math.random()*360);
@@ -78,7 +72,7 @@ public class NeuroShip extends GameObject {
         force.rotate(rad);
 
         //Random strength (between 1 and 5, for instance)
-        double strength = MIN_FORCE + Math.random()*MAX_FORCE;
+        double strength = min_force + Math.random()*max_force;
         force.multiply(strength);
 
         v.add(force);
@@ -86,11 +80,14 @@ public class NeuroShip extends GameObject {
         //Random rotation:
         int rotation = (int) (Math.random()*3);
         double turnAngle = rotation == 0? -1 : rotation == 1 ? 1 : 0;
-        d.rotate(turnAngle);
+        d.rotate(turnAngle * steerStep * (Math.random() * 3+2));
 
         //System.out.format("%.3f %.3f %d\n", rad, strength, rotation);
     }
 
+    public void addRandomForce() {
+        addRandomForce(MIN_FORCE,MAX_FORCE);
+    }
     public void reset() {
         s.set(width / 2, height / 2);
         v.zero();
@@ -154,12 +151,24 @@ public class NeuroShip extends GameObject {
         return diff.dot(front);
     }
 
+
+    public double dotDirections(NeuroShip other)
+    {
+        Vector2d thisFront = new Vector2d(this.d, true);
+        Vector2d otherFront = new Vector2d(other.d, true);
+        thisFront.normalise();
+        otherFront.normalise();
+
+        return thisFront.dot(otherFront);
+    }
+
     public double distTo(NeuroShip other)
     {
         Vector2d diff = Vector2d.subtract(other.s,this.s);
         return diff.mag();
     }
 
+    /**
     private void tryMissileLaunch() {
         // System.out.println("Trying a missile launch");
         if (releaseVelocity > maxRelease) {
@@ -176,7 +185,7 @@ public class NeuroShip extends GameObject {
             // System.out.println("Failed!");
         }
     }
-
+    **/
     public String toString() {
         return s + "\t " + v;
     }
@@ -213,5 +222,7 @@ public class NeuroShip extends GameObject {
         return dead;
     }
 
-
+    public Rectangle2D getBound() {
+        return new Rectangle2D.Double(s.x,s.y,Double.valueOf(xp[2]-xp[0]),Double.valueOf(yp[0]-yp[1]));
+    }
 }

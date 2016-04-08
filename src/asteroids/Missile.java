@@ -10,9 +10,15 @@ public class Missile extends GameObject {
 
     int ttl;
 
-    public Missile(Vector2d s, Vector2d v) {
+    public Missile(Vector2d s, Vector2d v, int missileTTL) {
         super(s, v);
         ttl = missileTTL;
+        r = 2;
+    }
+
+    public Missile(Vector2d s, Vector2d v) {
+        super(s, v);
+        ttl = 50;                                                       
         r = 2;
     }
 
@@ -32,9 +38,7 @@ public class Missile extends GameObject {
 
     @Override
     public GameObject copy() {
-        Missile object = new Missile(s, v);
-        object.ttl = ttl;
-
+        Missile object = new Missile(s, v, ttl);
         return object;
     }
 
@@ -50,6 +54,4 @@ public class Missile extends GameObject {
     public String toString() {
         return ttl + " :> " + s;
     }
-
-
 }

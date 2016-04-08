@@ -63,7 +63,7 @@ public class Agent extends AbstractPlayer {
     public Action act(SimpleBattle gameState, ElapsedCpuTimer elapsedTimer) {
 
         //Set the state observation object as the new root of the tree.
-        mctsPlayer.init(gameState);
+        mctsPlayer.init(gameState, 0);
 
         //Determine the action using MCTS...
         int action = mctsPlayer.run(elapsedTimer);

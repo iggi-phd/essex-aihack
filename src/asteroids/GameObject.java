@@ -1,6 +1,7 @@
 package asteroids;
 
 import math.Vector2d;
+import java.awt.geom.Rectangle2D; 
 
 import java.awt.*;
 
@@ -42,5 +43,8 @@ public abstract class GameObject {
     public boolean wrappable() {
         // wrap objects by default
         return true;
+    }
+    public Rectangle2D getBound() {
+        return null;
     }
 }
