@@ -61,7 +61,7 @@ public class NeuroShip extends GameObject {
         return scale * 2.4;
     }
 
-    public static double MIN_FORCE = 5.0;
+    public static double MIN_FORCE = 10.0;
     public static double MAX_FORCE = 50.0;
     public void addRandomForce(double min_force, double max_force)
     {
@@ -80,7 +80,7 @@ public class NeuroShip extends GameObject {
         //Random rotation:
         int rotation = (int) (Math.random()*3);
         double turnAngle = rotation == 0? -1 : rotation == 1 ? 1 : 0;
-        d.rotate(turnAngle * steerStep * (Math.random() * 3+2));
+        d.rotate(turnAngle * steerStep * (Math.random() * 3 ));
 
         //System.out.format("%.3f %.3f %d\n", rad, strength, rotation);
     }

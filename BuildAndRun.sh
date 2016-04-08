@@ -39,4 +39,5 @@ mkdir -p ${build_folder}
 javac -d ${build_folder} @${source_list_filename}
 
 ## Execute the program by pointing out the file which has method main
-java -cp ${build_folder}:**/*.class ${main_filename}
+#java -cp ${build_folder}:**/*.class ${main_filename}
+jar cfe battleGame.jar ${main_filename} ${build_folder}/src/battle/BattleTest.java.class
