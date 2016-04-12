@@ -44,7 +44,11 @@ public abstract class GameObject {
         // wrap objects by default
         return true;
     }
+
     public Rectangle2D getBound() {
         return null;
     }
+
+	public void addRandomForce() {
+	}
 }
