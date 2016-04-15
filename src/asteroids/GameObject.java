@@ -10,6 +10,7 @@ public abstract class GameObject {
     public boolean isTarget;
     public boolean dead;
     public double r;
+    public int id;
 
     protected GameObject(Vector2d s, Vector2d v) {
         this.s = new Vector2d(s, true);
@@ -51,4 +52,8 @@ public abstract class GameObject {
 
 	public void addRandomForce() {
 	}
+
+    public int getId() {
+        return this.id;
+    }  
 }

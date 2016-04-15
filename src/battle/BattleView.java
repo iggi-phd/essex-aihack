@@ -86,7 +86,7 @@ public class BattleView extends JComponent {
         String strAcumScores = "Acc. Score:    " + scA0 + " | " + scA1;
 
         String strPoints = "Points:    " + p1Stats.getPoints() + " | " + p2Stats.getPoints();
-        //String strMissiles  = "Missiles: " + p1Stats.getMissilesFired() + " | " + p2Stats.getMissilesFired();
+        String strMissiles  = "Missiles: " + p1Stats.getMissilesFired() + " | " + p2Stats.getMissilesFired();
         String strTicks = "Ticks:    " + game.currentTick;
         String strLives = "Life: " + p1Stats.getLife() +  " | " + p2Stats.getLife();
         String p1 = "P1 Green: " + TestWithMissile.playerNames[TestWithMissile.player1];
@@ -94,10 +94,11 @@ public class BattleView extends JComponent {
         //g.drawString(strScores, 10, 20);
         //g.drawString(strAcumScores, 10, 20);
         g.drawString(strPoints, 10, 20);
-        g.drawString(strLives, 10, 50);
-        g.drawString(strTicks, 10, 80);
-        g.drawString(p1, 10, 110);
-        g.drawString(p2, 10, 140);
+        g.drawString(strMissiles, 10, 50);
+        g.drawString(strLives, 10, 80);
+        g.drawString(strTicks, 10, 110);
+        g.drawString(p1, 10, 140);
+        g.drawString(p2, 10, 170);
     }
 
 

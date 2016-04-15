@@ -28,7 +28,7 @@ public class SingleTreeNode
     public int playerID;
     public int ROLLOUT_DEPTH = 10;
     public int NUM_ACTIONS = ActionMap.ActionMap.length;
-    public long DURATION_PER_TICK = 10;
+    public long DURATION_PER_TICK = 40;
     public static SimpleBattle rootState;
 
     public SingleTreeNode(Random rnd, int _playerID) {
@@ -71,10 +71,13 @@ public class SingleTreeNode
     }
     
     public void mctsSearch() {
+        long avgTimeTaken = 0;
+        long acumTimeTaken = 0;
+        int remainingLimit = 0;
+        long remaining = DURATION_PER_TICK;                                                                                                         
         int numIters = 0;
         long start_time = System.nanoTime();
-        boolean stop = false;
-        while(!stop) {
+        while(remaining > 2*avgTimeTaken && remaining > remainingLimit) {
             SimpleBattle state = rootState.clone();
             SingleTreeNode selected = treePolicy(state);
             double delta = selected.rollOut(state);
@@ -83,7 +86,9 @@ public class SingleTreeNode
             numIters++;
             //System.out.println(elapsedTimerIteration.elapsedMillis() + " --> " + acumTimeTaken + " (" + remaining + ")");
             long current_time = System.nanoTime();                      
-            stop = ((current_time - start_time)/1e6 >= DURATION_PER_TICK);
+            acumTimeTaken += (current_time - start_time)/1000000.0;
+            avgTimeTaken = acumTimeTaken/numIters;
+            remaining = (long) DURATION_PER_TICK - acumTimeTaken;
         }
     }
 
@@ -273,8 +278,8 @@ public class SingleTreeNode
         double bestValue = -Double.MAX_VALUE;
 
         for (int i=0; i<children.length; i++) {
-
             if(children[i] != null) {
+                System.out.println("id " + i);
                 //double tieBreaker = m_rnd.nextDouble() * epsilon;
                 double childValue = children[i].totValue / (children[i].nVisits + this.epsilon);
                 childValue = Util.noise(childValue, this.epsilon, this.m_rnd.nextDouble());     //break ties randomly

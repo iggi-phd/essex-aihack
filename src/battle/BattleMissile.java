@@ -10,7 +10,6 @@ import static asteroids.Constants.*;
 public class BattleMissile extends GameObject {
 
     int ttl;
-    int id;
     Color color;
 
     public BattleMissile(Vector2d s, Vector2d v, int id) {
@@ -56,6 +55,5 @@ public class BattleMissile extends GameObject {
     public String toString() {
         return ttl + " :> " + s;
     }
-
 
 }

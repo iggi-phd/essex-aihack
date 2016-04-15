@@ -55,7 +55,7 @@ public class RandomPairing extends ICoevPairing
 
             double fit = individual.evaluate(game, rival);
             ss.add(fit);
-            rival.accumFitness(-fit);
+            //rival.accumFitness(-fit);
         }
 
         double fit = ss.mean();

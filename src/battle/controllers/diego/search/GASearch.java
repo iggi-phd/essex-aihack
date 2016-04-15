@@ -7,6 +7,8 @@ import battle.controllers.diego.strategy.IMutation;
 import battle.controllers.diego.strategy.ISelection;
 import battle.controllers.diego.strategy.OpponentGenerator;
 
+import utilities.ElapsedCpuTimer;
+
 import java.util.Random;
 
 /**
@@ -104,12 +106,18 @@ public class GASearch extends Search {
         m_currentGameState = a_gameState;
         int numIters = 0; 
 
-        long start_time = System.nanoTime();
 
         //check that we don't overspend
        // while(numIters < 100) //TODO changed to 500 for testing
-        boolean stop = false;
-        while(!stop) {
+        //boolean stop = false;
+        //while(!stop) {
+        long avgTimeTaken = 0;
+        long acumTimeTaken = 0;
+        int remainingLimit = 0;
+        long remaining = DURATION_PER_TICK;
+        long start_time = System.nanoTime();
+        //long remaining = elapsedTimer.remainingTimeMillis();
+        while(remaining > 2*avgTimeTaken && remaining > remainingLimit) {
             GAIndividual[] nextPop = new GAIndividual[m_individuals.length];
 
             int i;
@@ -144,6 +152,13 @@ public class GASearch extends Search {
             m_numGenerations++;
             numIters++;
             //System.out.println("Iteration number " + numIters + ", evaluation number " + this.numEvals);
+            long current_time = System.nanoTime();
+            acumTimeTaken += (current_time - start_time)/1000000.0;
+            //acumTimeTaken += (elapsedTimerIteration.elapsedMillis());
+            avgTimeTaken = acumTimeTaken/numIters;
+            remaining = (long) DURATION_PER_TICK - acumTimeTaken;
+            //remaining = elapsedTimer.remainingTimeMillis();
+            /**
             switch(CONTROL_TYPE) {                                              
                 case 0:                                                         
                     long current_time = System.nanoTime();                      
@@ -158,6 +173,7 @@ public class GASearch extends Search {
                 default:                                                        
                     throw new RuntimeException("Control parameter is not right.");
             } 
+            */
         }
         //System.out.println("GA: numIters " + numIters + ", numEvals " + this.numEvals);
         return m_individuals[0].m_genome[0];
