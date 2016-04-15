@@ -18,7 +18,7 @@ public class Missile extends GameObject {
 
     public Missile(Vector2d s, Vector2d v) {
         super(s, v);
-        ttl = 50;                                                       
+        ttl = 20;                                                       
         r = 2;
     }
 

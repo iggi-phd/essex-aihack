@@ -73,7 +73,8 @@ public class SingleMCTSPlayer implements BattleController
     {
         init(gameState,playerId);
         m_root.mctsSearch();
-        int action = m_root.mostVisitedAction();  
+        //int action = m_root.mostVisitedAction();  
+        int action = m_root.bestAction();
         return action; 
     }
 

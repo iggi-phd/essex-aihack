@@ -24,7 +24,7 @@ public abstract class Search {
 
     public static int NUM_ITERS = 500;
     
-    public static long DURATION_PER_TICK = 10;
+    public static long DURATION_PER_TICK = 40;
     
     /**
      * Control type: 

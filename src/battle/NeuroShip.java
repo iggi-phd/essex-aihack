@@ -61,32 +61,36 @@ public class NeuroShip extends GameObject {
         return scale * 2.4;
     }
 
-    public static double MIN_FORCE = 5.0;
+    public static double MIN_FORCE = 10.0;
     public static double MAX_FORCE = 50.0;
-    public void addRandomForce(double min_force, double max_force)
+    public void addRandomForce(double min_force, double max_force, boolean rotate, boolean inverseForce)
     {
-        //Random direction:
-        double rad = Math.toRadians(Math.random()*360);
-
-        Vector2d force = new Vector2d(0.0, 1.0, true);
-        force.rotate(rad);
-
+        Vector2d force;
+        if(!inverseForce) {
+            //Random direction:
+            double rad = Math.toRadians(Math.random()*360);
+            force = new Vector2d(0.0, 1.0, true);
+            force.rotate(rad);
+        } else {
+            force = new Vector2d(-d.x/d.mag(), -d.y/d.mag(), true);
+        }
         //Random strength (between 1 and 5, for instance)
-        double strength = min_force + Math.random()*max_force;
+        double strength = min_force + Math.random()*(max_force-min_force);
         force.multiply(strength);
 
         v.add(force);
 
-        //Random rotation:
-        int rotation = (int) (Math.random()*3);
-        double turnAngle = rotation == 0? -1 : rotation == 1 ? 1 : 0;
-        d.rotate(turnAngle * steerStep * (Math.random() * 3+2));
-
+        if(rotate) {
+            //Random rotation:
+            int rotation = (int) (Math.random()*3);
+            double turnAngle = rotation == 0? -1 : rotation == 1 ? 1 : 0;
+            d.rotate(turnAngle * steerStep * (Math.random() ));
+        }
         //System.out.format("%.3f %.3f %d\n", rad, strength, rotation);
     }
 
     public void addRandomForce() {
-        addRandomForce(MIN_FORCE,MAX_FORCE);
+        addRandomForce(MIN_FORCE,MAX_FORCE,true,false);
     }
     public void reset() {
         s.set(width / 2, height / 2);
