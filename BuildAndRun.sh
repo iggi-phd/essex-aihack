@@ -12,7 +12,7 @@ source_list_filename=sourceList.txt
 build_folder=build                                                         
 #main_filename=battle.BattleTest
 main_filename=battleGameTest.TestWithMissile
-
+rm -r build
 
 ## Loop until all parameters are used up
 while [ "$1" != "" ]; do
@@ -41,5 +41,5 @@ mkdir -p ${build_folder}
 javac -d ${build_folder} @${source_list_filename}
 
 ## Execute the program by pointing out the file which has method main
-java -cp ${build_folder}:**/*.class ${main_filename} -1 1 -2 0 -T 1000 -N 1 -num_actions 5 -macro_actions 2 -mcost 1
+java -cp ${build_folder}:**/*.class ${main_filename} -1 1 -2 7 -T 10000 -N 1 -num_actions 10 -macro_actions 1 -mcost 1 -screen 1
 #jar cvf ${main_filename}.jar ${build_folder}/**/*.class
