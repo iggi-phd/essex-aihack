@@ -36,7 +36,7 @@ public class SimpleBattle {
     public static long DURATION_PER_TICK = 10;
 
     int nbObstacles = 5;
-    int nMissiles = 10000;
+    int nMissiles = 100;
     int missileSpeed = 4;
 	int cooldown = 4;
     int life = 5;
@@ -279,9 +279,12 @@ public class SimpleBattle {
 			stats.get(1).cooldown--;
 		}
 
-        wrap(s1);
-        wrap(s2);
+        //wrap(s1);
+        //wrap(s2);
 
+        for (GameObject object : objects) {
+            wrap(object);
+        }
         // here need to add the game objects ...
         /**
         java.util.List<GameObject> killList = new ArrayList<GameObject>();
@@ -370,8 +373,8 @@ public class SimpleBattle {
         }
         */
         double firePoints = this.scoreFunc*stats.get(playerId).nPoints/(10); 
-        return dot*distPoints;
-        //return (dot*distPoints + firePoints);
+        //return dot*distPoints;
+        return (dot*distPoints + firePoints);
         //return (stats.get(playerId).life + dot*distPoints + firePoints);
         //return (stats.get(playerId).life + this.scoreFunc*stats.get(playerId).nPoints/10);
         //return dot*distPoints;//*dotDirs;
@@ -385,15 +388,15 @@ public class SimpleBattle {
             return MIN_SCORE;
         //if(stats.get(playerId).life==0 && stats.get(1-playerId).life==0)
         //    return 0;
-       /** 
         if(playerId == 0)
-            return score1;
+            return score1 - score2;
         else
-            return score2;
-            **/
+            return score2 - score1;
+        /**
         if(playerId == 0)
             return score1 - score2 + stats.get(playerId).life + this.scoreFunc*stats.get(playerId).nPoints/10;
         return score2 - score1 + stats.get(playerId).life + this.scoreFunc*stats.get(playerId).nPoints/10;
+        */
     }
 
     public SimpleBattle clone() {
