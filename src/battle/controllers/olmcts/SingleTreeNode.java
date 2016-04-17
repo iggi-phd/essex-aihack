@@ -50,24 +50,28 @@ public class SingleTreeNode
 
     public void mctsSearch(ElapsedCpuTimer elapsedTimer) {
 
-        double avgTimeTaken = 0;
-        double acumTimeTaken = 0;
-        long remaining = elapsedTimer.remainingTimeMillis();
+        long avgTimeTaken = 0;
+        long acumTimeTaken = 0;
         int numIters = 0;
 
-        int remainingLimit = 0;
-        //SimpleBattle state = rootState.clone();
+        long remainingLimit = 0;
+        SimpleBattle state = rootState.clone();
+        //long remaining = (long) (elapsedTimer.getMaxTime()/1000000.0);
+        ElapsedCpuTimer testTimer = new ElapsedCpuTimer();
+        testTimer.setMaxTime(elapsedTimer.getMaxTime());
+        long remaining = testTimer.remainingTimeMillis();
         while(remaining > 2*avgTimeTaken && remaining > remainingLimit){
-            SimpleBattle state = rootState.clone();
+            //SimpleBattle state = rootState.clone();
             ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer();
             SingleTreeNode selected = treePolicy(state);
             double delta = selected.rollOut(state);
             backUp(selected, delta);
             numIters++;
             acumTimeTaken += (elapsedTimerIteration.elapsedMillis()) ;
-            //System.out.println(elapsedTimerIteration.elapsedMillis() + " --> " + acumTimeTaken + " (" + remaining + ")");
             avgTimeTaken  = acumTimeTaken/numIters;
-            remaining = elapsedTimer.remainingTimeMillis();
+            //remaining = (long) (elapsedTimer.getMaxTime()/1000000.0) - acumTimeTaken;
+            remaining = testTimer.remainingTimeMillis();
+            //System.out.println("remaining=" + remaining);
         }
     }
 
@@ -77,10 +81,12 @@ public class SingleTreeNode
 
         while (!state.isGameOver() && cur.m_depth < ROLLOUT_DEPTH)
         {
+           // System.out.println("treePolicy: cur.m_depth="+cur.m_depth);
             if (cur.notFullyExpanded()) {
+               // System.out.println("treePolicy: not fully expanded, call expand, m_depth=" + m_depth);
                 return cur.expand(state);
-
             } else {
+               // System.out.println("treePolicy: fully expanded, call uct, m_depth=" + m_depth);
                 SingleTreeNode next = cur.uct(state);
                 cur = next;
             }
@@ -91,12 +97,15 @@ public class SingleTreeNode
 
 
     public SingleTreeNode expand(SimpleBattle state) {
-        int bestAction = 0;
+        int i=0;
+        while(children[i] != null)
+            i++;
+        int bestAction = i;
         double bestValue = -1;
-
-        for (int i = 0; i < children.length; i++) {
+        for (; i < children.length; i++) {
             double x = m_rnd.nextDouble();
             if (x > bestValue && children[i] == null) {
+               // System.out.println("m_depth=" + m_depth+ " expanded " + i);
                 bestAction = i;
                 bestValue = x;
             }
@@ -105,6 +114,7 @@ public class SingleTreeNode
         state.update(ActionMap.ActionMap[bestAction], ActionMap.ActionMap[this.m_rnd.nextInt(NUM_ACTIONS)]);
 
         SingleTreeNode tn = new SingleTreeNode(this,bestAction,this.m_rnd,playerID);
+       // System.out.println("expand: new node created with bestAction="+bestAction);
         children[bestAction] = tn;
         return tn;
     }
@@ -154,6 +164,7 @@ public class SingleTreeNode
 
         while (!finishRollout(state,thisDepth)) {
 
+            //System.out.println("rollOut: not finish rollout, thisDepth=" +thisDepth);
             int action = m_rnd.nextInt(NUM_ACTIONS);
             state.update(ActionMap.ActionMap[action], ActionMap.ActionMap[this.m_rnd.nextInt(NUM_ACTIONS)]);
             thisDepth++;
@@ -192,11 +203,15 @@ public class SingleTreeNode
 
     public boolean finishRollout(SimpleBattle rollerState, int depth)
     {
-        if(depth >= ROLLOUT_DEPTH)      //rollout end condition.
+        if(depth >= ROLLOUT_DEPTH) {      //rollout end condition.
+           // System.out.println("depth=" + depth +"   >=   ROLLOUT_DEPTH="+ROLLOUT_DEPTH);
             return true;
+        }
 
-        if(rollerState.isGameOver())               //end of game
+        if(rollerState.isGameOver()) {              //end of game
+           // System.out.println("Game over");
             return true;
+        }
 
         return false;
     }
@@ -223,6 +238,7 @@ public class SingleTreeNode
 
             if(children[i] != null)
             {
+               // System.out.println("mostVisitedAction: not null");
                 if(first == -1)
                     first = children[i].nVisits;
                 else if(first != children[i].nVisits)
@@ -232,7 +248,7 @@ public class SingleTreeNode
 
                 double childValue = children[i].nVisits;
                 childValue = Util.noise(childValue, this.epsilon, this.m_rnd.nextDouble());     //break ties randomly
-                System.out.println("bestValue=" + bestValue + " childValue=" + childValue );
+               // System.out.println("mostVisitedAction: child=" +i +" bestValue=" + bestValue + " childValue=" + childValue );
                 if (childValue > bestValue) {
                     bestValue = childValue;
                     selected = i;
@@ -242,13 +258,16 @@ public class SingleTreeNode
 
         if (selected == -1)
         {
-            System.out.println("Unexpected selection!");
+           // System.out.println("mostVisitedAction: Unexpected selection!");
             selected = 0;
         }else if(allEqual)
         {
             //If all are equal, we opt to choose for the one with the best Q.
             selected = bestAction();
+        } else {
+           // System.out.println("mostVisitedAction: Selected=" + selected);
         }
+
         return selected;
     }
 
@@ -261,18 +280,19 @@ public class SingleTreeNode
             if(children[i] != null) {
                 double childValue = children[i].totValue / (children[i].nVisits + this.epsilon);
                 childValue = Util.noise(childValue, this.epsilon, this.m_rnd.nextDouble());     //break ties randomly
-                System.out.println("bestValue=" + bestValue + " childValue=" + childValue );
+               // System.out.println("bestAction: child=" +i+ " bestValue=" + bestValue + " childValue=" + childValue );
                 if (childValue > bestValue) {
                     bestValue = childValue;
                     selected = i;
-                    System.out.println("Selected=" + selected);
+                    //System.out.println("bestAction: Selected=" + selected);
                 }
             }
         }
+       // System.out.println("bestAction: Selected=" + selected);
 
         if (selected == -1)
         {
-            System.out.println("Unexpected selection!");
+           // System.out.println("bestAction: Unexpected selection!");
             selected = 0;
         }
 
