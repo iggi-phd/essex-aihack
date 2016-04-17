@@ -119,11 +119,15 @@ public class CoevSearch extends Search {
         m_currentGameState = a_gameState;
 
         //check that we don't overspend
-        double avgTimeTaken = 0;
-        double acumTimeTaken = 0;
-        int remainingLimit = 0;
+        long avgTimeTaken = 0;
+        long acumTimeTaken = 0;
         int numIters = 0;
-        long remaining = elapsedTimer.remainingTimeMillis();
+        
+        long remainingLimit = 0;
+        //long remaining = (long) (elapsedTimer.getMaxTime()/1000000.0);
+        ElapsedCpuTimer testTimer = new ElapsedCpuTimer();
+        testTimer.setMaxTime(elapsedTimer.getMaxTime());
+        long remaining = testTimer.remainingTimeMillis();
         while(remaining > 2*avgTimeTaken && remaining > remainingLimit)
         {
             ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer(); 
@@ -163,7 +167,7 @@ public class CoevSearch extends Search {
             numIters++;
             acumTimeTaken += (elapsedTimerIteration.elapsedMillis());
             avgTimeTaken = acumTimeTaken/numIters;
-            remaining = elapsedTimer.remainingTimeMillis();
+            remaining = testTimer.remainingTimeMillis();
 
             /**
             switch(CONTROL_TYPE) {                                              

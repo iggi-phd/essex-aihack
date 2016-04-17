@@ -104,12 +104,15 @@ public class GASearch extends Search {
     public int run(SimpleBattle a_gameState, ElapsedCpuTimer elapsedTimer)
     {
         m_currentGameState = a_gameState;
+        long avgTimeTaken = 0;
+        long acumTimeTaken = 0;
         int numIters = 0;
         
-        double avgTimeTaken = 0;
-        double acumTimeTaken = 0;
-        int remainingLimit = 0;
-        long remaining = elapsedTimer.remainingTimeMillis();;
+        long remainingLimit = 0;
+        //long remaining = (long) (elapsedTimer.getMaxTime()/1000000.0);
+        ElapsedCpuTimer testTimer = new ElapsedCpuTimer();
+        testTimer.setMaxTime(elapsedTimer.getMaxTime());
+        long remaining = testTimer.remainingTimeMillis();
         
         while(remaining > 2*avgTimeTaken && remaining > remainingLimit) {
             ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer();
@@ -149,7 +152,8 @@ public class GASearch extends Search {
             numIters++;
             acumTimeTaken += (elapsedTimerIteration.elapsedMillis());
             avgTimeTaken = acumTimeTaken/numIters;
-            remaining = elapsedTimer.remainingTimeMillis();
+            //remaining = elapsedTimer.remainingTimeMillis();
+            remaining = testTimer.remainingTimeMillis();
         }
         //System.out.println("GA: numIters " + numIters + ", numEvals " + this.numEvals);
         return m_individuals[0].m_genome[0];

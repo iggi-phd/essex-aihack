@@ -279,12 +279,14 @@ public class SimpleBattle {
 			stats.get(1).cooldown--;
 		}
 
-        //wrap(s1);
-        //wrap(s2);
+        wrap(s1);
+        wrap(s2);
 
+        /**
         for (GameObject object : objects) {
             wrap(object);
         }
+        */
         // here need to add the game objects ...
         /**
         java.util.List<GameObject> killList = new ArrayList<GameObject>();

@@ -128,5 +128,12 @@ public class ElapsedCpuTimer {
         }
         return false;
     }
+    
+    public long getMaxTime() {
+        return maxTime;
+    }
 
+    public void setMaxTime(long time) {
+        maxTime = time;
+    }
 }
