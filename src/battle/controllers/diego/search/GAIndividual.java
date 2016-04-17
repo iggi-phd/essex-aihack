@@ -2,6 +2,7 @@ package battle.controllers.diego.search;
 
 import battle.SimpleBattle;
 import battle.controllers.diego.ActionMap;
+import math.Vector2d;
 import utilities.StatSummary;
 
 import java.util.Random;
@@ -24,20 +25,24 @@ public class GAIndividual
 
     private StatSummary accumFit;
 
-    public GAIndividual(int a_genomeLength, int playerID)
+    public Search search;
+
+    public GAIndividual(int a_genomeLength, int playerID, Search search)
     {
         m_genome = new int[a_genomeLength];
         m_fitness = 0;
         accumFit = new StatSummary();
         this.playerID = playerID;
+        this.search = search;
     }
 
-    public GAIndividual(int genome[], int playerID)
+    public GAIndividual(int genome[], int playerID, Search search)
     {
         m_genome = genome;
         m_fitness = 0;
         accumFit = new StatSummary();
         this.playerID = playerID;
+        this.search = search;
     }
 
     /**
@@ -69,9 +74,17 @@ public class GAIndividual
                     thisGameCopy.update(ActionMap.ActionMap[thisAction], ActionMap.ActionMap[otherAction]);
                 else
                     thisGameCopy.update(ActionMap.ActionMap[otherAction], ActionMap.ActionMap[thisAction]);
+
                 end = thisGameCopy.isGameOver();
                 //if(end)
                 //    System.out.println("The previous result is a guess !");
+
+                Vector2d myPos = thisGameCopy.getShip(playerID).s;
+                search.hitMapOwn[(int)myPos.x][(int)myPos.y]++;
+
+                Vector2d oppPos = thisGameCopy.getShip(1-playerID).s;
+                search.hitMapOpp[(int)oppPos.x][(int)oppPos.y]++;
+
             }
         }
         m_fitness = thisGameCopy.score(playerID);
@@ -93,7 +106,7 @@ public class GAIndividual
 
     public GAIndividual copy()
     {
-        GAIndividual gai = new GAIndividual(this.m_genome.length, this.playerID);
+        GAIndividual gai = new GAIndividual(this.m_genome.length, this.playerID, this.search);
         for(int i = 0; i < this.m_genome.length; ++i)
         {
             gai.m_genome[i] = this.m_genome[i];

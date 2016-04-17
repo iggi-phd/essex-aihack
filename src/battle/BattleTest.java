@@ -33,6 +33,8 @@ public class BattleTest {
     static final int MAX_TICKS_GAME = 2000;
     static final int NUM_GAMES_TO_PLAY = 1;
 
+    public static final boolean SHOW_ROLLOUTS = false;
+
     public static void main(String[] args) {
         //playOne(BattleTest.WASD, BattleTest.ARROWS);
 

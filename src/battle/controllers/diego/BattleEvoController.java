@@ -1,7 +1,9 @@
 package battle.controllers.diego;
 
 import asteroids.Action;
+import asteroids.Constants;
 import battle.BattleController;
+import battle.BattleTest;
 import battle.SimpleBattle;
 import battle.controllers.diego.search.Search;
 
@@ -147,4 +149,24 @@ public class BattleEvoController implements battle.BattleController {
      */
     public void paint(Graphics2D a_gr) {}
 
+    public void draw(Graphics2D g)
+    {
+        if(BattleTest.SHOW_ROLLOUTS) {
+            if (m_search.hitMapOwn != null) {
+
+                for (int i = 0; i < m_search.hitMapOwn.length; ++i) {
+                    for (int j = 0; j < m_search.hitMapOwn[i].length; ++j) {
+                        if (m_search.hitMapOwn[i][j] > 0) {
+                            //System.out.println(i + " " + j + ":" + m_search.hitMapOwn[i][j]);
+                            g.setColor(Color.WHITE);
+                            g.fillOval(i, j, 1, 1);
+                        }
+
+                    }
+
+                }
+            }
+            int a = 0;
+        }
+    }
 }

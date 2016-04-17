@@ -4,6 +4,7 @@ import asteroids.Action;
 import battle.BattleController;
 import battle.SimpleBattle;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -15,5 +16,10 @@ public class NullController implements BattleController {
     @Override
     public Action getAction(SimpleBattle gameStateCopy, int playerId) {
         return new Action(0, 0, false);
+    }
+
+    public void draw(Graphics2D g)
+    {
+
     }
 }

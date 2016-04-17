@@ -4,6 +4,7 @@ import asteroids.Action;
 import battle.BattleController;
 import battle.SimpleBattle;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -116,5 +117,11 @@ public class WASDController implements BattleController, KeyListener {
         if(key == KeyEvent.VK_SPACE){
             shoot = false;
         }
+    }
+
+
+    public void draw(Graphics2D g)
+    {
+
     }
 }

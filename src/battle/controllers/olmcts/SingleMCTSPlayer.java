@@ -1,5 +1,6 @@
 package battle.controllers.olmcts;
 
+import java.awt.*;
 import java.util.Random;
 import battle.SimpleBattle;
 import battle.BattleController;
@@ -82,5 +83,10 @@ public class SingleMCTSPlayer implements BattleController
     {
         int best_action = run(gameState, playerId);
         return ActionMap.ActionMap[best_action];
+    }
+
+    public void draw(Graphics2D g)
+    {
+
     }
 }

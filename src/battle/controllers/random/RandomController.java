@@ -5,6 +5,7 @@ import battle.BattleController;
 import battle.SimpleBattle;
 import battle.controllers.diego.ActionMap;
 
+import java.awt.*;
 import java.util.Random;
 
 /**
@@ -25,5 +26,11 @@ public class RandomController implements BattleController {
     public Action getAction(SimpleBattle gameStateCopy, int playerId) {
         int action = m_rnd.nextInt(ActionMap.ActionMap.length);
         return ActionMap.ActionMap[action];
+    }
+
+
+    public void draw(Graphics2D g)
+    {
+
     }
 }

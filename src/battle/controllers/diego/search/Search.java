@@ -55,6 +55,14 @@ public abstract class Search {
      */
     public Random m_rnd;
 
+
+    /**
+     * Hitmap, for drawing.
+     */
+    public int[][] hitMapOwn = null;
+    public int[][] hitMapOpp = null;
+
+
     public Search(Random rnd) {
         m_rnd = rnd;
     }

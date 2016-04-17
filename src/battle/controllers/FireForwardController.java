@@ -20,4 +20,9 @@ public class FireForwardController extends DebugController {
         g.setColor(Color.WHITE);
         g.drawLine(0, 0, 0, -10);
     }
+
+    public void draw(Graphics2D g)
+    {
+
+    }
 }
