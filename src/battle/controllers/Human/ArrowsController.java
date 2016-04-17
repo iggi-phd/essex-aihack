@@ -3,6 +3,7 @@ package battle.controllers.Human;
 import asteroids.Action;
 import battle.BattleController;
 import battle.SimpleBattle;
+import utilities.ElapsedCpuTimer;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -47,7 +48,7 @@ public class ArrowsController implements BattleController, KeyListener {
     }
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(SimpleBattle gameStateCopy, int playerId, ElapsedCpuTimer elapsedTimer) {
 
         if (curAction == null)
             curAction = ActionMap[0];

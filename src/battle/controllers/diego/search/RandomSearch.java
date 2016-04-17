@@ -2,7 +2,7 @@ package battle.controllers.diego.search;
 
 import battle.SimpleBattle;
 import battle.controllers.diego.ActionMap;
-
+import utilities.ElapsedCpuTimer;
 import java.util.Random;
 
 /**
@@ -55,7 +55,7 @@ public class RandomSearch extends Search {
      * @return  the action decided to be executed.
      */
     @Override
-    public int run(SimpleBattle a_gameState)
+    public int run(SimpleBattle a_gameState, ElapsedCpuTimer elapsedTimer)
     {
         m_currentGameState = a_gameState;
         int numIters = 0;

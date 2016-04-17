@@ -69,19 +69,19 @@ public class SingleMCTSPlayer implements BattleController
         return action;
     }
     
-    public int run(SimpleBattle gameState, int playerId)
+    public int run(SimpleBattle gameState, int playerId, ElapsedCpuTimer elapsedTimer)
     {
         init(gameState,playerId);
-        m_root.mctsSearch();
-        //int action = m_root.mostVisitedAction();  
-        int action = m_root.bestAction();
+        m_root.mctsSearch(elapsedTimer);
+        int action = m_root.mostVisitedAction();  
+        //int action = m_root.bestAction();
         return action; 
     }
 
     @Override                                                                   
-    public Action getAction(SimpleBattle gameState, int playerId)
+    public Action getAction(SimpleBattle gameState, int playerId, ElapsedCpuTimer elapsedTimer)
     {
-        int best_action = run(gameState, playerId);
+        int best_action = run(gameState, playerId, elapsedTimer);
         return ActionMap.ActionMap[best_action];
     }
 }

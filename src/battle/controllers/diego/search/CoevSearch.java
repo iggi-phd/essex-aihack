@@ -114,22 +114,19 @@ public class CoevSearch extends Search {
      * @return  the action decided to be executed.
      */
     @Override
-    public int run(SimpleBattle a_gameState)//, ElapsedCpuTimer elapsedTimer)
+    public int run(SimpleBattle a_gameState, ElapsedCpuTimer elapsedTimer)
     {
         m_currentGameState = a_gameState;
 
         //check that we don't overspend
-        //boolean stop = false;
-        long avgTimeTaken = 0;
-        long acumTimeTaken = 0;
+        double avgTimeTaken = 0;
+        double acumTimeTaken = 0;
         int remainingLimit = 0;
-        long remaining = DURATION_PER_TICK;
         int numIters = 0;
-        //long remaining = elapsedTimer.remainingTimeMillis();
-        long start_time = System.nanoTime();
+        long remaining = elapsedTimer.remainingTimeMillis();
         while(remaining > 2*avgTimeTaken && remaining > remainingLimit)
         {
-            //ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer(); 
+            ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer(); 
             //OPPONENT POPULATION: prepare the next generation (no evaluation nor sorting yet!).
             GAIndividual[] nextOppPop = new GAIndividual[m_individualsOpp.length];
 
@@ -164,11 +161,9 @@ public class CoevSearch extends Search {
 
             m_numGenerations++;
             numIters++;
-            long current_time = System.nanoTime();
-            acumTimeTaken += (current_time - start_time)/1000000.0;
+            acumTimeTaken += (elapsedTimerIteration.elapsedMillis());
             avgTimeTaken = acumTimeTaken/numIters;
-            remaining = (long) DURATION_PER_TICK - acumTimeTaken;
-            //remaining = elapsedTimer.remainingTimeMillis();
+            remaining = elapsedTimer.remainingTimeMillis();
 
             /**
             switch(CONTROL_TYPE) {                                              
