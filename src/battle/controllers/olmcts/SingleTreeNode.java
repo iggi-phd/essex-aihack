@@ -28,7 +28,7 @@ public class SingleTreeNode
     public int playerID;
     public int ROLLOUT_DEPTH = 10;
     public int NUM_ACTIONS = ActionMap.ActionMap.length;
-    public long DURATION_PER_TICK = 10;
+
     public static SimpleBattle rootState;
 
     public SingleTreeNode(Random rnd, int _playerID) {
@@ -55,7 +55,8 @@ public class SingleTreeNode
         long remaining = elapsedTimer.remainingTimeMillis();
         int numIters = 0;
 
-        int remainingLimit = 5;
+        int remainingLimit = 0;
+        //SimpleBattle state = rootState.clone();
         while(remaining > 2*avgTimeTaken && remaining > remainingLimit){
             SimpleBattle state = rootState.clone();
             ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer();
@@ -67,23 +68,6 @@ public class SingleTreeNode
             //System.out.println(elapsedTimerIteration.elapsedMillis() + " --> " + acumTimeTaken + " (" + remaining + ")");
             avgTimeTaken  = acumTimeTaken/numIters;
             remaining = elapsedTimer.remainingTimeMillis();
-        }
-    }
-    
-    public void mctsSearch() {
-        int numIters = 0;
-        long start_time = System.nanoTime();
-        boolean stop = false;
-        while(!stop) {
-            SimpleBattle state = rootState.clone();
-            SingleTreeNode selected = treePolicy(state);
-            double delta = selected.rollOut(state);
-            backUp(selected, delta);
-            
-            numIters++;
-            //System.out.println(elapsedTimerIteration.elapsedMillis() + " --> " + acumTimeTaken + " (" + remaining + ")");
-            long current_time = System.nanoTime();                      
-            stop = ((current_time - start_time)/1e6 >= DURATION_PER_TICK);
         }
     }
 
@@ -248,6 +232,7 @@ public class SingleTreeNode
 
                 double childValue = children[i].nVisits;
                 childValue = Util.noise(childValue, this.epsilon, this.m_rnd.nextDouble());     //break ties randomly
+                System.out.println("bestValue=" + bestValue + " childValue=" + childValue );
                 if (childValue > bestValue) {
                     bestValue = childValue;
                     selected = i;
@@ -273,14 +258,14 @@ public class SingleTreeNode
         double bestValue = -Double.MAX_VALUE;
 
         for (int i=0; i<children.length; i++) {
-
             if(children[i] != null) {
-                //double tieBreaker = m_rnd.nextDouble() * epsilon;
                 double childValue = children[i].totValue / (children[i].nVisits + this.epsilon);
                 childValue = Util.noise(childValue, this.epsilon, this.m_rnd.nextDouble());     //break ties randomly
+                System.out.println("bestValue=" + bestValue + " childValue=" + childValue );
                 if (childValue > bestValue) {
                     bestValue = childValue;
                     selected = i;
+                    System.out.println("Selected=" + selected);
                 }
             }
         }

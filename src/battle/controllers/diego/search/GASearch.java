@@ -7,6 +7,8 @@ import battle.controllers.diego.strategy.IMutation;
 import battle.controllers.diego.strategy.ISelection;
 import battle.controllers.diego.strategy.OpponentGenerator;
 
+import utilities.ElapsedCpuTimer;
+
 import java.util.Random;
 
 /**
@@ -98,71 +100,60 @@ public class GASearch extends Search {
      * @param a_gameState Game state where the macro-action to be decided must be executed from.
      * @return  the action decided to be executed.
      */
-    @Override
-    public int run(SimpleBattle a_gameState)
+    @Override  
+    public int run(SimpleBattle a_gameState, ElapsedCpuTimer elapsedTimer)
     {
         m_currentGameState = a_gameState;
-        int numIters = 0; 
-
-        long start_time = System.nanoTime();
-
-        //check that we don't overspend
-       // while(numIters < 100) //TODO changed to 500 for testing
-        boolean stop = false;
-        while(!stop) {
+        int numIters = 0;
+        
+        double avgTimeTaken = 0;
+        double acumTimeTaken = 0;
+        int remainingLimit = 0;
+        long remaining = elapsedTimer.remainingTimeMillis();;
+        
+        while(remaining > 2*avgTimeTaken && remaining > remainingLimit) {
+            ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer();
+            
             GAIndividual[] nextPop = new GAIndividual[m_individuals.length];
-
+            
             int i;
             for(i = 0; i < ELITISM; ++i)
             {
                 nextPop[i] = m_individuals[i];
             }
-
+            
             GAIndividual opponent = opponentGen.getOpponent(Search.NUM_ACTIONS_INDIVIDUAL);
-
+            
             for(;i<m_individuals.length;++i)
             {
                 //System.out.println("######### " + numIters + ":" + i + " #############");
                 nextPop[i] = breed(); // m_individuals[i-ELITISM].copy();
-
-
+                
+                
                 mut.mutate(nextPop[i]);
-
+                
                 //System.out.print("c-m: " + nextPop[i].toString());
                 nextPop[i].evaluate(a_gameState, opponent);
                 this.numEvals++;
                 //System.out.println(", " + nextPop[i].m_fitness);
             }
-
+            
             m_individuals = nextPop;
             sortPopulationByFitness(m_individuals);
-
+            
             /*for(i = 0; i < m_individuals.length; ++i)
-                System.out.format("individual i: " + i + ", fitness: %.3f, actions: %s \n", m_individuals[i].m_fitness, m_individuals[i].toString());     */
-
-
+             System.out.format("individual i: " + i + ", fitness: %.3f, actions: %s \n", m_individuals[i].m_fitness, m_individuals[i].toString());     */
+            
+            
             m_numGenerations++;
             numIters++;
-            //System.out.println("Iteration number " + numIters + ", evaluation number " + this.numEvals);
-            switch(CONTROL_TYPE) {                                              
-                case 0:                                                         
-                    long current_time = System.nanoTime();                      
-                    stop = ((current_time - start_time)/1e6 >= DURATION_PER_TICK);
-                    break;                                                      
-                case 1:                                                         
-                    stop = (this.numEvals >= NUM_EVALS); 
-                    break;                                                      
-                case 2:                                                         
-                    stop = (numIters >= NUM_ITERS);                             
-                    break;                                                      
-                default:                                                        
-                    throw new RuntimeException("Control parameter is not right.");
-            } 
+            acumTimeTaken += (elapsedTimerIteration.elapsedMillis());
+            avgTimeTaken = acumTimeTaken/numIters;
+            remaining = elapsedTimer.remainingTimeMillis();
         }
         //System.out.println("GA: numIters " + numIters + ", numEvals " + this.numEvals);
         return m_individuals[0].m_genome[0];
     }
-
 
     private GAIndividual breed()
     {

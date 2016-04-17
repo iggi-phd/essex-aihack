@@ -2,6 +2,7 @@ package battle.controllers;
 
 import asteroids.Action;
 import battle.*;
+import utilities.ElapsedCpuTimer;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -11,7 +12,7 @@ import java.awt.geom.AffineTransform;
  */
 public class FireForwardController extends DebugController {
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(SimpleBattle gameStateCopy, int playerId, ElapsedCpuTimer elapsedTimer) {
         return new Action(1,0,true);
     }
 

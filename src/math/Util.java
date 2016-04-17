@@ -1,5 +1,6 @@
 package math;
 import java.util.Random;
+import math.MutableDouble;
 
 public class Util {
     public static double min(double[] x) {
@@ -63,4 +64,15 @@ public class Util {
         }
     }
 
+    public static boolean findArgValue(String[] args, String argument, MutableDouble v)
+    {
+        boolean hasFound = false;
+        int argc = args.length;
+        for(int i=0 ; i<argc-1 ; i++)
+            if(args[i].equals("-" + argument)) {
+                v.setValue(Double.parseDouble(args[i + 1]));
+                hasFound = true;
+            }
+        return hasFound;
+    }
 }

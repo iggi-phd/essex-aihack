@@ -24,7 +24,13 @@ public class ActionMap
         if (action==0||action==6) return 3;
         if (action==1) return 4;
         if (action==2) return 5;
-        if (action==3) return 0;
+        if (action==3) {
+            Random m_rnd = new Random();
+            if(m_rnd.nextDouble() < 0.5)
+                return 0;
+            else
+                return 6;
+        }
         if (action==4) return 1;
         if (action==5) return 2;
         return -1;

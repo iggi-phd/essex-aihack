@@ -4,6 +4,7 @@ import asteroids.Action;
 import battle.BattleController;
 import battle.SimpleBattle;
 import battle.controllers.diego.ActionMap;
+import utilities.ElapsedCpuTimer;
 
 import java.util.Random;
 
@@ -22,7 +23,7 @@ public class RandomController implements BattleController {
 
 
     @Override
-    public Action getAction(SimpleBattle gameStateCopy, int playerId) {
+    public Action getAction(SimpleBattle gameStateCopy, int playerId, ElapsedCpuTimer elapsedTimer) {
         int action = m_rnd.nextInt(ActionMap.ActionMap.length);
         return ActionMap.ActionMap[action];
     }

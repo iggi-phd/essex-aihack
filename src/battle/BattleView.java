@@ -13,7 +13,7 @@ import java.awt.geom.Rectangle2D;
 
 import static asteroids.Constants.*;
 import static java.awt.Color.black;
-
+import battleGameTest.TestWithMissile;
 
 public class BattleView extends JComponent {
     static int offset = 0;
@@ -61,8 +61,11 @@ public class BattleView extends JComponent {
 
     public void paintState(Graphics2D g) {
 
-        for (GameObject object : game.objects) {
-            object.draw(g);
+        if(!game.objects.isEmpty()) {
+            GameObject[] objectsCopy = game.objects.toArray(new GameObject[game.objects.size()]);
+            for (GameObject object : objectsCopy) {
+                object.draw(g);
+            }
         }
 
         g.setColor(Color.white);
@@ -84,16 +87,20 @@ public class BattleView extends JComponent {
         double scA1 = ((int)(game.ss2.sum() * 1000) * 0.001);
         String strAcumScores = "Acc. Score:    " + scA0 + " | " + scA1;
 
-
-        //String strMissiles  = "Missiles: " + p1Stats.getMissilesFired() + " | " + p2Stats.getMissilesFired();
-        String strTicks     = "Ticks:    " + game.currentTick;
-        String p1 = "P1 Green " + game.p1.getClass().getSimpleName();
-        String p2 = "P2 Blue " + game.p2.getClass().getSimpleName();
-        g.drawString(strScores, 10, 20);
-        g.drawString(strAcumScores, 10, 50);
-        g.drawString(strTicks, 10, 80);
-        g.drawString(p1, 10, 110);
-        g.drawString(p2, 10, 140);
+        String strPoints = "Points:    " + p1Stats.getPoints() + " | " + p2Stats.getPoints();
+        String strMissiles  = "Missiles: " + p1Stats.getMissilesFired() + " | " + p2Stats.getMissilesFired();
+        String strTicks = "Ticks:    " + game.currentTick;
+        String strLives = "Life: " + p1Stats.getLife() +  " | " + p2Stats.getLife();
+        String p1 = "P1 Green: " + TestWithMissile.playerNames[TestWithMissile.player1];
+        String p2 = "P2 Blue: " + TestWithMissile.playerNames[TestWithMissile.player2];
+        //g.drawString(strScores, 10, 20);
+        //g.drawString(strAcumScores, 10, 20);
+        g.drawString(strPoints, 10, 20);
+        g.drawString(strMissiles, 10, 50);
+        g.drawString(strLives, 10, 80);
+        g.drawString(strTicks, 10, 110);
+        g.drawString(p1, 10, 140);
+        g.drawString(p2, 10, 170);
     }
 
 

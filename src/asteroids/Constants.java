@@ -33,7 +33,7 @@ public interface Constants {
     int lifeThreshold = 1000;
 
     double missileMinVelocity = 2;
-    int missileRadius = 2;
+    int missileRadius = 1;
     int missileTTL = 60;
 
     // how many smaller asteroids an asteroid splits into

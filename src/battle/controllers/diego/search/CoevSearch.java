@@ -7,6 +7,8 @@ import battle.controllers.diego.strategy.ICrossover;
 import battle.controllers.diego.strategy.IMutation;
 import battle.controllers.diego.strategy.ISelection;
 
+import utilities.ElapsedCpuTimer;
+
 import java.util.Random;
 
 /**
@@ -57,6 +59,7 @@ public class CoevSearch extends Search {
         mut = im;
         sel = is;
         pair = icp;
+        //System.out.println("num_action=" + this.NUM_ACTIONS_INDIVIDUAL+ " macro_action="+ this.MACRO_ACTION_LENGTH);
     }
 
     /**
@@ -111,16 +114,19 @@ public class CoevSearch extends Search {
      * @return  the action decided to be executed.
      */
     @Override
-    public int run(SimpleBattle a_gameState)
+    public int run(SimpleBattle a_gameState, ElapsedCpuTimer elapsedTimer)
     {
         m_currentGameState = a_gameState;
 
         //check that we don't overspend
-        //while(numIters < 500)
-        boolean stop = false;
-        long start_time = System.nanoTime();
-        while(!stop)
+        double avgTimeTaken = 0;
+        double acumTimeTaken = 0;
+        int remainingLimit = 0;
+        int numIters = 0;
+        long remaining = elapsedTimer.remainingTimeMillis();
+        while(remaining > 2*avgTimeTaken && remaining > remainingLimit)
         {
+            ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer(); 
             //OPPONENT POPULATION: prepare the next generation (no evaluation nor sorting yet!).
             GAIndividual[] nextOppPop = new GAIndividual[m_individualsOpp.length];
 
@@ -154,6 +160,12 @@ public class CoevSearch extends Search {
             sortPopulationByFitness(m_individualsOpp);
 
             m_numGenerations++;
+            numIters++;
+            acumTimeTaken += (elapsedTimerIteration.elapsedMillis());
+            avgTimeTaken = acumTimeTaken/numIters;
+            remaining = elapsedTimer.remainingTimeMillis();
+
+            /**
             switch(CONTROL_TYPE) {                                              
                 case 0:                                                         
                     long current_time = System.nanoTime();                      
@@ -168,6 +180,7 @@ public class CoevSearch extends Search {
                 default:                                                        
                    throw new RuntimeException("Control parameter is not right.");
             }
+            */
         }
         //System.out.println("COEV: numIters " + m_numGenerations + ", numEvals " + numEvals);
         return m_individuals[0].m_genome[0];

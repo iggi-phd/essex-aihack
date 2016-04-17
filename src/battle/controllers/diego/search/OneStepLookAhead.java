@@ -6,6 +6,7 @@ import battle.controllers.diego.ActionMap;
 import math.Matrix;
 import battle.BattleController;
 import asteroids.Action;
+import utilities.ElapsedCpuTimer;
 
 public class OneStepLookAhead implements BattleController {
     public Matrix my_fitness;
@@ -37,7 +38,7 @@ public class OneStepLookAhead implements BattleController {
     }
     
     @Override
-    public Action getAction(SimpleBattle gameState, int playerId)
+    public Action getAction(SimpleBattle gameState, int playerId, ElapsedCpuTimer elapsedTimer)
     {
         int best_action = -1;
         //SimpleBattle thisGameCopy = gameState.clone();
