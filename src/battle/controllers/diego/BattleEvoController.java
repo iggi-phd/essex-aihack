@@ -4,7 +4,7 @@ import asteroids.Action;
 import battle.BattleController;
 import battle.SimpleBattle;
 import battle.controllers.diego.search.Search;
-
+import utilities.ElapsedCpuTimer;
 import java.awt.*;
 
 /**
@@ -34,6 +34,8 @@ public class BattleEvoController implements battle.BattleController {
      *  Last macro action to be executed.
      */
     private int m_lastMacroAction;
+    
+    public static long DURATION_PER_TICK = 10;
 
     /**
      * Constructor of the controller
@@ -53,11 +55,11 @@ public class BattleEvoController implements battle.BattleController {
      * @return
      */
     @Override
-    public Action getAction(SimpleBattle game, int playerId)
+    public Action getAction(SimpleBattle game, int playerId, ElapsedCpuTimer elapsedTimer)
     {
         m_search.playerID = playerId;
         if(Search.MACRO_ACTION_LENGTH == 1)
-            return getSingleAction(game, playerId);
+            return getSingleAction(game, playerId, elapsedTimer);
 
         int cycle = game.getTicks();
         int nextMacroAction;
@@ -81,7 +83,7 @@ public class BattleEvoController implements battle.BattleController {
                     m_search.init(game, playerId);
                 }
                 //keep searching, but it is not time to retrieve the best action found
-                m_search.run(game);
+                m_search.run(game, elapsedTimer);
 
                 //we keep executing the same action decided in the past.
                 nextMacroAction = m_lastMacroAction;
@@ -91,7 +93,7 @@ public class BattleEvoController implements battle.BattleController {
             {
                 nextMacroAction = m_lastMacroAction; //default value
                 //keep searching and retrieve the action suggested by the random search engine.
-                int suggestedAction = m_search.run(game);
+                int suggestedAction = m_search.run(game, elapsedTimer);
                 //now it's time to execute this action. Also, in next cycle, we need to reset the search
                 m_resetRS = true;
                 if(suggestedAction != -1)
@@ -133,10 +135,10 @@ public class BattleEvoController implements battle.BattleController {
         }
     }
 
-    public Action getSingleAction(SimpleBattle game, int playerId)
+    public Action getSingleAction(SimpleBattle game, int playerId, ElapsedCpuTimer elapsedTimer)
     {
         m_search.init(game, playerId);
-        int suggestedAction = m_search.run(game);
+        int suggestedAction = m_search.run(game, elapsedTimer);
         return ActionMap.ActionMap[suggestedAction];
     }
 

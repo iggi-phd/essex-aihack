@@ -44,6 +44,8 @@ public class NeuroShip extends GameObject {
     // played id (used for drawing)
     int playerID;
 
+    public static double MIN_FORCE = 5.0;
+    public static double MAX_FORCE = 10.0;
 
     public NeuroShip(Vector2d s, Vector2d v, Vector2d d, int playerID) {
         super(new Vector2d(s, true), new Vector2d(v, true));
@@ -61,8 +63,6 @@ public class NeuroShip extends GameObject {
         return scale * 2.4;
     }
 
-    public static double MIN_FORCE = 10.0;
-    public static double MAX_FORCE = 50.0;
     public void addRandomForce(double min_force, double max_force, boolean rotate, boolean inverseForce)
     {
         Vector2d force;
@@ -77,6 +77,7 @@ public class NeuroShip extends GameObject {
         //Random strength (between 1 and 5, for instance)
         double strength = min_force + Math.random()*(max_force-min_force);
         force.multiply(strength);
+        //System.out.println("force: x=" + force.x + " y=" + force.y);
 
         v.add(force);
 

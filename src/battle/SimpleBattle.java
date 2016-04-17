@@ -6,6 +6,7 @@ import math.Vector2d;
 import math.Util;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
+import utilities.ElapsedCpuTimer;
 
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -32,9 +33,10 @@ public class SimpleBattle {
 
     int nTicks = 1000;
     boolean visible = true;
+    public static long DURATION_PER_TICK = 10;
 
     int nbObstacles = 5;
-    int nMissiles = 100;
+    int nMissiles = 10000;
     int missileSpeed = 4;
 	int cooldown = 4;
     int life = 5;
@@ -213,20 +215,14 @@ public class SimpleBattle {
         // get the actions from each player
 
         // apply them to each player's ship, taking actions as necessary
-        Action a1 = p1.getAction(this.clone(), 0);
-        Action a2 = p2.getAction(this.clone(), 1);
+        ElapsedCpuTimer elapsedTimer = new ElapsedCpuTimer();
+        elapsedTimer.setMaxTimeMillis(this.DURATION_PER_TICK);
+        Action a1 = p1.getAction(this.clone(), 0, elapsedTimer);
+        Action a2 = p2.getAction(this.clone(), 1, elapsedTimer);
         //System.out.println("Player 0 at time " + currentTick + " life="+this.stats.get(0).life+ " cooldown=" +this.stats.get(0).cooldown+" missiles="+this.stats.get(0).nMissiles);
 		//System.out.println("Player 1 at time " + currentTick + " life="+this.stats.get(1).life+ " cooldown=" +this.stats.get(1).cooldown+" missiles="+this.stats.get(1).nMissiles);
 		update(a1, a2);
         checkMissiles();
-/**
-        if(a1.shoot && stats.get(0).cooldown <= 0) {
-            s1.addRandomForce();
-		}
-        if(a2.shoot && stats.get(1).cooldown <= 0) {
-            s2.addRandomForce();
-		}
-*/
         ss1.add(score(0));
         ss2.add(score(1));
     }
@@ -522,7 +518,7 @@ public class SimpleBattle {
 			thisStats.nMissiles--;
             thisStats.nPoints--;
 			thisStats.cooldown = this.cooldown;
-			currentShip.addRandomForce();
+			currentShip.addRandomForce(5,10,false,false);
         } else {
 			thisStats.cooldown--;
 		}

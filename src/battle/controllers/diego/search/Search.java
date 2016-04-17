@@ -1,7 +1,7 @@
 package battle.controllers.diego.search;
 
 import battle.SimpleBattle;
-
+import utilities.ElapsedCpuTimer;
 import java.util.Random;
 
 /**
@@ -23,8 +23,6 @@ public abstract class Search {
     public static int NUM_EVALS = 1500;
 
     public static int NUM_ITERS = 500;
-    
-    public static long DURATION_PER_TICK = 40;
     
     /**
      * Control type: 
@@ -61,7 +59,7 @@ public abstract class Search {
 
     abstract public void init(SimpleBattle gameState, int playerID);
 
-    abstract public int run(SimpleBattle a_gameState);
+    abstract public int run(SimpleBattle a_gameState, ElapsedCpuTimer elapsedTimer);
 
     abstract public double scoreGame(SimpleBattle game);
 
