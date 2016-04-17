@@ -31,8 +31,8 @@ public class BattleTest {
     static final int ONESTEP = 6;
     static final int OLMCTS = 7;
 
-    static final int MAX_TICKS_GAME = 2000;
-    static final int NUM_GAMES_TO_PLAY = 1;
+    public static int MAX_TICKS_GAME = 2000;
+    public static int NUM_GAMES_TO_PLAY = 1;
     public static int SCORE_FUNC = 0;
 
     public static void main(String[] args) {
