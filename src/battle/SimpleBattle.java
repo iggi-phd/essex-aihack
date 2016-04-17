@@ -82,6 +82,7 @@ public class SimpleBattle {
         if (visible) {
             view = new BattleView(this);
             new JEasyFrame(view, "battle");
+            view.repaint();
         }
     }
 
@@ -109,6 +110,7 @@ public class SimpleBattle {
             view.requestFocus();
         }
 
+        waitTillReady();
         while (!isGameOver()) {
             update();
             //System.out.println("player 1: " + this.stats.get(0).life);
@@ -133,7 +135,36 @@ public class SimpleBattle {
         double[] allRecord = Util.combineArray(tmp,score2Record);
         return allRecord;
     }
-    
+
+    protected void waitTillReady()
+    {
+        if(visible)
+        {
+            while(!view.ready) {
+                view.repaint();
+                waitStep(1000);
+            }
+        }
+
+        waitStep(1000);
+    }
+
+    /**
+     * Waits until the next step.
+     * @param duration Amount of time to wait for.
+     */
+    protected static void waitStep(int duration) {
+
+        try
+        {
+            Thread.sleep(duration);
+        }
+        catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Randomly reset the game if randomInit==true
      */

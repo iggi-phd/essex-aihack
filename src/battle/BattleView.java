@@ -22,6 +22,7 @@ public class BattleView extends JComponent {
     static Color bg = black;
     SimpleBattle game;
     // Font font;
+    boolean ready = false;
 
     Ship ship;
 
@@ -54,6 +55,7 @@ public class BattleView extends JComponent {
         game.draw(g);
         g.setTransform(at);
         paintState(g);
+        ready = true;
     }
 
 

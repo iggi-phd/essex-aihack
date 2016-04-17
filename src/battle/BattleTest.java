@@ -36,7 +36,7 @@ public class BattleTest {
     public static void main(String[] args) {
         //playOne(BattleTest.WASD, BattleTest.ARROWS);
 
-        playOne(BattleTest.GA, BattleTest.WASD);
+        playOne(BattleTest.ARROWS, BattleTest.WASD);
         //playOne(BattleTest.GA, BattleTest.COEV);
         //
         //playOne(BattleTest.ONESTEP, BattleTest.COEV);
