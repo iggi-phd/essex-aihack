@@ -230,4 +230,8 @@ public class NeuroShip extends GameObject {
     public Rectangle2D getBound() {
         return new Rectangle2D.Double(s.x,s.y,Double.valueOf(xp[2]-xp[0]),Double.valueOf(yp[0]-yp[1]));
     }
+    @Override
+    public int getId() {
+        return this.playerID;
+    }
 }

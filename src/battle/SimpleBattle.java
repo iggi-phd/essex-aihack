@@ -263,8 +263,6 @@ public class SimpleBattle {
         s1.update(a1);
         s2.update(a2);
 
-        System.out.println("s1 "+s1.s);
-        System.out.println("obj1 "+objects.get(1).s);
         checkCollision(s1);
         checkCollision(s2);
 
@@ -452,19 +450,21 @@ public class SimpleBattle {
             }
             **/
             // the actor is a ship
+            int playerId = (actor == s1 ? 0 : 1);
             for (GameObject ob : objects) {
-                int playerId = (actor == s1 ? 0 : 1);
                 if(ob.getId() != playerId) {
                     if(ob instanceof NeuroShip) {
+                        //System.out.println("ship " + ob.getId() + " playerId " + playerId);
                         if (overlap(actor, ob)) {
                             this.stats.get(playerId).life=0;
                             this.stats.get(1-playerId).life=0;
                             //System.out.println(this.stats.get(1-playerId).life);
+                            return;
                         }
                     } else if (ob instanceof BattleMissile) {
+                        //System.out.println("missile " + ob.getId() + " playerId " + playerId);
                         if (overlap(actor, ob)) {
                             ob.hit();
-                            objects.remove(ob);
                             this.stats.get(playerId).life--;
 						    if(playerId==1) {
 							    s2.addRandomForce();
@@ -475,9 +475,9 @@ public class SimpleBattle {
 						    }
                         }
                     }
-                    return;
                 }
             }
+            removeDead();
         }
     }
 
@@ -494,6 +494,10 @@ public class SimpleBattle {
                 }
             }
         }
+        removeDead();
+    }
+
+    protected void removeDead() {
         for(int i=objects.size()-1; i>1; i--) {
             GameObject ob = objects.get(i);
             if(ob.dead())
