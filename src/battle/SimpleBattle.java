@@ -263,6 +263,8 @@ public class SimpleBattle {
         s1.update(a1);
         s2.update(a2);
 
+        System.out.println("s1 "+s1.s);
+        System.out.println("obj1 "+objects.get(1).s);
         checkCollision(s1);
         checkCollision(s2);
 
@@ -451,16 +453,16 @@ public class SimpleBattle {
             **/
             // the actor is a ship
             for (GameObject ob : objects) {
-                if (overlap(actor, ob)) {
-                    // the object is hit, and the actor is also
-
-                    int playerId = (actor == s1 ? 0 : 1);
+                int playerId = (actor == s1 ? 0 : 1);
+                if(ob.getId() != playerId) {
                     if(ob instanceof NeuroShip) {
-                        this.stats.get(playerId).life=0;
-                        this.stats.get(1-playerId).life=0;
-                        //System.out.println(this.stats.get(1-playerId).life);
+                        if (overlap(actor, ob)) {
+                            this.stats.get(playerId).life=0;
+                            this.stats.get(1-playerId).life=0;
+                            //System.out.println(this.stats.get(1-playerId).life);
+                        }
                     } else if (ob instanceof BattleMissile) {
-                        if(ob.getId() != playerId) {
+                        if (overlap(actor, ob)) {
                             ob.hit();
                             objects.remove(ob);
                             this.stats.get(playerId).life--;
@@ -500,10 +502,6 @@ public class SimpleBattle {
     }
 
     private boolean overlap(GameObject actor, GameObject ob) {
-        if (actor.equals(ob)) {
-            return false;
-        }
-
         // otherwise do the default check
         double dist = actor.s.dist(ob.s);
         boolean ret = dist < (actor.r() + ob.r());
