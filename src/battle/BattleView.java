@@ -24,6 +24,7 @@ public class BattleView extends JComponent {
     // Font font;
 
     Ship ship;
+    boolean ready = false;
 
     static double viewScale = 1.0;
 
@@ -54,6 +55,7 @@ public class BattleView extends JComponent {
         game.draw(g);
         g.setTransform(at);
         paintState(g);
+        ready = true;
     }
 
 
