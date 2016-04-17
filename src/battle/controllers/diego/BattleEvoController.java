@@ -14,29 +14,29 @@ import java.awt.*;
  * Date: 17/10/12
  */
 public class BattleEvoController implements battle.BattleController {
-
+    
     /**
      *   Current action in the macro action being execut
      */
     private int m_currentMacroAction;
-
+    
     /**
      * Random Search engine to find the optimal macro-action to execute.
      */
     private Search m_search;
-
+    
     /**
      * Flag that indicates if the RS engine must be restarted (a new action has been decided).
      */
     boolean m_resetRS;
-
+    
     /**
      *  Last macro action to be executed.
      */
     private int m_lastMacroAction;
     
     public static long DURATION_PER_TICK = 10;
-
+    
     /**
      * Constructor of the controller
      */
@@ -47,7 +47,7 @@ public class BattleEvoController implements battle.BattleController {
         m_currentMacroAction = 10;
         m_lastMacroAction = 0;
     }
-
+    
     /**
      * Returns an action to execute in the game.
      * @param game A copy of the current game
@@ -60,10 +60,10 @@ public class BattleEvoController implements battle.BattleController {
         m_search.playerID = playerId;
         if(Search.MACRO_ACTION_LENGTH == 1)
             return getSingleAction(game, playerId, elapsedTimer);
-
+        
         int cycle = game.getTicks();
         int nextMacroAction;
-
+        
         if(cycle == 0)
         {
             //First cycle of a match is special, we need to execute any action to start looking for the next one.
@@ -84,7 +84,7 @@ public class BattleEvoController implements battle.BattleController {
                 }
                 //keep searching, but it is not time to retrieve the best action found
                 m_search.run(game, elapsedTimer);
-
+                
                 //we keep executing the same action decided in the past.
                 nextMacroAction = m_lastMacroAction;
                 m_currentMacroAction--;
@@ -98,20 +98,20 @@ public class BattleEvoController implements battle.BattleController {
                 m_resetRS = true;
                 if(suggestedAction != -1)
                     m_lastMacroAction = suggestedAction;
-
+                
                 if(m_lastMacroAction != -1)
                     m_currentMacroAction = Search.MACRO_ACTION_LENGTH-1;
-
+                
             }else{
                 throw new RuntimeException("This should not be happening: " + m_currentMacroAction);
             }
         }
-
+        
         //System.out.println(playerId + ": " + nextMacroAction);
         return ActionMap.ActionMap[nextMacroAction];
     }
-
-
+    
+    
     /**
      * Updates the game state using the macro-action that is being executed. It rolls the game up to the point in the
      * future where the current macro-action is finished.
@@ -134,19 +134,38 @@ public class BattleEvoController implements battle.BattleController {
             }
         }
     }
-
+    
     public Action getSingleAction(SimpleBattle game, int playerId, ElapsedCpuTimer elapsedTimer)
     {
         m_search.init(game, playerId);
         int suggestedAction = m_search.run(game, elapsedTimer);
         return ActionMap.ActionMap[suggestedAction];
     }
-
-
+    
+    
     /**
      * We are boring and we don't paint anything here.
      * @param a_gr Graphics device to paint.
      */
     public void paint(Graphics2D a_gr) {}
-
+    public void draw(Graphics2D g)
+    {
+        if(BattleTest.SHOW_ROLLOUTS) {
+            if (m_search.hitMapOwn != null) {
+                
+                for (int i = 0; i < m_search.hitMapOwn.length; ++i) {
+                    for (int j = 0; j < m_search.hitMapOwn[i].length; ++j) {
+                        if (m_search.hitMapOwn[i][j] > 0) {
+                            //System.out.println(i + " " + j + ":" + m_search.hitMapOwn[i][j]);
+                            g.setColor(Color.WHITE);
+                            g.fillOval(i, j, 1, 1);
+                        }
+                        
+                    }
+                    
+                }
+            }
+            int a = 0;
+        }
+    }
 }

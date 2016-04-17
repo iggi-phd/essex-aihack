@@ -600,6 +600,16 @@ public class SimpleBattle {
             RenderableBattleController rbc = (RenderableBattleController)p2;
             rbc.render(g, s2.copy());
         }
+
+        p1.draw(g);
+        p2.draw(g);
+
+        if(BattleTest.SHOW_ROLLOUTS)
+        {
+            //waitStep(5000);
+        }
+
+
     }
 
     public NeuroShip getShip(int playerId) {

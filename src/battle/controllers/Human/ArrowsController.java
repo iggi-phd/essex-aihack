@@ -5,6 +5,7 @@ import battle.BattleController;
 import battle.SimpleBattle;
 import utilities.ElapsedCpuTimer;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -120,6 +121,11 @@ public class ArrowsController implements BattleController, KeyListener {
         if (key == KeyEvent.VK_SPACE) {
             m_use = false;
         }
+
+    }
+
+    public void draw(Graphics2D g)
+    {
 
     }
 }

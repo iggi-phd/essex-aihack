@@ -31,6 +31,6 @@ public class UniformCrossover implements ICrossover {
             }
         }
 
-        return new GAIndividual(newInd, parentA.playerID);
+        return new GAIndividual(newInd, parentA.playerID, parentA.search);
     }
 }
