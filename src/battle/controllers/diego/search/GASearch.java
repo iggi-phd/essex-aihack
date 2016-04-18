@@ -1,5 +1,6 @@
 package battle.controllers.diego.search;
 
+import asteroids.Constants;
 import battle.SimpleBattle;
 import battle.controllers.diego.ActionMap;
 import battle.controllers.diego.strategy.ICrossover;
@@ -62,6 +63,9 @@ public class GASearch extends Search {
     @Override
     public void init(SimpleBattle gameState, int playerId)
     {
+        hitMapOwn = new int[Constants.width][Constants.height];
+        hitMapOpp = new int[Constants.width][Constants.height];
+
         this.numEvals = 0;
         m_individuals = new GAIndividual[NUM_INDIVIDUALS];
         this.playerID = playerId;
@@ -72,7 +76,7 @@ public class GASearch extends Search {
         if(NUM_EVALS>=NUM_INDIVIDUALS) {
             for(int i = 0; i < NUM_INDIVIDUALS; ++i)
             {
-                m_individuals[i] = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, playerID);
+                m_individuals[i] = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, playerID, this);
                 m_individuals[i].randomize(m_rnd, ActionMap.ActionMap.length );
                 m_individuals[i].evaluate(gameState, opponent);
                 this.numEvals++;

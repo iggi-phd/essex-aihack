@@ -9,6 +9,8 @@ import battle.NeuroShip;
 import battle.SimpleBattle;
 import utilities.ElapsedCpuTimer;
 
+import java.awt.*;
+
 /**
  * Created by simonlucas on 30/05/15.
  */
@@ -38,5 +40,11 @@ public class RotateAndShoot implements BattleController {
     @Override
     public Action getAction(SimpleBattle gameStateCopy, int playerId, ElapsedCpuTimer elapsedTimer) {
         return new Action(0, 1, true);
+    }
+
+
+    public void draw(Graphics2D g)
+    {
+
     }
 }

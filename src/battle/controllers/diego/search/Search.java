@@ -12,7 +12,7 @@ public abstract class Search {
     /**
      * Number of macro-actions that form the random path.
      */
-    public static int NUM_ACTIONS_INDIVIDUAL = 5; //8
+    public static int NUM_ACTIONS_INDIVIDUAL = 20; //8
     /**
      * Number of single actions that form a macro action.
      */
@@ -52,6 +52,14 @@ public abstract class Search {
      * Random number generator
      */
     public Random m_rnd;
+
+
+    /**
+     * Hitmap, for drawing.
+     */
+    public int[][] hitMapOwn = null;
+    public int[][] hitMapOpp = null;
+
 
     public Search(Random rnd) {
         m_rnd = rnd;

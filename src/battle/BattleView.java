@@ -21,10 +21,9 @@ public class BattleView extends JComponent {
     // static int carSize = 5;
     static Color bg = black;
     SimpleBattle game;
-    // Font font;
-    boolean ready = false;
 
     Ship ship;
+    boolean ready = false;
 
     static double viewScale = 1.0;
 

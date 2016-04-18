@@ -12,7 +12,7 @@ public class NullOpponentGenerator implements OpponentGenerator {
 
     public NullOpponentGenerator(int numActions)
     {
-        nullOpponent = new GAIndividual(numActions, -1);
+        nullOpponent = new GAIndividual(numActions, -1, null);
     }
 
 

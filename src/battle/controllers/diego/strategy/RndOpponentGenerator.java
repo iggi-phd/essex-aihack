@@ -19,7 +19,7 @@ public class RndOpponentGenerator implements OpponentGenerator {
 
     @Override
     public GAIndividual getOpponent(int numActions) {
-        GAIndividual ind = new GAIndividual(numActions, -1);
+        GAIndividual ind = new GAIndividual(numActions, -1, null);
         ind.randomize(rnd, ActionMap.ActionMap.length);
         return ind;
     }

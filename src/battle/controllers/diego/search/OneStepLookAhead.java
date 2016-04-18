@@ -8,6 +8,8 @@ import battle.BattleController;
 import asteroids.Action;
 import utilities.ElapsedCpuTimer;
 
+import java.awt.*;
+
 public class OneStepLookAhead implements BattleController {
     public Matrix my_fitness;
     
@@ -87,6 +89,12 @@ public class OneStepLookAhead implements BattleController {
                 throw new RuntimeException("Recommendation policy not defined.");
        }
         return best_action;
+    }
+
+
+    public void draw(Graphics2D g)
+    {
+
     }
 
 }
