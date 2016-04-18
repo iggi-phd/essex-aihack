@@ -41,7 +41,7 @@ public class OneStepLookAhead extends Search {
 
         m_bestFitnessFound = -1;
 
-        for(int i=0; i<allPath,length; ++i)
+        for(int i=0; i<allPath.length; ++i)
         {
             allPath[i] = createPath(i);
     }
