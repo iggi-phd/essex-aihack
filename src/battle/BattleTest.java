@@ -35,7 +35,7 @@ public class BattleTest {
     public static int NUM_GAMES_TO_PLAY = 1;
     public static int SCORE_FUNC = 0;
 
-    public static final boolean SHOW_ROLLOUTS = false;
+    public static final boolean SHOW_ROLLOUTS = true;
 
     public static void main(String[] args) {
         //playOne(BattleTest.WASD, BattleTest.ARROWS);

@@ -2,6 +2,7 @@ package battle.controllers.diego;
 
 import asteroids.Action;
 import battle.BattleController;
+import battle.BattleTest;
 import battle.SimpleBattle;
 import battle.controllers.diego.search.Search;
 import utilities.ElapsedCpuTimer;
