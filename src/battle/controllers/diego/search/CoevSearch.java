@@ -1,5 +1,6 @@
 package battle.controllers.diego.search;
 
+import asteroids.Constants;
 import battle.SimpleBattle;
 import battle.controllers.diego.ActionMap;
 import battle.controllers.diego.strategy.ICoevPairing;
@@ -68,6 +69,9 @@ public class CoevSearch extends Search {
     @Override
     public void init(SimpleBattle gameState, int playerId)
     {
+        hitMapOwn = new int[Constants.width][Constants.height];
+        hitMapOpp = new int[Constants.width][Constants.height];
+
         this.numEvals = 0;
         m_individuals = new GAIndividual[NUM_INDIVIDUALS];
         m_individualsOpp = new GAIndividual[NUM_INDIVIDUALS];
