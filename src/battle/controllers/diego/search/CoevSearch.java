@@ -81,7 +81,7 @@ public class CoevSearch extends Search {
             m_individuals[i] = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, playerID, this);
             m_individuals[i].randomize(m_rnd, ActionMap.ActionMap.length);
 
-            m_individualsOpp[i] = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, playerID, this);
+            m_individualsOpp[i] = new GAIndividual(Search.NUM_ACTIONS_INDIVIDUAL, 1-playerID, null);
             m_individualsOpp[i].randomize(m_rnd, ActionMap.ActionMap.length);
         }
 
@@ -191,6 +191,11 @@ public class CoevSearch extends Search {
             */
         }
         //System.out.println("COEV: numIters " + m_numGenerations + ", numEvals " + numEvals);
+
+
+        //System.out.print(a_gameState.currentTick + " ");
+        //m_individuals[0].print();
+
         return m_individuals[0].m_genome[0];
     }
 

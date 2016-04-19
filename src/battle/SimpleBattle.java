@@ -44,7 +44,7 @@ public class SimpleBattle {
 	double maxShootRange = 100000;
     private static final double MAX_SCORE = 1000000;
 	private static final double MIN_SCORE = -1000000;
-    public static int scoreFunc = 0;
+    public static int scoreFunc = 1;
 
     ArrayList<GameObject> objects;
     ArrayList<PlayerStats> stats;
@@ -53,7 +53,7 @@ public class SimpleBattle {
     NeuroShip s1, s2;
     BattleController p1, p2;
     BattleView view;
-    int currentTick;
+    public int currentTick;
 
     double score1, score2;
     StatSummary ss1 = new StatSummary();
@@ -107,9 +107,6 @@ public class SimpleBattle {
         this.p1 = p1;
         this.p2 = p2;
         reset(true);
-
-        stats.add(new PlayerStats(nMissiles, 0, life));
-        stats.add(new PlayerStats(nMissiles, 0, life));
 
         if (p1 instanceof KeyListener) {
             view.addKeyListener((KeyListener)p1);
@@ -205,8 +202,8 @@ public class SimpleBattle {
         this.currentTick = 0;
         this.winner = -1;
 
-        stats.add(new PlayerStats(nMissiles, 0, life));
-        stats.add(new PlayerStats(nMissiles, 0, life));
+        stats.add(new PlayerStats(nMissiles, 0, life, 0, this.nMissiles));
+        stats.add(new PlayerStats(nMissiles, 0, life, 0, this.nMissiles));
         objects.add(s1);
         objects.add(s2);
     }
@@ -386,7 +383,7 @@ public class SimpleBattle {
 //            s1.addRepulsiveForce(2 * minShootRange, 5 * minShootRange, dir);
 //
 //        }
-        double dist = Math.abs(ss1.distTo(ss2)-minShootRange);
+        double dist = Math.abs(ss1.distTo(ss2));//-minShootRange);
 
 
         double dot = ss1.dotTo(ss2);
@@ -405,7 +402,7 @@ public class SimpleBattle {
             return MAX_SCORE;
         }
         */
-        double firePoints = this.scoreFunc*stats.get(playerId).nPoints/(10); 
+        double firePoints = this.scoreFunc*stats.get(playerId).nPoints;///(10);
         //return dot*distPoints;
         return (dot*distPoints + firePoints);
         //return (stats.get(playerId).life + dot*distPoints + firePoints);
@@ -456,7 +453,7 @@ public class SimpleBattle {
     protected ArrayList<PlayerStats> copyStats() {
         ArrayList<PlayerStats> statsClone = new ArrayList<PlayerStats>();
         for (PlayerStats object : stats) {
-            statsClone.add(new PlayerStats(object.nMissiles, object.cooldown, object.life));
+            statsClone.add(new PlayerStats(object.nMissiles, object.cooldown, object.life, object.nPoints, this.nMissiles));
         }
 
         return statsClone;
@@ -572,7 +569,7 @@ public class SimpleBattle {
         }
         double dist = ss1.distTo(ss2);
         //if (dist >= minShootRange && dist<=maxShootRange && thisStats.nMissiles > 0 && thisStats.cooldown <=0) {
-        if (dist >= minShootRange && dist<=maxShootRange && thisStats.nMissiles > 0 && thisStats.cooldown <=0) { 
+        if (/*dist >= minShootRange && dist<=maxShootRange && */thisStats.nMissiles > 0 && thisStats.cooldown <=0) {
         	BattleMissile m = new BattleMissile(s, new Vector2d(0, 0, true), playerId);
         	// the velocity is noisy
         	double noiseStrength = 0.05;
@@ -738,21 +735,14 @@ public class SimpleBattle {
         int nPoints;
         int totalMissiles;
 
-        public PlayerStats(int _nMissiles, int _cooldown, int _life) {
+        public PlayerStats(int _nMissiles, int _cooldown, int _life, int _nPoints, int _totMissiles) {
             this.nMissiles = _nMissiles;
             this.cooldown = _cooldown;
             this.life = _life;
-            this.nPoints = 0;
-            this.totalMissiles = this.nMissiles;
+            this.nPoints = _nPoints;
+            this.totalMissiles = _totMissiles;
         }
 
-        public PlayerStats() {
-            this.nMissiles = 10;
-            this.cooldown = 0;
-            this.life = 3;
-            this.nPoints = 0;
-            this.totalMissiles = this.nMissiles;
-        }
 
         public int getMissilesFired() {
             return (this.totalMissiles-this.nMissiles);
@@ -771,7 +761,7 @@ public class SimpleBattle {
         }
 
         public String toString() {
-            return nMissiles + " : " + cooldown;
+            return "M:" + nMissiles + "; C: " + cooldown + "; L: " + life + "; P: " + nPoints + " : ";
         }
     }
 }

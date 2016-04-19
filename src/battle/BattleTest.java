@@ -122,8 +122,8 @@ public class BattleTest {
                         new UniformCrossover(rnd1),
                         new PMutation(rnd1, 0.1),
                         new TournamentSelection(rnd1, 3),
-                        //new NullOpponentGenerator(Search.NUM_ACTIONS_INDIVIDUAL),
-                        new RndOpponentGenerator(rnd1),
+                        new NullOpponentGenerator(Search.NUM_ACTIONS_INDIVIDUAL),
+                        //new RndOpponentGenerator(rnd1),
                         rnd1));
             case BattleTest.ONESTEP:
                 return new OneStepLookAhead();
