@@ -1,0 +1,221 @@
+import pylab
+import scipy
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import errorbar
+from scipy.stats.mstats import kruskalwallis as anova
+from scipy.stats import shapiro as normality_test
+from scipy.stats import mannwhitneyu as nonparam
+from scipy.stats import ttest_ind as ttest
+import csv
+import os
+
+
+def errorfill(x, y, yerr, ls, color=None, alpha_fill=0.3, ax=None):
+    ax = ax if ax is not None else plt.gca()
+    if color is None:
+        color = ax._get_lines.color_cycle.next()
+    if np.isscalar(yerr) or len(yerr) == len(y):
+        ymin = [a - b for a,b in zip(y, yerr)]
+        ymax = [sum(pair) for pair in zip(y, yerr)]
+    elif len(yerr) == 2:
+        ymin, ymax = yerr
+
+    ax.plot(x, y, linestyle=ls, color=color)
+    #print ymin
+    #print y
+    #print ymax
+    ax.fill_between(x, ymax, ymin, color=color, alpha=alpha_fill)
+
+def plot_error_bar(numLines, ls, data):
+    #All data we need is in avarage*AtTrial. Calculate averages for each repeat, stddev and stderr
+    averages = []
+    std_dev = []
+    std_err = []
+
+    numTicks = len(data[0])
+
+    for i in range(numTicks):
+         averages.append(np.average(data, axis=0)[i])
+         stdev = np.std(data, axis=0)
+         std_dev.append(stdev[i])
+         std_err.append(stdev[i] / np.sqrt(numLines))
+
+
+    errorfill(range(numTicks), averages, std_err, ls)
+
+
+def plot_res(data_mult, numLines, labels, ls, loc, ylabel, filename, show_plot, ylims=None):
+
+    #Create a figure
+    fig = pylab.figure()
+
+    #Add a subplot (Grid of plots 1x1, adding plot 1)
+    ax = fig.add_subplot(111)
+
+    ls_idx = 0
+    for data in data_mult:
+        plot_error_bar(numLines, ls[ls_idx], data)
+        ls_idx+=1
+
+    plt.legend(labels,
+               shadow=True, fancybox=True, loc=loc)
+
+    #Titles and labels
+    #plt.title('Heuristic estimation: 8 routes')
+    plt.xlabel("Game Tick", fontsize=16)
+    plt.ylabel(ylabel, fontsize=16)
+
+    if ylims != None:
+        plt.ylim(ylims)
+
+
+    #Save to file.
+    fig.savefig(filename)
+
+    # And show it:
+    if show_plot:
+        plt.show()
+
+
+
+def get_data(filename, acum=False):
+
+    numRuns = 1000000
+
+    AVOID_FIRST = 10 #AVOID_FIRST number of trials before computing accum. averages.
+
+    f = open(filename, 'rb')
+    csvReader = csv.reader(f, delimiter=',')
+
+    numRuns = np.min([numRuns, sum(1 for row in csvReader) - 1])
+    f.seek(0)
+
+    data = []  # [[] for i in range(numRuns)]
+
+
+    for row in csvReader:
+        acum_val = 0
+        d = []
+        repeatScores = []
+
+        for v in row:
+            try:
+                next_value = float(v)
+                if acum:
+                    repeatScores.append(next_value)
+
+                    if len(repeatScores) > AVOID_FIRST:
+                        avg_scores = np.sum(repeatScores)
+                        d.append(avg_scores)
+                    else:
+                        d.append(next_value)
+                else:
+                    d.append(next_value)
+
+            except:
+                #print "Ignoring expection in line", row
+                pass
+
+        data.append(d)
+
+
+    #return np.average(repeatScoresF, axis=0)
+    return numRuns, data, np.average(data, axis=0)
+
+def plot(input_files, output_dir, output_file, ls, labels, loc, acum=False, show_plot=False):
+
+    minNumRuns = 100
+    all_scores = []
+
+    for filename in input_files:
+        numRuns, data, avg = get_data(filename, acum)
+        all_scores.append(data)
+
+        if numRuns < minNumRuns:
+            minNumRuns = numRuns
+
+
+    plot_res(all_scores, minNumRuns, labels, ls, loc, "Score", output_dir+output_file+"pdf", show_plot)#, [-2,2])
+
+
+
+
+
+if __name__=="__main__":
+
+    # DATA_FILES = ["../data/CoEv_2x10_vs_Null_100x100.txt", "../data/GA_2x10_vs_Null_100x100.txt", "../data/CoEv_2x10_vs_GA_2x10_100x100.txt"]
+    # output_file = '2x10_vs_Null_100x100'
+
+    # DATA_FILES = ["../data/CoEv_2x10_vs_Null_100x50.txt", "../data/GA_2x10_vs_Null_100x50.txt", "../data/CoEv_2x10_vs_GA_2x10_100x50.txt"]
+    # output_file = '2x10_vs_Null_100x50'
+
+    # DATA_FILES = ["../data/CoEv_5x10_vs_Null_100x50.txt", "../data/GA_5x10_vs_Null_100x50.txt", "../data/CoEv_5x10_vs_GA_2x10_100x50.txt"]
+    # output_file = '5x10_vs_Null_100x50'
+
+    # DATA_FILES = ["../data/CoEv_1x5_vs_Null_1000x1000.txt", "../data/CoEv_1x10_vs_Null_1000x1000.txt",
+    #               #"../data/CoEv_1x25_vs_Null_1000x1000.txt",  "../data/CoEv_1x50_vs_Null_1000x1000.txt"]
+    #               ]
+    # output_file = 'CoEv_1xXX_vs_Null_1000x1000'
+
+    # DATA_FILES = ["../data/CoEv_1x5_vs_Null_100x100.txt", "../data/CoEv_1x10_vs_Null_100x100.txt",
+    #               "../data/CoEv_1x25_vs_Null_100x100.txt",  "../data/CoEv_1x50_vs_Null_100x100.txt"]
+    # output_file = 'CoEv_1xXX_vs_Null_100x100'
+
+    # DATA_FILES = ["../data/GA_1x5_vs_Null_100x100.txt", "../data/GA_1x10_vs_Null_100x100.txt",
+    #               "../data/GA_1x25_vs_Null_100x100.txt",  "../data/GA_1x50_vs_Null_100x100.txt"]
+    # output_file = 'GA_1xXX_vs_Null_100x100'
+
+    # DATA_FILES = ["../data/CoEv_1x5_vs_GA_100x100.txt", "../data/CoEv_1x10_vs_GA_100x100.txt",
+    #               "../data/CoEv_1x25_vs_GA_100x100.txt",  "../data/CoEv_1x50_vs_GA_100x100.txt"]
+    # output_file = 'CoEv_1xXX_vs_GA_100x100'
+
+    # DATA_FILES = ["../data/CoEv_10x1_vs_GA_100x100.txt", "../data/CoEv_5x2_vs_GA_100x100.txt",
+    #               "../data/CoEv_2x5_vs_GA_100x100.txt",  "../data/CoEv_1x10_vs_GA_100x100.txt"]
+    # output_file = 'CoEv_XXxYY_vs_GA_100x100'
+
+    # DATA_FILES = ["../data/GA_1x5_vs_RND_100x100.txt", "../data/GA_1x10_vs_RND_100x100.txt",
+    #               "../data/GA_1x25_vs_RND_100x100.txt",  "../data/GA_1x50_vs_RND_100x100.txt"]
+    # output_file = 'GA_1xXX_vs_RND_100x100'
+
+    # DATA_FILES = ["../data/CoEv_1x5_vs_RND_100x100.txt", "../data/CoEv_1x10_vs_RND_100x100.txt",
+    #               "../data/CoEv_1x25_vs_RND_100x100.txt",  "../data/CoEv_1x50_vs_RND_100x100.txt"]
+    # output_file = 'CoEv_1xXX_vs_RND_100x100'
+
+    # DATA_FILES = ["../data/CoEv_1x5_vs_RND_100x1000.txt", "../data/CoEv_1x10_vs_RND_100x1000.txt",
+    #               "../data/CoEv_1x25_vs_RND_100x1000.txt",  "../data/CoEv_1x50_vs_RND_100x1000.txt"]
+    # output_file = 'CoEv_1xXX_vs_RND_100x1000'
+
+    # DATA_FILES = ["../data/CoEv_1x5_vs_Null_100x100.txt","../data/CoEv_1x5_vs_GA_100x100.txt",
+    #               "../data/CoEv_1x5_vs_RND_100x100.txt","../data/CoEv_1x5_vs_CoEv_1x5_100x100.txt"]
+    # output_file = 'CoEv_1x5_vs_XXX_100x100'
+
+    # DATA_FILES = ["../data/CoEv_1x5_vs_Null_100x100.txt","../data/GA_1x5_vs_Null_100x100.txt",
+    #               "../data/CoEv_1x5_vs_RND_100x100.txt", "../data/GA_1x5_vs_RND_100x100.txt"]
+    # output_file = 'CoEvGA_1x5_vs_NullRND_100x100'
+
+
+    # DATA_FILES = ["../data/GA-rndOpp_10x1_vs_RND_100x100.txt","../data/GA-rndOpp_5x2_vs_RND_100x100.txt",
+    #               "../data/GA-rndOpp_2x5_vs_RND_100x100.txt", "../data/GA-rndOpp_1x10_vs_RND_100x100.txt"]
+    # output_file = 'GA-rndOpp_1xXX_vs_RND_100x100'
+
+
+    DATA_FILES = ["../data/GA-nullOpp_10x1_vs_RND_100x100.txt","../data/GA-nullOpp_5x2_vs_RND_100x100.txt",
+                  "../data/GA-nullOpp_2x5_vs_RND_100x100.txt", "../data/GA-nullOpp_1x10_vs_RND_100x100.txt"]
+    output_file = 'GA-nullOpp_1xXX_vs_RND_100x100'
+
+    acum = False
+
+    labels = []
+    for d in DATA_FILES:
+        labels.append(d[8:-4])
+
+    ls = ['-', '--', '-.',':']
+    loc = 2
+    PIC_DIR = "../pics/"
+    if acum:
+        PIC_DIR = PIC_DIR + "acum/"
+
+
+    plot(DATA_FILES, PIC_DIR, output_file, ls, labels, loc, acum, True)
+

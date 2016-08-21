@@ -4,6 +4,7 @@ import asteroids.GameObject;
 import asteroids.GameState;
 import asteroids.Ship;
 import math.Vector2d;
+import utilities.StatSummary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.awt.geom.Rectangle2D;
 
 import static asteroids.Constants.*;
 import static java.awt.Color.black;
-
+import battleGameTest.TestWithMissile;
 
 public class BattleView extends JComponent {
     static int offset = 0;
@@ -20,9 +21,9 @@ public class BattleView extends JComponent {
     // static int carSize = 5;
     static Color bg = black;
     SimpleBattle game;
-    // Font font;
 
     Ship ship;
+    boolean ready = false;
 
     static double viewScale = 1.0;
 
@@ -53,13 +54,17 @@ public class BattleView extends JComponent {
         game.draw(g);
         g.setTransform(at);
         paintState(g);
+        ready = true;
     }
 
 
     public void paintState(Graphics2D g) {
 
-        for (GameObject object : game.objects) {
-            object.draw(g);
+        if(!game.objects.isEmpty()) {
+            GameObject[] objectsCopy = game.objects.toArray(new GameObject[game.objects.size()]);
+            for (GameObject object : objectsCopy) {
+                object.draw(g);
+            }
         }
 
         g.setColor(Color.white);
@@ -71,16 +76,30 @@ public class BattleView extends JComponent {
         //String str = game.stats.get(0) + " " + game.stats.get(1) + " " + game.currentTick;
         SimpleBattle.PlayerStats p1Stats = game.stats.get(0);
         SimpleBattle.PlayerStats p2Stats = game.stats.get(1);
-        String strScores    = "Score:    " + p1Stats.getPoints() + " | " + p2Stats.getPoints();
+        //String strScores    = "Score:    " + p1Stats.getPoints() + " | " + p2Stats.getPoints();
+
+        double sc0 = ((int)(game.score(0) * 1000) * 0.001);
+        double sc1 = ((int)(game.score(1) * 1000) * 0.001);
+        String strScores    = "Score:    " + sc0 + " | " + sc1;
+
+        double scA0 = ((int)(game.ss1.sum() * 1000) * 0.001);
+        double scA1 = ((int)(game.ss2.sum() * 1000) * 0.001);
+        String strAcumScores = "Acc. Score:    " + scA0 + " | " + scA1;
+
+        String strPoints = "Points:    " + p1Stats.getPoints() + " | " + p2Stats.getPoints();
         String strMissiles  = "Missiles: " + p1Stats.getMissilesFired() + " | " + p2Stats.getMissilesFired();
-        String strTicks     = "Ticks:    " + game.currentTick;
-        String p1 = "P1 Green " + game.p1.getClass().getSimpleName();
-        String p2 = "P2 Blue " + game.p2.getClass().getSimpleName();
-        g.drawString(strScores, 10, 20);
+        String strTicks = "Ticks:    " + game.currentTick;
+        String strLives = "Life: " + p1Stats.getLife() +  " | " + p2Stats.getLife();
+        String p1 = "P1 Green: " + TestWithMissile.playerNames[TestWithMissile.player1];
+        String p2 = "P2 Blue: " + TestWithMissile.playerNames[TestWithMissile.player2];
+        //g.drawString(strScores, 10, 20);
+        //g.drawString(strAcumScores, 10, 20);
+        g.drawString(strPoints, 10, 20);
         g.drawString(strMissiles, 10, 50);
-        g.drawString(strTicks, 10, 80);
-        g.drawString(p1, 10, 110);
-        g.drawString(p2, 10, 140);
+        g.drawString(strLives, 10, 80);
+        g.drawString(strTicks, 10, 110);
+        g.drawString(p1, 10, 140);
+        g.drawString(p2, 10, 170);
     }
 
 

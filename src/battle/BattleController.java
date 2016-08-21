@@ -1,6 +1,9 @@
 package battle;
 
 import asteroids.Action;
+import utilities.ElapsedCpuTimer;
+
+import java.awt.*;
 
 /**
  * Created by simon lucas on 10/06/15.
@@ -8,6 +11,7 @@ import asteroids.Action;
 
 public interface BattleController {
 
-    Action getAction(SimpleBattle gameStateCopy, int playerId);
+    Action getAction(SimpleBattle gameStateCopy, int playerId, ElapsedCpuTimer elapsedTimer);
 
+    void draw(Graphics2D g);
 }
